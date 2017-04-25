@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.resell.hp.admin.dao.BrandDAO;
 import com.resell.hp.admin.dao.SeriesDAO;
 import com.resell.hp.util.KeyUtils;
 
@@ -14,6 +15,9 @@ public class SeriesService {
 
 	@Autowired
 	private SeriesDAO seriesDAO;
+	
+	@Autowired
+	private BrandDAO brandDAO;
 	
 	public List getList() {
 		return seriesDAO.selectList();
@@ -31,8 +35,10 @@ public class SeriesService {
 		return seriesDAO.delete(seriesId);
 	}
 	
-	public int add(String seriesName, String brandId) {
+	public int add(String seriesName) {
 		String seriesId = KeyUtils.generateKey("SRS");
+		String brandId = brandDAO.selectBrandId("NIKE");
+		
 		return seriesDAO.insert(seriesId, seriesName, brandId);
 	}	
 }

@@ -30,8 +30,8 @@ public class SeriesController {
 	}
 
 	@RequestMapping("/add")
-	public Map add(@RequestParam("seriesName") String seriesName, @RequestParam("brandId") String brandId) {
-		seriesService.add(seriesName, brandId);
+	public Map add(@RequestParam("seriesName") String seriesName) {
+		seriesService.add(seriesName);
 		
 		Map result = new HashMap();
 		result.put(result, "ok");

@@ -23,6 +23,10 @@ public class BrandService {
 		return brandDAO.selectOne(brandId);
 	}
 	
+	public String getBrandId(String brandName){
+		return brandDAO.selectBrandId(brandName);
+	}
+	
 	public int modify(String brandId, String brandName) {
 		return brandDAO.update(brandId, brandName);
 	}	

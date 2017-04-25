@@ -22,6 +22,10 @@ public class BrandDAO {
 		return sqlSession.selectOne("admin.brand.selectOne", brandId);
 	}
 	
+	public String selectBrandId(String brandName) {
+		return sqlSession.selectOne("admin.brand.selectBrandId", brandName); 
+	}
+	
 	public int update(String brandId, String brandName) {
 		Map param = new HashMap();
 		param.put("brandId", brandId);
