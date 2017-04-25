@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="admin.brand">
+  	<select id="selectList" resultType="map">
+		SELECT brand_id, brand_name
+		  FROM tbl_brand
+	</select>
+	
+	<select id="selectOne" parameterType="string" resultType="map">
+		SELECT brand_id, brand_name
+		  FROM tbl_brand
+		 WHERE brand_id = #{brandId}
+	</select>
+	
+	<update id="update" parameterType="map">
+		UPDATE tbl_brand
+		   SET brand_name = #{brandName}
+		 WHERE brand_id = #{brandId}
+	</update>
+	
+	<delete id="delete" parameterType="string">
+		DELETE FROM tbl_brand
+		 WHERE brand_id = #{brandId}
+	</delete>
+	
+  	<insert id="insert" parameterType="map">
+  		INSERT INTO tbl_brand
+  			(brand_id, brand_name)
+  		VALUES
+  			(#{brandId}, #{brandName})
+ 	</insert>
+  
+</mapper>
