@@ -1,12 +1,12 @@
 package com.resell.hp.dao;
 
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import com.resell.hp.service.MemberService;
 
 @Repository
 public class MemberDAO {
@@ -16,12 +16,24 @@ public class MemberDAO {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(MemberDAO.class);
 	
+	public void insertUser(Map userInfo) {
+		sqlSession.selectOne("member.insertUser", userInfo);
+	}
+	
+	public void insertUserDetail(Map userInfoDetail) {
+		sqlSession.selectOne("member.insertUserDetail", userInfoDetail);
+	}
+	
 	public String selectUserPw(String userId){
 		return sqlSession.selectOne("member.selectUserPw", userId);
 	}
+	
 	public String selectUid(String userId) {
-		LOGGER.debug(sqlSession.selectOne("member.selectUid", userId));
 		return sqlSession.selectOne("member.selectUid", userId);
+	}
+
+	public String selectRank(String uid) {
+		return sqlSession.selectOne("member.selectRank", uid);
 	}
 
 }

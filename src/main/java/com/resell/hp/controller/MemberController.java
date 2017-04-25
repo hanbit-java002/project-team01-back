@@ -26,12 +26,18 @@ public class MemberController {
 	private MemberService memberService;
 	
 	@RequestMapping(value="/api/member/signUp", method=RequestMethod.POST)
-	public Map signUp(@RequestParam("userInfo") Map userId ) {
+	public Map signUp(@RequestParam("userId") String userId, @RequestParam("userPw") String userPw,
+			@RequestParam("userName") String userName, @RequestParam("userPhone") String userPhone,
+			@RequestParam("userAddr") String userAddr, @RequestParam("userAddrDetail") String userAddrDetail,
+			@RequestParam("userZipcode") String userZipcode) {
+		
+		memberService.addUser(userId, userPw, userName, userPhone, 
+				userAddr, userAddrDetail, userZipcode);
 		
 		
-		 Map result = new HashMap();
-		 result.put("result", "ok");		
-		 return result;
+		Map result = new HashMap();
+		result.put("result", "ok");		
+		return result;
 	}	
 	
 	@RequestMapping(value="/api/member/signIn", method=RequestMethod.POST)
@@ -52,10 +58,12 @@ public class MemberController {
 	      //로그인 세션 저장//
 	      HttpSession session = request.getSession();
 	      String uid = memberService.getUid(userId);
+	      String userRank = memberService.getRank(uid);
 	     
 	      session.setAttribute("signedIn", true);
 	      session.setAttribute("uid", uid);
 	      session.setAttribute("userId", userId);
+	      session.setAttribute("userRank", userRank);
 		
 		  Map result = new HashMap();
 		  result.put("result", "ok");		
@@ -75,8 +83,19 @@ public class MemberController {
       }
       
       result.put("result", signedIn);
+      result.put("userRank", session.getAttribute("userRank"));
       
       return result;
+   }
+   
+   @RequestMapping("/api/member/signout")
+   public Map signOut(HttpSession session) {
+	      session.invalidate();
+	      
+	      Map result = new HashMap();
+	      result.put("result", "ok");
+	      
+	      return result;
    }
 
 }

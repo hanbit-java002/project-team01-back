@@ -8,9 +8,28 @@
 	  	 FROM tbl_member
 	  	WHERE user_id = #{userId}
 	  </select>
+	  
 	  <select id="selectUid" parameterType="string" resultType="string">
 	    SELECT uid
 	  	 FROM tbl_member
-		WHERE user_id =#{userId};
+		WHERE user_id =#{userId}
 	  </select>
+	  
+	  <select id="selectRank" parameterType="string" resultType="string">
+	    SELECT user_rank
+	  	 FROM tbl_member
+		WHERE uid =#{uid}
+	  </select>
+	  
+	  <insert id="insertUser" parameterType="map">
+	    INSERT INTO tbl_member (uid, user_id, user_pw, user_name) 
+	    	 VALUES (#{uid}, #{userId}, #{userPw}, #{userName})
+	    
+	  </insert>
+	  
+	  <insert id="insertUserDetail" parameterType="map">
+	    INSERT INTO tbl_member_detail (uid, phone_num, addr, addr_detail, zip_code) 
+	    	 VALUES (#{uid}, #{userPhone}, #{userAddr}, #{userAddrDetail},
+	    	 		 #{userZipcode})
+	  </insert>
 </mapper>
