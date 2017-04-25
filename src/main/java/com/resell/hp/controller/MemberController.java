@@ -25,13 +25,22 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
-	@RequestMapping(value="/api/memeber/signIn", method=RequestMethod.POST)
-	public Map signIn(@RequestParam("id") String id, @RequestParam("pw") String pw,
+	@RequestMapping(value="/api/member/signUp", method=RequestMethod.POST)
+	public Map signUp(@RequestParam("userInfo") Map userId ) {
+		
+		
+		 Map result = new HashMap();
+		 result.put("result", "ok");		
+		 return result;
+	}	
+	
+	@RequestMapping(value="/api/member/signIn", method=RequestMethod.POST)
+	public Map signIn(@RequestParam("userId") String userId, @RequestParam("userPw") String userPw,
 			HttpServletRequest request) {
 		
 	      try {
-	          if(!memberService.isValidMember(id, pw)) {
-	            LOGGER.warn("패스워드 틀림:" + id + "/" + pw);
+	          if(!memberService.isValidMember(userId, userPw)) {
+	            LOGGER.warn("패스워드 틀림:" + userId + "/" + userPw);
 	             
 	             throw new RuntimeException("패스워드가 다릅니다.");
 	          }
@@ -39,10 +48,18 @@ public class MemberController {
 	       catch (NullPointerException e) {
 	          throw new RuntimeException("가입되지 않은 사용자입니다.");
 	       }
+	      
+	      //로그인 세션 저장//
+	      HttpSession session = request.getSession();
+	      String uid = memberService.getUid(userId);
+	     
+	      session.setAttribute("signedIn", true);
+	      session.setAttribute("uid", uid);
+	      session.setAttribute("userId", userId);
 		
-		Map result = new HashMap();
-		result.put("result", "ok");		
-		return result;
+		  Map result = new HashMap();
+		  result.put("result", "ok");		
+		  return result;
 	}
 	
    @RequestMapping("/api/member/signedin")

@@ -14,10 +14,5 @@ public class MainController {
 	
 	@Autowired
 	private MainService mainService;
-	
-	@RequestMapping("/api/main/test")
-	public List<Map<String, Object>> getTest() {
-		return (mainService.test());
-	}
 
 }
