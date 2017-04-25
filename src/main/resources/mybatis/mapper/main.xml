@@ -9,6 +9,6 @@
  -->
   <select id="selectAll" resultType="map">
    SELECT *
-  	 FROM tbl_test
+  	 FROM tbl_brand
   </select>
 </mapper>
