@@ -16,4 +16,16 @@
 		 WHERE m.uid = #{userUid}
 		   AND m.uid = d.uid
 	</select>
+	
+	<update id="update" parameterType="map">
+ 		UPDATE tbl_member m, tbl_member_detail d
+ 		   SET m.user_name = #{userName},
+ 		       m.user_rank = #{userRank},
+ 		       d.phone_num = #{userPhoneNum},
+ 		       d.addr = #{userAddr},
+ 		       d.addr_detail = #{userAddrDetail},
+ 		       d.zip_code = #{userZipCode}
+ 		 WHERE m.uid = #{userUid}
+ 		   AND m.uid = d.uid
+ 	</update>
 </mapper>

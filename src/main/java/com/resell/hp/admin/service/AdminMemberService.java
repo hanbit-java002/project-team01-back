@@ -21,4 +21,11 @@ public class AdminMemberService {
 	public Map getUserData(String userUid) {
 		return adminMemberDAO.selectUserData(userUid);
 	}
+	
+	public int modify(String userUid, String userName, String userRank, String userPhoneNum, 
+			String userAddr, String userAddrDetail, String userZipCode) {
+		
+		return adminMemberDAO.update(userUid, userName, userRank, 
+				userPhoneNum, userAddr, userAddrDetail, userZipCode);
+	}	
 }
