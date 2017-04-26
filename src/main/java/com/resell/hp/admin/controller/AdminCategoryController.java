@@ -11,24 +11,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.resell.hp.admin.service.CategoryService;
+import com.resell.hp.admin.service.AdminCategoryService;
 
 @RestController
 @RequestMapping("/api/admin/category")
-public class CategoryController {
+public class AdminCategoryController {
 	
 	@Autowired
-	private CategoryService categoryService;
+	private AdminCategoryService adminCategoryService;
 	
 	@RequestMapping("/list")
 	public List list() {
-		return categoryService.getList();
+		return adminCategoryService.getList();
 	}
 	
-
 	@RequestMapping("/add")
 	public Map add(@RequestParam("categoryName") String categoryName) {
-		categoryService.add(categoryName);
+		adminCategoryService.add(categoryName);
 		
 		Map result = new HashMap();
 		result.put(result, "ok");
@@ -39,7 +38,7 @@ public class CategoryController {
 	@RequestMapping(value="/{categoryId}", method=RequestMethod.GET)
 	public Map get(@PathVariable("categoryId") String categoryId) {
 		
-		return categoryService.get(categoryId);
+		return adminCategoryService.get(categoryId);
 	}
 	
 	
@@ -47,7 +46,7 @@ public class CategoryController {
 	public Map modify(@PathVariable("categoryId") String categoryId,
 			@RequestParam("categoryName") String categoryName) {
 		
-		categoryService.modify(categoryId, categoryName);
+		adminCategoryService.modify(categoryId, categoryName);
 		
 		Map result = new HashMap();
 		result.put(result, "ok");
@@ -58,7 +57,7 @@ public class CategoryController {
 	@RequestMapping(value="/{categoryId}", method=RequestMethod.DELETE)
 	public Map remove(@PathVariable("categoryId") String categoryId) {
 		
-		categoryService.remove(categoryId);
+		adminCategoryService.remove(categoryId);
 		
 		Map result = new HashMap();
 		result.put(result, "ok");

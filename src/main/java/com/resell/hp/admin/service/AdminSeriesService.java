@@ -6,39 +6,39 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.resell.hp.admin.dao.BrandDAO;
-import com.resell.hp.admin.dao.SeriesDAO;
+import com.resell.hp.admin.dao.AdminBrandDAO;
+import com.resell.hp.admin.dao.AdminSeriesDAO;
 import com.resell.hp.util.KeyUtils;
 
 @Service
-public class SeriesService {
+public class AdminSeriesService {
 
 	@Autowired
-	private SeriesDAO seriesDAO;
+	private AdminSeriesDAO adminSeriesDAO;
 	
 	@Autowired
-	private BrandDAO brandDAO;
+	private AdminBrandDAO adminBrandDAO;
 	
 	public List getList() {
-		return seriesDAO.selectList();
+		return adminSeriesDAO.selectList();
 	}
 	
 	public Map get(String seriesId) {
-		return seriesDAO.selectOne(seriesId);
+		return adminSeriesDAO.selectOne(seriesId);
 	}
 	
 	public int modify(String seriesId, String seriesName) {
-		return seriesDAO.update(seriesId, seriesName);
+		return adminSeriesDAO.update(seriesId, seriesName);
 	}	
 	
 	public int remove(String seriesId) {
-		return seriesDAO.delete(seriesId);
+		return adminSeriesDAO.delete(seriesId);
 	}
 	
 	public int add(String seriesName) {
 		String seriesId = KeyUtils.generateKey("SRS");
-		String brandId = brandDAO.selectBrandId("NIKE");
+		String brandId = adminBrandDAO.selectBrandId("NIKE");
 		
-		return seriesDAO.insert(seriesId, seriesName, brandId);
+		return adminSeriesDAO.insert(seriesId, seriesName, brandId);
 	}	
 }

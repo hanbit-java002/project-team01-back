@@ -6,33 +6,33 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.resell.hp.admin.dao.CategoryDAO;
+import com.resell.hp.admin.dao.AdminCategoryDAO;
 import com.resell.hp.util.KeyUtils;
 
 @Service
-public class CategoryService {
+public class AdminCategoryService {
 
 	@Autowired
-	private CategoryDAO categoryDAO;
+	private AdminCategoryDAO adminCategoryDAO;
 	
 	public List getList() {
-		return categoryDAO.selectList();
+		return adminCategoryDAO.selectList();
 	}
 	
 	public Map get(String categoryId) {
-		return categoryDAO.selectOne(categoryId);
+		return adminCategoryDAO.selectOne(categoryId);
 	}
 	
 	public int modify(String categoryId, String categoryName) {
-		return categoryDAO.update(categoryId, categoryName);
+		return adminCategoryDAO.update(categoryId, categoryName);
 	}	
 	
 	public int remove(String categoryId) {
-		return categoryDAO.delete(categoryId);
+		return adminCategoryDAO.delete(categoryId);
 	}
 	
 	public int add(String categoryName) {
 		String categoryId = KeyUtils.generateKey("CAT");
-		return categoryDAO.insert(categoryId, categoryName);
+		return adminCategoryDAO.insert(categoryId, categoryName);
 	}	
 }

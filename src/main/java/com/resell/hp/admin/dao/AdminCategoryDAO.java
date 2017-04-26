@@ -9,17 +9,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CategoryDAO {
+public class AdminCategoryDAO {
 	
 	@Autowired
 	private SqlSession sqlSession;
 	
 	public List selectList() {
-		return sqlSession.selectList("admin.category.selectList");
+		return sqlSession.selectList("admin.adminCategory.selectList");
 	}
 	
 	public Map selectOne(String categoryId) {
-		return sqlSession.selectOne("admin.category.selectOne", categoryId);
+		return sqlSession.selectOne("admin.adminCategory.selectOne", categoryId);
 	}
 	
 	public int update(String categoryId, String categoryName) {
@@ -27,11 +27,11 @@ public class CategoryDAO {
 		param.put("categoryId", categoryId);
 		param.put("categoryName", categoryName);
 		
-		return sqlSession.insert("admin.category.update", param);
+		return sqlSession.insert("admin.adminCategory.update", param);
 	}
 	
 	public int delete(String categoryId) {
-		return sqlSession.insert("admin.category.delete", categoryId);
+		return sqlSession.insert("admin.adminCategory.delete", categoryId);
 	}
 	
 	public int insert(String categoryId, String categoryName) {
@@ -39,6 +39,6 @@ public class CategoryDAO {
 		param.put("categoryId", categoryId);
 		param.put("categoryName", categoryName);
 		
-		return sqlSession.insert("admin.category.insert", param);
+		return sqlSession.insert("admin.adminCategory.insert", param);
 	}
 }

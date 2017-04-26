@@ -11,27 +11,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.resell.hp.admin.service.BrandService;
-import com.resell.hp.admin.service.SeriesService;
+import com.resell.hp.admin.service.AdminBrandService;
+import com.resell.hp.admin.service.AdminSeriesService;
 
 @RestController
 @RequestMapping("/api/admin/series")
-public class SeriesController {
+public class AdminSeriesController {
 
 	@Autowired
-	private SeriesService seriesService;
-	
-	@Autowired
-	private BrandService brandService;
+	private AdminSeriesService adminSeriesService;
 	
 	@RequestMapping("/list")
 	public List list() {
-		return seriesService.getList();
+		return adminSeriesService.getList();
 	}
 
 	@RequestMapping("/add")
 	public Map add(@RequestParam("seriesName") String seriesName) {
-		seriesService.add(seriesName);
+		adminSeriesService.add(seriesName);
 		
 		Map result = new HashMap();
 		result.put(result, "ok");
@@ -42,7 +39,7 @@ public class SeriesController {
 	@RequestMapping(value="/{seriesId}", method=RequestMethod.GET)
 	public Map get(@PathVariable("seriesId") String seriesId) {
 		
-		return seriesService.get(seriesId);
+		return adminSeriesService.get(seriesId);
 	}
 	
 	
@@ -50,7 +47,7 @@ public class SeriesController {
 	public Map modify(@PathVariable("seriesId") String seriesId,
 			@RequestParam("seriesName") String seriesName) {
 		
-		seriesService.modify(seriesId, seriesName);
+		adminSeriesService.modify(seriesId, seriesName);
 		
 		Map result = new HashMap();
 		result.put(result, "ok");
@@ -61,7 +58,7 @@ public class SeriesController {
 	@RequestMapping(value="/{seriesId}", method=RequestMethod.DELETE)
 	public Map remove(@PathVariable("seriesId") String seriesId) {
 		
-		seriesService.remove(seriesId);
+		adminSeriesService.remove(seriesId);
 		
 		Map result = new HashMap();
 		result.put(result, "ok");

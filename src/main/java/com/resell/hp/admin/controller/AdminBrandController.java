@@ -11,24 +11,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.resell.hp.admin.service.BrandService;
+import com.resell.hp.admin.service.AdminBrandService;
 
 @RestController
 @RequestMapping("/api/admin/brand")
-public class BrandController {
+public class AdminBrandController {
 	
 	@Autowired
-	private BrandService brandService;
+	private AdminBrandService adminBrandService;
 	
 	@RequestMapping("/list")
 	public List list() {
-		return brandService.getList();
+		return adminBrandService.getList();
 	}
 	
 
 	@RequestMapping("/add")
 	public Map add(@RequestParam("brandName") String brandName) {
-		brandService.add(brandName);
+		adminBrandService.add(brandName);
 		
 		Map result = new HashMap();
 		result.put(result, "ok");
@@ -39,14 +39,14 @@ public class BrandController {
 	@RequestMapping(value="/{brandId}", method=RequestMethod.GET)
 	public Map get(@PathVariable("brandId") String brandId) {
 		
-		return brandService.get(brandId);
+		return adminBrandService.get(brandId);
 	}
 			
 	@RequestMapping(value="/{brandId}", method=RequestMethod.PUT)
 	public Map modify(@PathVariable("brandId") String brandId,
 			@RequestParam("brandName") String brandName) {
 		
-		brandService.modify(brandId, brandName);
+		adminBrandService.modify(brandId, brandName);
 		
 		Map result = new HashMap();
 		result.put(result, "ok");
@@ -57,7 +57,7 @@ public class BrandController {
 	@RequestMapping(value="/{brandId}", method=RequestMethod.DELETE)
 	public Map remove(@PathVariable("brandId") String brandId) {
 		
-		brandService.remove(brandId);
+		adminBrandService.remove(brandId);
 		
 		Map result = new HashMap();
 		result.put(result, "ok");

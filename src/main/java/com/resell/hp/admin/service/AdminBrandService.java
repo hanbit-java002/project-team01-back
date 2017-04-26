@@ -6,37 +6,37 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.resell.hp.admin.dao.BrandDAO;
+import com.resell.hp.admin.dao.AdminBrandDAO;
 import com.resell.hp.util.KeyUtils;
 
 @Service
-public class BrandService {
+public class AdminBrandService {
 	
 	@Autowired
-	private BrandDAO brandDAO;
+	private AdminBrandDAO adminBrandDAO;
 	
 	public List getList() {
-		return brandDAO.selectList();
+		return adminBrandDAO.selectList();
 	}
 	
 	public Map get(String brandId) {
-		return brandDAO.selectOne(brandId);
+		return adminBrandDAO.selectOne(brandId);
 	}
 	
 	public String getBrandId(String brandName){
-		return brandDAO.selectBrandId(brandName);
+		return adminBrandDAO.selectBrandId(brandName);
 	}
 	
 	public int modify(String brandId, String brandName) {
-		return brandDAO.update(brandId, brandName);
+		return adminBrandDAO.update(brandId, brandName);
 	}	
 	
 	public int remove(String brandId) {
-		return brandDAO.delete(brandId);
+		return adminBrandDAO.delete(brandId);
 	}
 	
 	public int add(String brandName) {
 		String brandId = KeyUtils.generateKey("BRD");
-		return brandDAO.insert(brandId, brandName);
+		return adminBrandDAO.insert(brandId, brandName);
 	}	
 }

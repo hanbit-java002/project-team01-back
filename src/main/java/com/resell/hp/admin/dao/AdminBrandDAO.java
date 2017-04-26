@@ -9,21 +9,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class BrandDAO {
+public class AdminBrandDAO {
 	
 	@Autowired
 	private SqlSession sqlSession;
 	
 	public List selectList() {
-		return sqlSession.selectList("admin.brand.selectList");
+		return sqlSession.selectList("admin.adminBrand.selectList");
 	}
 	
 	public Map selectOne(String brandId) {
-		return sqlSession.selectOne("admin.brand.selectOne", brandId);
+		return sqlSession.selectOne("admin.adminBrand.selectOne", brandId);
 	}
 	
 	public String selectBrandId(String brandName) {
-		return sqlSession.selectOne("admin.brand.selectBrandId", brandName); 
+		return sqlSession.selectOne("admin.adminBrand.selectBrandId", brandName); 
 	}
 	
 	public int update(String brandId, String brandName) {
@@ -31,11 +31,11 @@ public class BrandDAO {
 		param.put("brandId", brandId);
 		param.put("brandName", brandName);
 		
-		return sqlSession.insert("admin.brand.update", param);
+		return sqlSession.insert("admin.adminBrand.update", param);
 	}
 	
 	public int delete(String brandId) {
-		return sqlSession.insert("admin.brand.delete", brandId);
+		return sqlSession.insert("admin.adminBrand.delete", brandId);
 	}
 	
 	public int insert(String brandId, String brandName) {
@@ -43,6 +43,6 @@ public class BrandDAO {
 		param.put("brandId", brandId);
 		param.put("brandName", brandName);
 		
-		return sqlSession.insert("admin.brand.insert", param);
+		return sqlSession.insert("admin.adminBrand.insert", param);
 	}
 }

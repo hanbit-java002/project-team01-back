@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="admin.adminMember">
+  	<select id="selectList" resultType="map">
+		SELECT m.uid, m.user_id, m.user_name, m.user_rank
+		  FROM tbl_member m, tbl_member_detail d
+		 WHERE m.uid = d.uid
+	</select>
+	
+	<select id="selectUserData" parameterType="string" resultType="map">
+		SELECT m.uid, m.user_id, m.user_name, m.user_rank,
+			   d.phone_num, d.addr, d.addr_detail, d.zip_code
+		  FROM tbl_member m, tbl_member_detail d
+		 WHERE m.uid = #{userUid}
+		   AND m.uid = d.uid
+	</select>
+</mapper>
