@@ -37,13 +37,14 @@ public class MemberService {
 		userInfo.put("userId", userId);
 		userInfo.put("userPw", encryptedUserPw);
 		userInfo.put("userName", userName);
+		userInfo.put("userRank", "member");
 		
 		Map userInfoDetail = new HashMap();
 		userInfoDetail.put("uid", uid);
 		userInfoDetail.put("userPhone", userPhone);
 		userInfoDetail.put("userAddr", userAddr);
 		userInfoDetail.put("userAddrDetail", userAddrDetail);
-		userInfoDetail.put("userZipcode", userZipcode);		
+		userInfoDetail.put("userZipcode", userZipcode);	
 		
 		memberDAO.insertUser(userInfo);
 		memberDAO.insertUserDetail(userInfoDetail);

@@ -22,8 +22,8 @@
 	  </select>
 	  
 	  <insert id="insertUser" parameterType="map">
-	    INSERT INTO tbl_member (uid, user_id, user_pw, user_name) 
-	    	 VALUES (#{uid}, #{userId}, #{userPw}, #{userName})
+	    INSERT INTO tbl_member (uid, user_id, user_pw, user_name, user_rank) 
+	    	 VALUES (#{uid}, #{userId}, #{userPw}, #{userName}, #(userRank))
 	    
 	  </insert>
 	  
