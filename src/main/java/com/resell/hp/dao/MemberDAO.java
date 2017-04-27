@@ -1,5 +1,6 @@
 package com.resell.hp.dao;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -34,6 +35,14 @@ public class MemberDAO {
 
 	public String selectRank(String uid) {
 		return sqlSession.selectOne("member.selectRank", uid);
+	}
+	
+	public String selectUserId(String userName, String phoneNum) {
+		Map param = new HashMap();
+		param.put("userName", userName);
+		param.put("phoneNum", phoneNum);
+		
+		return sqlSession.selectOne("member.selectUserId", param);
 	}
 
 }

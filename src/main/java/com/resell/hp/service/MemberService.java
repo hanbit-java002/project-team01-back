@@ -65,6 +65,9 @@ public class MemberService {
 		return memberDAO.selectRank(uid);
 	}
 	
+	public String getUserId(String userName, String phoneNum) {
+		return memberDAO.selectUserId(userName, phoneNum);
+	}
 
 	
 

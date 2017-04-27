@@ -98,4 +98,25 @@ public class MemberController {
 	      return result;
    }
 
+   
+   
+   @RequestMapping(value="/api/member/findId", method=RequestMethod.POST)
+	public Map findId(@RequestParam("userName") String userName, 
+			@RequestParam("phoneNum") String phoneNum) {
+
+	   
+	    String userId = memberService.getUserId(userName, phoneNum);
+		
+	    if(userId == null) {
+	    	throw new RuntimeException("가입되지 않은 사용자입니다.");
+	    }
+	    else {
+	    	Map result = new HashMap<>();
+			result.put("result", "ok");
+			result.put("userId", userId);
+			
+			return result;
+	    }
+	}
+   
 }
