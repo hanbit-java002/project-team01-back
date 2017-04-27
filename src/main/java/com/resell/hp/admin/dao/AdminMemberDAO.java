@@ -14,8 +14,21 @@ public class AdminMemberDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public List selectList() {
-		return sqlSession.selectList("admin.adminMember.selectList");
+	public List selectList(int currentPage, int rowsPerPage, String sValue) {
+		Map param = new HashMap();
+		param.put("firstIndex", (currentPage - 1) * rowsPerPage);
+		param.put("rowsPerPage", rowsPerPage);
+		param.put("sValue", sValue);
+
+		return sqlSession.selectList("admin.adminMember.selectList", param);
+	}
+	
+	// 다이나믹 SQL을 사용할 때 변수는 항상 map으로 넘겨줘야 에러가 안 난다! 	
+	public int countList(String sValue) {
+		Map param = new HashMap();
+		param.put("sValue", sValue);
+		
+		return sqlSession.selectOne("admin.adminMember.countList", param);
 	}
 	
 	public Map selectUserData(String userUid) {

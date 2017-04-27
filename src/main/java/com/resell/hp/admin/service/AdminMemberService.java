@@ -14,8 +14,12 @@ public class AdminMemberService {
 	@Autowired
 	private AdminMemberDAO adminMemberDAO;
 	
-	public List getList() {
-		return adminMemberDAO.selectList();
+	public List getList(int currentPage, int rowsPerPage, String sValue) {
+		return adminMemberDAO.selectList(currentPage, rowsPerPage, sValue);
+	}
+	
+	public int countList(String sValue) {
+		return adminMemberDAO.countList(sValue);
 	}
 	
 	public Map getUserData(String userUid) {

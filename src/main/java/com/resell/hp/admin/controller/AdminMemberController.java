@@ -21,8 +21,18 @@ public class AdminMemberController {
 	private AdminMemberService adminMemberService;
 
 	@RequestMapping("/list")
-	public List list() {
-		return adminMemberService.getList();
+	public Map getList(@RequestParam("currentPage") int currentPage,
+			@RequestParam("rowsPerPage") int rowsPerPage,
+			@RequestParam("sValue") String sValue) {
+		
+		List list = adminMemberService.getList(currentPage, rowsPerPage, sValue);
+		int count = adminMemberService.countList(sValue);
+		
+		Map result = new HashMap();
+		result.put("list", list);
+		result.put("count", count);
+		
+		return result;
 	}
 	
 	@RequestMapping(value="/{userUid}", method=RequestMethod.GET)
