@@ -3,10 +3,22 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="admin.adminMember">
-  	<select id="selectList" resultType="map">
-		SELECT m.uid, m.user_id, m.user_name, m.user_rank
-		  FROM tbl_member m, tbl_member_detail d
-		 WHERE m.uid = d.uid
+  	<select id="selectList" parameterType="map" resultType="map">
+		SELECT uid, user_id, user_name, user_rank
+		  FROM tbl_member
+		<if test="sValue != null and sValue != 'all'">
+         WHERE user_rank = #{sValue}
+        </if>
+		 ORDER BY user_name
+		 LIMIT #{firstIndex}, #{rowsPerPage}
+	</select>
+	
+	<select id="countList" parameterType="map" resultType="int">
+		SELECT COUNT(uid) AS members
+		  FROM tbl_member
+		<if test="sValue != null and sValue != 'all'">
+         WHERE user_rank = #{sValue}
+        </if>
 	</select>
 	
 	<select id="selectUserData" parameterType="string" resultType="map">
