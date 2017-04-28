@@ -14,8 +14,15 @@ public class AdminCategoryDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public List selectList() {
-		return sqlSession.selectList("admin.adminCategory.selectList");
+	public List selectList(int currentPage, int rowsPerPage) {
+		Map param = new HashMap();
+		param.put("firstIndex", (currentPage - 1) * rowsPerPage);
+		param.put("rowsPerPage", rowsPerPage);
+		return sqlSession.selectList("admin.adminCategory.selectList", param);
+	}
+	
+	public int countList() {
+		return sqlSession.selectOne("admin.adminCategory.countList");
 	}
 	
 	public Map selectOne(String categoryId) {

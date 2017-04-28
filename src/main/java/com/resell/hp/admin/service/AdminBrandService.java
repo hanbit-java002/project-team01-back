@@ -15,8 +15,12 @@ public class AdminBrandService {
 	@Autowired
 	private AdminBrandDAO adminBrandDAO;
 	
-	public List getList() {
-		return adminBrandDAO.selectList();
+	public List getList(int currentPage, int rowsPerPage) {
+		return adminBrandDAO.selectList(currentPage, rowsPerPage);
+	}
+	
+	public int countList() {
+		return adminBrandDAO.countList();
 	}
 	
 	public Map get(String brandId) {

@@ -21,8 +21,17 @@ public class AdminCategoryController {
 	private AdminCategoryService adminCategoryService;
 	
 	@RequestMapping("/list")
-	public List list() {
-		return adminCategoryService.getList();
+	public Map getlist(@RequestParam("currentPage") int currentPage,
+			@RequestParam("rowsPerPage") int rowsPerPage) {
+		
+		List list = adminCategoryService.getList(currentPage, rowsPerPage);
+		int count = adminCategoryService.countList();
+		
+		Map result = new HashMap();
+		result.put("list", list);
+		result.put("count", count);
+		
+		return result;
 	}
 	
 	@RequestMapping("/add")
@@ -40,7 +49,6 @@ public class AdminCategoryController {
 		
 		return adminCategoryService.get(categoryId);
 	}
-	
 	
 	@RequestMapping(value="/{categoryId}", method=RequestMethod.PUT)
 	public Map modify(@PathVariable("categoryId") String categoryId,

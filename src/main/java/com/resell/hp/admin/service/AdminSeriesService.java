@@ -19,8 +19,12 @@ public class AdminSeriesService {
 	@Autowired
 	private AdminBrandDAO adminBrandDAO;
 	
-	public List getList() {
-		return adminSeriesDAO.selectList();
+	public List getList(int currentPage, int rowsPerPage) {
+		return adminSeriesDAO.selectList(currentPage, rowsPerPage);
+	}
+	
+	public int countList() {
+		return adminSeriesDAO.countList();
 	}
 	
 	public Map get(String seriesId) {

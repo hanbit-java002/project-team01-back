@@ -15,8 +15,12 @@ public class AdminCategoryService {
 	@Autowired
 	private AdminCategoryDAO adminCategoryDAO;
 	
-	public List getList() {
-		return adminCategoryDAO.selectList();
+	public List getList(int currentPage, int rowsPerPage) {
+		return adminCategoryDAO.selectList(currentPage, rowsPerPage);
+	}
+	
+	public int countList() {
+		return adminCategoryDAO.countList();
 	}
 	
 	public Map get(String categoryId) {

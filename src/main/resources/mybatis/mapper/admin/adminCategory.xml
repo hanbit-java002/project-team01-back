@@ -3,11 +3,19 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="admin.adminCategory">
-  	<select id="selectList" resultType="map">
+
+  	<select id="selectList" parameterType="map" resultType="map">
 		SELECT category_id, category_name
 		  FROM tbl_category
-	</select>
+		 ORDER BY category_name
+		 LIMIT #{firstIndex}, #{rowsPerPage}
+	</select>	
 	
+	<select id="countList" resultType="int">
+		SELECT COUNT(category_id) AS countCategory
+		  FROM tbl_category
+	</select>
+		
 	<select id="selectOne" parameterType="string" resultType="map">
 		SELECT category_id, category_name
 		  FROM tbl_category

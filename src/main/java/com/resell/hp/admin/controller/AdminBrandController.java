@@ -21,10 +21,18 @@ public class AdminBrandController {
 	private AdminBrandService adminBrandService;
 	
 	@RequestMapping("/list")
-	public List list() {
-		return adminBrandService.getList();
+	public Map getlist(@RequestParam("currentPage") int currentPage,
+			@RequestParam("rowsPerPage") int rowsPerPage) {
+		
+		List list = adminBrandService.getList(currentPage, rowsPerPage);
+		int count = adminBrandService.countList();
+		
+		Map result = new HashMap();
+		result.put("list", list);
+		result.put("count", count);
+		
+		return result;
 	}
-	
 
 	@RequestMapping("/add")
 	public Map add(@RequestParam("brandName") String brandName) {

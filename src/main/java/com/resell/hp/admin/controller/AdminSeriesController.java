@@ -22,10 +22,19 @@ public class AdminSeriesController {
 	private AdminSeriesService adminSeriesService;
 	
 	@RequestMapping("/list")
-	public List list() {
-		return adminSeriesService.getList();
+	public Map getlist(@RequestParam("currentPage") int currentPage,
+			@RequestParam("rowsPerPage") int rowsPerPage) {
+		
+		List list = adminSeriesService.getList(currentPage, rowsPerPage);
+		int count = adminSeriesService.countList();
+		
+		Map result = new HashMap();
+		result.put("list", list);
+		result.put("count", count);
+		
+		return result;
 	}
-
+	
 	@RequestMapping("/add")
 	public Map add(@RequestParam("seriesName") String seriesName) {
 		adminSeriesService.add(seriesName);
@@ -41,8 +50,7 @@ public class AdminSeriesController {
 		
 		return adminSeriesService.get(seriesId);
 	}
-	
-	
+		
 	@RequestMapping(value="/{seriesId}", method=RequestMethod.PUT)
 	public Map modify(@PathVariable("seriesId") String seriesId,
 			@RequestParam("seriesName") String seriesName) {
