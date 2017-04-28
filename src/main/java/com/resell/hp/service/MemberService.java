@@ -69,6 +69,14 @@ public class MemberService {
 		return memberDAO.selectUserId(userName, phoneNum);
 	}
 
+
+	public String getTempPw(String userId) {
+		String uid = memberDAO.selectUid(userId);
+		memberDAO.updateTempPw(uid);
+		
+		return memberDAO.selectUserPw(userId);
+	}
+
 	
 
 }

@@ -3,20 +3,20 @@ package com.resell.hp.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.websocket.server.PathParam;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.resell.hp.controller.MemberController;
 import com.resell.hp.service.MemberService;
 
 @RestController
@@ -24,6 +24,9 @@ public class MemberController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(MemberController.class);
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private JavaMailSender mailSender;
 	
 	@RequestMapping(value="/api/member/signUp", method=RequestMethod.POST)
 	public Map signUp(@RequestParam("userId") String userId, @RequestParam("userPw") String userPw,
@@ -118,5 +121,43 @@ public class MemberController {
 			return result;
 	    }
 	}
+   
+   
+   private String from = "hanbitresell@gmail.com";	//보내는사람 이메일
+   private String subject = "[Resll] 임시 비밀번호 입니다.";	//제목
+   
+   @RequestMapping(value = "/api/member/findPw", method=RequestMethod.POST)
+   public Map sendMail(@RequestParam("userEmail") String userId) {
+	   
+	   String uid = memberService.getUid(userId);
+	   String tempPw = memberService.getTempPw(userId);	//임시 비밀번호
+	   
+	   if(uid == null) {
+		   throw new RuntimeException("가입되지 않은 사용자입니다.");
+	   }
+	   else {
+		   Map result = new HashMap<>();
+		   
+		   try {
+				   MimeMessage message = mailSender.createMimeMessage();
+				   MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8"); 
+				   messageHelper.setTo(userId);	//받는사람 이메일 
+				   messageHelper.setText(userId + " 님의 \n임시 비밀번호는 [ " + tempPw + " ] 입니다."
+				   		+ "\n\n* 비밀번호 변경은 [My Page > 회원정보 변경]에서 가능합니다."); 	//본문
+				   messageHelper.setFrom(from); 
+				   messageHelper.setSubject(subject);	// 메일제목은 생략 가능하다
+					   
+				   mailSender.send(message); 
+			} 
+			catch(Exception e) { 
+				   System.out.println(e); 
+			} 
+		   
+		   	result.put("result", "ok");
+		   	
+		   	return result; 
+	   }
+
+   }
    
 }

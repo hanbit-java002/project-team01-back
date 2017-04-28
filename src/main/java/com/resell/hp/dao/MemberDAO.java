@@ -45,4 +45,9 @@ public class MemberDAO {
 		return sqlSession.selectOne("member.selectUserId", param);
 	}
 
+	public int updateTempPw(String uid) {
+
+		return sqlSession.update("member.updateTempPw", uid);
+	}
+
 }
