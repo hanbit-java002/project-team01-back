@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="product">
+  	<select id="selectList" parameterType="map" resultType="map">
+		SELECT p.product_id, p.product_name, p.product_main_img, p.category_id, c.category_name,
+			   p.price, p.brand_id, p.uid, p.size, p.quality, p.deal_means, p.safe_deal, p.update_date
+		  FROM (
+		  	SELECT product_id, product_name, product_main_img, category_id,
+				   price, brand_id, uid, size, quality, deal_means, safe_deal, update_date
+		  	  FROM tbl_product
+		  	 <if test="brandId != null">
+       		 WHERE brand_id = #{brandId}
+        	 </if>) p, tbl_category c
+		 WHERE p.category_id = c.category_id
+		 ORDER BY update_date DESC
+		 LIMIT #{firstIndex}, #{rowsPerPage}
+	</select>
+	
+	<select id="countList" parameterType="map" resultType="int">
+		SELECT COUNT(product_id) AS products
+		  FROM tbl_product
+		<if test="brandId != null">
+         WHERE brand_id = #{brandId}
+        </if>
+	</select>
+	
+</mapper>
