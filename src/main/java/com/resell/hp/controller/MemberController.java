@@ -3,15 +3,15 @@ package com.resell.hp.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.mail.internet.MimeMessage;
+/*import javax.mail.internet.MimeMessage;*/
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
+/*import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;*/
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,7 +25,7 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
-	@Autowired
+	/*@Autowired
 	private JavaMailSender mailSender;
 	
 	@RequestMapping(value="/api/member/signUp", method=RequestMethod.POST)
@@ -41,7 +41,7 @@ public class MemberController {
 		Map result = new HashMap();
 		result.put("result", "ok");		
 		return result;
-	}	
+	}	*/
 	
 	@RequestMapping(value="/api/member/signIn", method=RequestMethod.POST)
 	public Map signIn(@RequestParam("userId") String userId, @RequestParam("userPw") String userPw,
@@ -123,7 +123,7 @@ public class MemberController {
 	}
    
    
-   private String from = "hanbitresell@gmail.com";	//보내는사람 이메일
+   /*private String from = "hanbitresell@gmail.com";	//보내는사람 이메일
    private String subject = "[Resll] 임시 비밀번호 입니다.";	//제목
    
    @RequestMapping(value = "/api/member/findPw", method=RequestMethod.POST)
@@ -158,6 +158,6 @@ public class MemberController {
 		   	return result; 
 	   }
 
-   }
+   }*/
    
 }
