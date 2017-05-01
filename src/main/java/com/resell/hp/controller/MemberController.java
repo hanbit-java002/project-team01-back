@@ -25,8 +25,8 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
-	/*@Autowired
-	private JavaMailSender mailSender;
+	/* @Autowired
+	private JavaMailSender mailSender;*/
 	
 	@RequestMapping(value="/api/member/signUp", method=RequestMethod.POST)
 	public Map signUp(@RequestParam("userId") String userId, @RequestParam("userPw") String userPw,
@@ -41,7 +41,7 @@ public class MemberController {
 		Map result = new HashMap();
 		result.put("result", "ok");		
 		return result;
-	}	*/
+	}
 	
 	@RequestMapping(value="/api/member/signIn", method=RequestMethod.POST)
 	public Map signIn(@RequestParam("userId") String userId, @RequestParam("userPw") String userPw,
