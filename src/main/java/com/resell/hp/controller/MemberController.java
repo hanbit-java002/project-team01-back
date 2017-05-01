@@ -83,10 +83,10 @@ public class MemberController {
          signedIn = "yes";
          
          result.put("userId", session.getAttribute("userId"));
+         result.put("userRank", session.getAttribute("userRank"));
       }
       
       result.put("result", signedIn);
-      result.put("userRank", session.getAttribute("userRank"));
       
       return result;
    }
@@ -107,7 +107,6 @@ public class MemberController {
 	public Map findId(@RequestParam("userName") String userName, 
 			@RequestParam("phoneNum") String phoneNum) {
 
-	   
 	    String userId = memberService.getUserId(userName, phoneNum);
 		
 	    if(userId == null) {
@@ -120,9 +119,7 @@ public class MemberController {
 			
 			return result;
 	    }
-	}
-   
-   
+	}   
    /*private String from = "hanbitresell@gmail.com";	//보내는사람 이메일
    private String subject = "[Resll] 임시 비밀번호 입니다.";	//제목
    
@@ -159,5 +156,4 @@ public class MemberController {
 	   }
 
    }*/
-   
 }
