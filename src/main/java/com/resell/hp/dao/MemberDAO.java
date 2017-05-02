@@ -49,5 +49,9 @@ public class MemberDAO {
 
 		return sqlSession.update("member.updateTempPw", uid);
 	}
+	public Map selectUserInfo(String uid) {
+
+		return sqlSession.selectOne("member.selectUserInfo", uid);
+	}
 
 }

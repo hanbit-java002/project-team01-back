@@ -76,6 +76,10 @@ public class MemberService {
 		
 		return memberDAO.selectUserPw(userId);
 	}
+	
+	public Map getUserInfo(String uid) {		
+		return memberDAO.selectUserInfo(uid);
+	}
 
 	
 

@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,7 +22,7 @@ import com.resell.hp.service.MarketService;
 @RequestMapping("/api/market")
 public class MarketController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(MarketController.class);
-	
+	@Autowired
 	private MarketService marketService;
 	
 	@SignInRequired
@@ -40,6 +41,8 @@ public class MarketController {
 		String dealMeans = request.getParameter("dealMeans");
 		String dealPlace = request.getParameter("dealPlace");
 		boolean safeDeal = Boolean.parseBoolean(request.getParameter("safeDeal"));
+		String loginId =(String) session.getAttribute("uid");
+		
 		
 		Map productInfo = new HashMap<String, Object>();
 		productInfo.put("productName",productName);
@@ -50,27 +53,19 @@ public class MarketController {
 		productInfo.put("price",price);
 		productInfo.put("quality",quality);
 		productInfo.put("detail",detail);
-		productInfo.put("arrImgSrc",arrImgSrc);
-		productInfo.put("mainImgIndex",mainImgIndex);
 		productInfo.put("dealMeans",dealMeans);
 		productInfo.put("dealPlace",dealPlace);
 		productInfo.put("safeDeal",safeDeal);
+		productInfo.put("loginId",loginId);
+		productInfo.put("status","processing");
 		
+		LOGGER.debug("#####퀄리티임"+(String)productInfo.get("quality"));
 		
-		System.out.println("배열 데이터"+arrImgSrc.length);
+		Map productImgInfo = new HashMap<String, Object>();
+		productImgInfo.put("arrImgSrc",arrImgSrc);
+		productImgInfo.put("mainImgIndex",mainImgIndex);
 		
-		if (arrImgSrc != null) {
-			for (int i=0; i<arrImgSrc.length; i++) {
-				String dataUrl = arrImgSrc[i];
-				
-				String contentType = StringUtils.substringBetween("data:", ";base64,");
-				String base64 = StringUtils.substringAfter(dataUrl, ";base64,");
-				
-				byte[] bytes = Base64.decodeBase64(base64);
-			
-				
-			}
-		}
+		marketService.add(productInfo, productImgInfo);
 		
 		Map result = new HashMap();
 		result.put("result", "ok");

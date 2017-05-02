@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="file">
+
+	<insert id="insert" parameterType="map">
+		INSERT INTO tbl_product_img 
+					(img_id, img_url, product_id, img_main, img_type, img_size) 
+			 VALUES (#{imgId}, #{imgUrl}, #{productId}, #{isMainImg}, #{contentType}, #{imgSize})
+	</insert>
+
+	<select id="selectOne" parameterType="string" resultType="map">
+		SELECT img_id, img_type, img_size
+		  FROM tbl_product_img
+		 WHERE img_id = #{fileId}
+	</select>
+
+</mapper>

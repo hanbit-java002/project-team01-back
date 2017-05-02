@@ -100,7 +100,12 @@ public class MemberController {
 	      
 	      return result;
    }
-
+   
+   @RequestMapping("/api/member/getUserInfo")
+   public Map getUserInfo(HttpSession session) {
+	   String uid =(String) session.getAttribute("uid");
+	   return memberService.getUserInfo(uid);
+   }
    
    
    @RequestMapping(value="/api/member/findId", method=RequestMethod.POST)
