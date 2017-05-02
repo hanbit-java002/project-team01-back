@@ -14,6 +14,7 @@ public class ProductDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	
+	//product 리스트 불러오기
 	public List selectList(int currentPage, int rowsPerPage, String brandId) {
 		Map param = new HashMap();
 		param.put("firstIndex", (currentPage - 1) * rowsPerPage);
@@ -29,5 +30,10 @@ public class ProductDAO {
 		param.put("brandId", brandId);
 		
 		return sqlSession.selectOne("admin.adminMember.countList", param);
+	}
+	
+	//product detail 정보 가져오기
+	public List selectProductDetail(String productId) {
+		return sqlSession.selectList("product.selectProductDetail", productId);
 	}
 }

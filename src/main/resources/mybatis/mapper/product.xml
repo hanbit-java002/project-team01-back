@@ -4,16 +4,18 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="product">
   	<select id="selectList" parameterType="map" resultType="map">
-		SELECT p.product_id, p.product_name, p.product_main_img, p.category_id, c.category_name,
-			   p.price, p.brand_id, p.uid, p.size, p.quality, p.deal_means, p.safe_deal, p.update_date
+		SELECT p.product_id, p.product_name, p.category_id, c.category_name, i.img_url,
+			   p.price, p.brand_id, p.seller_uid, p.size, p.quality, p.deal_means, p.safe_deal, p.update_date
 		  FROM (
-		  	SELECT product_id, product_name, product_main_img, category_id,
-				   price, brand_id, uid, size, quality, deal_means, safe_deal, update_date
+		  	SELECT product_id, product_name, category_id,
+				   price, brand_id, seller_uid, size, quality, deal_means, safe_deal, update_date
 		  	  FROM tbl_product
 		  	 <if test="brandId != null">
        		 WHERE brand_id = #{brandId}
-        	 </if>) p, tbl_category c
+        	 </if>) p, tbl_category c, tbl_product_img i
 		 WHERE p.category_id = c.category_id
+		   AND p.product_id = i.product_id
+		   AND i.img_main = "1"
 		 ORDER BY update_date DESC
 		 LIMIT #{firstIndex}, #{rowsPerPage}
 	</select>
@@ -24,6 +26,19 @@
 		<if test="brandId != null">
          WHERE brand_id = #{brandId}
         </if>
+	</select>
+	
+	<select id="selectProductDetail" parameterType="map" resultType="map">
+		SELECT p.product_id, p.product_name, p.category_id, c.category_name,
+			   p.price, p.brand_id, p.seller_uid, p.size, p.quality, p.deal_means,
+			   p.safe_deal, p.update_date, p.description
+		  FROM (
+		  	SELECT product_id, product_name, category_id, price,
+		  		   brand_id, seller_uid, size, quality, deal_means,
+				   safe_deal, update_date, description
+		  	  FROM tbl_product
+       		 WHERE product_id = #{productId}) p, tbl_category c
+		 WHERE p.category_id = c.category_id
 	</select>
 	
 </mapper>
