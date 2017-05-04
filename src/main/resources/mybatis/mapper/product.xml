@@ -31,11 +31,11 @@
 	<select id="selectProductDetail" parameterType="string" resultType="map">
 		SELECT p.product_id, p.product_name, p.category_id, c.category_name,
 			   p.price, p.brand_id, p.seller_uid, p.size, p.quality, p.deal_means,
-			   p.safe_deal, p.update_date, p.description
+			   p.safe_deal, p.update_date, p.description, p.direct_place, p.delivery_check
 		  FROM (
 		  	SELECT product_id, product_name, category_id, price,
 		  		   brand_id, seller_uid, size, quality, deal_means,
-				   safe_deal, update_date, description
+				   safe_deal, update_date, description, direct_place, delivery_check
 		  	  FROM tbl_product
        		 WHERE product_id = #{productId}) p, tbl_category c
 		 WHERE p.category_id = c.category_id
@@ -56,7 +56,24 @@
 		  	  FROM tbl_product
        		 WHERE product_id = #{productId}) s, tbl_product p
        	 WHERE p.seller_uid = s.seller_uid
-       	   AND p.selling_status = "selling";
+       	   AND p.selling_status = "selling"
 	</select>
 	
+	<select id="countLike" parameterType="string" resultType="int">
+		SELECT COUNT(product_id) AS countLike
+		  FROM tbl_like
+       	 WHERE product_id = #{productId}
+	</select>
+
+	<select id="countComment" parameterType="string" resultType="int">
+		SELECT COUNT(comment_id) AS countComment
+		  FROM tbl_comment
+       	 WHERE product_id = #{productId}
+	</select>
+
+	<select id="countComplain" parameterType="string" resultType="int">
+		SELECT COUNT(product_id) AS countComplain
+		  FROM tbl_complain
+       	 WHERE product_id = #{productId}
+	</select>
 </mapper>

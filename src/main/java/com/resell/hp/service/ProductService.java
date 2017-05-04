@@ -48,4 +48,19 @@ public class ProductService {
 	public int countSell(String productId) {
 		return productDAO.countSell(productId);
 	}
+	
+	//like count
+	public int countLike(String productId) {
+		return productDAO.countLike(productId);
+	}
+	
+	//comment count
+	public int countComment(String productId) {
+		return productDAO.countComment(productId);
+	}
+	
+	//complain count
+	public int countComplain(String productId) {
+		return productDAO.countComplain(productId);
+	}
 }

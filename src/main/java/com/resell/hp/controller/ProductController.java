@@ -54,5 +54,23 @@ public class ProductController {
 		result.put("countSell", countSell);
 		
 		return result;
-	}		
+	}
+	
+	//like count
+	@RequestMapping(value="/like/{productId}", method=RequestMethod.GET)
+	public int countLike(@PathVariable("productId") String productId) {
+		return productService.countLike(productId);
+	}
+	
+	//comment count
+	@RequestMapping(value="/comment/{productId}", method=RequestMethod.GET)
+	public int countComment(@PathVariable("productId") String productId) {
+		return productService.countComment(productId);
+	}
+	
+	//complain count
+	@RequestMapping(value="/complain/{productId}", method=RequestMethod.GET)
+	public int countComplain(@PathVariable("productId") String productId) {
+		return productService.countComplain(productId);
+	}
 }
