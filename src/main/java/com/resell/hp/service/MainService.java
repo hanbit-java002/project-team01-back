@@ -12,7 +12,7 @@ import com.resell.hp.dao.MainDAO;
 public class MainService {
 	
 	@Autowired
-	private MainDAO mainDAO;
+	private MainDAO mainDAO; 
 	
 	public List<Map<String, Object>> test() {
 		return mainDAO.selectAll();

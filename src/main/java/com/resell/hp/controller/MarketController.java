@@ -49,7 +49,7 @@ public class MarketController {
 		productInfo.put("brandId",brandId);
 		productInfo.put("categoryId",categoryId);
 		productInfo.put("sizeId",sizeId);
-		productInfo.put("seriesId",seriesId);
+		productInfo.put("seriesId",seriesId);  
 		productInfo.put("price",price);
 		productInfo.put("quality",quality);
 		productInfo.put("detail",detail);

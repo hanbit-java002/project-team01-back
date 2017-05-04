@@ -35,7 +35,7 @@ public class MemberDAO {
 
 	public String selectRank(String uid) {
 		return sqlSession.selectOne("member.selectRank", uid);
-	}
+	} 
 	
 	public String selectUserId(String userName, String phoneNum) {
 		Map param = new HashMap();

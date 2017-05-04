@@ -26,7 +26,7 @@
 		FROM tbl_member m, tbl_member_detail d
 		WHERE m.user_name = #{userName}
 		AND d.phone_num = #{phoneNum}
-	  </select>
+	  </select> 
 	  
 	  <select id="selectUserInfo"  parameterType="string" resultType="map">
 	    SELECT m.uid, m.user_id, m.user_name, m.user_rank, d.phone_num, d.addr, d.addr_detail, d.zip_code

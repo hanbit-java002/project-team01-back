@@ -14,7 +14,7 @@ import com.resell.hp.service.BrandService;
 public class BrandController {
 	
 	@Autowired
-	private BrandService brandService;
+	private BrandService brandService; 
 	
 	@RequestMapping("/list")
 	public List<Map<String, Object>> list() {

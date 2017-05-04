@@ -10,5 +10,5 @@
   <select id="selectAll" resultType="map">
    SELECT *
   	 FROM tbl_brand
-  </select>
+  </select> 
 </mapper>

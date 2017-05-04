@@ -22,7 +22,7 @@ public class FileController {
 	@Autowired
 	private FileService fileService;
 
-	@RequestMapping("/api/file/{fileId}")
+	@RequestMapping("/api/file/{fileId}")  
 	public void getFile(@PathVariable("fileId") String fileId,
 			HttpServletResponse response) throws Exception {
 		

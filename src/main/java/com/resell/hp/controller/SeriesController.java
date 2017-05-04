@@ -16,7 +16,7 @@ public class SeriesController {
 	@Autowired
 	private SeriesService seriesService;
 	
-	@RequestMapping("/list")
+	@RequestMapping("/list") 
 	public List<Map<String, Object>> list() {
 		return seriesService.getList();
 	}

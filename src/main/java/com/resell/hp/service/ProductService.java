@@ -16,7 +16,7 @@ public class ProductService {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProductService.class);
 
-	@Autowired
+	@Autowired 
 	private ProductDAO productDAO;
 	
 	@Autowired

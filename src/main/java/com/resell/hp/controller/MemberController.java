@@ -98,7 +98,7 @@ public class MemberController {
 	      Map result = new HashMap();
 	      result.put("result", "ok");
 	      
-	      return result;
+	      return result; 
    }
    
    @RequestMapping("/api/member/getUserInfo")

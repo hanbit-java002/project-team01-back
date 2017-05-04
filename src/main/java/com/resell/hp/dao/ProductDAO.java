@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 public class ProductDAO {
 
 	@Autowired
-	private SqlSession sqlSession;
+	private SqlSession sqlSession; 
 	
 	//product 리스트 불러오기
 	public List selectList(int currentPage, int rowsPerPage, String brandId) {

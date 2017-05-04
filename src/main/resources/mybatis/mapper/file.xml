@@ -8,7 +8,7 @@
 		INSERT INTO tbl_product_img 
 					(img_id, img_url, product_id, img_main, img_type, img_size) 
 			 VALUES (#{imgId}, #{imgUrl}, #{productId}, #{isMainImg}, #{contentType}, #{imgSize})
-	</insert>
+	</insert> 
 
 	<select id="selectOne" parameterType="string" resultType="map">
 		SELECT img_id, img_type, img_size

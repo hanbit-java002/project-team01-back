@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.resell.hp.service.MainService;
 
 @RestController
-public class MainController {
+public class MainController {  
 	
 	@Autowired
 	private MainService mainService;

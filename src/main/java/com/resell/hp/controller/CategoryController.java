@@ -15,7 +15,7 @@ public class CategoryController {
 	
 	@Autowired
 	private CategoryService categoryService;
-	
+	 
 	@RequestMapping("/list")
 	public List<Map<String, Object>> list() {
 		return categoryService.getList();

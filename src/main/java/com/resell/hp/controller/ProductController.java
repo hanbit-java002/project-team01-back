@@ -21,7 +21,7 @@ public class ProductController {
 	private ProductService productService;
 	
 	//product 리스트 불러오기
-	@RequestMapping("/list")
+	@RequestMapping("/list") 
 	public Map getList(@RequestParam("currentPage") int currentPage,
 			@RequestParam("rowsPerPage") int rowsPerPage,
 			@RequestParam("brandName") String brandName) {

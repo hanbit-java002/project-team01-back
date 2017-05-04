@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class MainDAO {
 	@Autowired
-	private SqlSession sqlSession;
+	private SqlSession sqlSession; 
 	
 	public List<Map<String, Object>> selectAll() {
 		return sqlSession.selectList("main.selectAll");

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class MarketDAO {
 	@Autowired
-	private SqlSession sqlSession;
+	private SqlSession sqlSession;  
 	
 	public int insert(Map productInfo) {		
 		return sqlSession.insert("market.insert", productInfo);

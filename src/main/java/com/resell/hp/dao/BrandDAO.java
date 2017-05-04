@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 public class BrandDAO {
 	@Autowired
 	private SqlSession sqlSession;
-	
+	 
 	public List<Map<String, Object>> selectAll() {
 		return sqlSession.selectList("brand.selectAll");
 	}

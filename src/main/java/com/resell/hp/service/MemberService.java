@@ -67,7 +67,7 @@ public class MemberService {
 	
 	public String getUserId(String userName, String phoneNum) {
 		return memberDAO.selectUserId(userName, phoneNum);
-	}
+	} 
 
 
 	public String getTempPw(String userId) {

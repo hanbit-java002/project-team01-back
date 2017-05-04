@@ -18,7 +18,7 @@ public class MarketService {
 	@Autowired
 	private FileService fileService;
 	
-	@Transactional
+	@Transactional 
 	public void add(Map productInfo, Map productImgInfo) {
 	
 		String productId= KeyUtils.generateKey("PRO");

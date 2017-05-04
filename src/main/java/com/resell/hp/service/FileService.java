@@ -64,7 +64,7 @@ public class FileService {
 		}
 		return productId;
 	}
-	@Transactional
+	@Transactional 
 	public void addProductImg(String imgId, String contentType, int imgSize, 
 			String imgUrl, String productId , boolean isMainImg) {
 		fileDAO.insert(imgId, contentType, imgSize, imgUrl, productId, isMainImg);

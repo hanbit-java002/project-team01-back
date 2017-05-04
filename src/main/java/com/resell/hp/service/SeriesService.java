@@ -12,7 +12,7 @@ import com.resell.hp.dao.SeriesDAO;
 public class SeriesService {
 	
 	@Autowired
-	private SeriesDAO seriesDAO;
+	private SeriesDAO seriesDAO; 
 	
 	public List<Map<String, Object>> getList() {
 		return seriesDAO.selectAll();
