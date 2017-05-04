@@ -6,15 +6,21 @@
 <insert id="insert" parameterType="map"> 
 	INSERT INTO tbl_product 
 				(product_id, product_name, category_id,
-				 brand_id, seller_uid, price, 
+				 brand_id, seller_uid, price 
 				 <if test="sizeId != null">
-       		 		size,
+       		 		,size
         	 	 </if>
-				 quality,
+				 ,quality,
 				  deal_means, safe_deal, update_date,
-				  description, selling_status, 
+				  description, selling_status 
 				  <if test="seriesId != null">
-       		 		series_id
+       		 		,series_id
+        	 	 </if>
+        	 	 <if test="directPlace != null">
+       		 		,direct_place
+        	 	 </if>
+        	 	 <if test="deliveryCheck!= null">
+       		 		,delivery_check
         	 	 </if>
 				  ) 
 		 VALUES (#{productId}, #{productName}, #{categoryId},
@@ -23,10 +29,17 @@
        		 		#{sizeId},
         	 	 </if>
 		 		 #{quality}, #{dealMeans}, #{safeDeal}, 
-		 		 DATE_FORMAT(NOW(),"%Y%m%d%H%i%s"), #{detail}, #{status}, 
+		 		 DATE_FORMAT(NOW(),"%Y%m%d%H%i%s"), #{detail}, #{status} 
 		 		 <if test="seriesId != null">
-       		 		#{seriesId}
-        	 	 </if>)
+       		 		,#{seriesId}
+        	 	 </if>
+        	 	 <if test="directPlace != null">
+       		 		,#{directPlace}
+        	 	 </if>
+        	 	 <if test="deliveryCheck != null">
+       		 		,#{deliveryCheck}
+        	 	 </if>
+        	 	 )
 </insert>
 
 </mapper>

@@ -39,10 +39,10 @@ public class MarketController {
 		String[] arrImgSrc = request.getParameterValues("arrImgSrc");
 		int mainImgIndex = Integer.parseInt(request.getParameter("mainImgIndex"));
 		String dealMeans = request.getParameter("dealMeans");
-		String dealPlace = request.getParameter("dealPlace");
+		String directPlace = request.getParameter("dealPlace");
 		boolean safeDeal = Boolean.parseBoolean(request.getParameter("safeDeal"));
 		String loginId =(String) session.getAttribute("uid");
-		
+		String deliveryCheck= request.getParameter("deliveryCheck");
 		
 		Map productInfo = new HashMap<String, Object>();
 		productInfo.put("productName",productName);
@@ -54,10 +54,11 @@ public class MarketController {
 		productInfo.put("quality",quality);
 		productInfo.put("detail",detail);
 		productInfo.put("dealMeans",dealMeans);
-		productInfo.put("dealPlace",dealPlace);
+		productInfo.put("directPlace",directPlace);
 		productInfo.put("safeDeal",safeDeal);
 		productInfo.put("loginId",loginId);
 		productInfo.put("status","processing");
+		productInfo.put("deliveryCheck", deliveryCheck);
 		
 		Map productImgInfo = new HashMap<String, Object>();
 		productImgInfo.put("arrImgSrc",arrImgSrc);
