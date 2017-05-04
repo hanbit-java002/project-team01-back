@@ -59,8 +59,6 @@ public class MarketController {
 		productInfo.put("loginId",loginId);
 		productInfo.put("status","processing");
 		
-		LOGGER.debug("#####퀄리티임"+(String)productInfo.get("quality"));
-		
 		Map productImgInfo = new HashMap<String, Object>();
 		productImgInfo.put("arrImgSrc",arrImgSrc);
 		productImgInfo.put("mainImgIndex",mainImgIndex);

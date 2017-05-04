@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class FileDAO {
 	@Autowired
-	private SqlSession sqlSession; 
+	private SqlSession sqlSession;
 	
 	public int insert(String imgId, String contentType, int imgSize, 
 			String imgUrl, String productId, boolean isMainImg){
