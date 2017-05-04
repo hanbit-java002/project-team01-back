@@ -38,4 +38,14 @@ public class ProductService {
 	public List getProductDetail(String productId) {
 		return productDAO.selectProductDetail(productId);
 	}
+	
+	//판매자 정보 가져오기
+	public Map getSellerInfo(String productId) {
+		return productDAO.selectSellerInfo(productId);
+	}
+	
+	//count Sell 가져오기
+	public int countSell(String productId) {
+		return productDAO.countSell(productId);
+	}
 }

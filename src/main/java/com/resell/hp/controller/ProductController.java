@@ -41,5 +41,18 @@ public class ProductController {
 	public List getProductDetail(@PathVariable("productId") String productId) {
 		return productService.getProductDetail(productId);
 	}
+	
+	//판매자 정보 가져오기
+	@RequestMapping(value="/seller/{productId}", method=RequestMethod.GET)
+	public Map getSellerInfo(@PathVariable("productId") String productId) {
+	
+		Map sellerInfo = productService.getSellerInfo(productId);
+		int countSell = productService.countSell(productId);
 		
+		Map result = new HashMap();
+		result.put("sellerInfo", sellerInfo);
+		result.put("countSell", countSell);
+		
+		return result;
+	}		
 }

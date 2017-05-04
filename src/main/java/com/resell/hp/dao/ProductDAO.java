@@ -36,4 +36,14 @@ public class ProductDAO {
 	public List selectProductDetail(String productId) {
 		return sqlSession.selectList("product.selectProductDetail", productId);
 	}
+	
+	//판매자 정보 가져오기	
+	public Map selectSellerInfo(String productId) {
+		return sqlSession.selectOne("product.selectSellerInfo", productId);
+	}
+	
+	//count Sell 가져오기
+	public int countSell(String productId) {
+		return sqlSession.selectOne("product.countSell", productId);
+	}
 }

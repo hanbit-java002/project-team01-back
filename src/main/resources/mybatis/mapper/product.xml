@@ -28,7 +28,7 @@
         </if>
 	</select>
 	
-	<select id="selectProductDetail" parameterType="map" resultType="map">
+	<select id="selectProductDetail" parameterType="string" resultType="map">
 		SELECT p.product_id, p.product_name, p.category_id, c.category_name,
 			   p.price, p.brand_id, p.seller_uid, p.size, p.quality, p.deal_means,
 			   p.safe_deal, p.update_date, p.description
@@ -39,6 +39,24 @@
 		  	  FROM tbl_product
        		 WHERE product_id = #{productId}) p, tbl_category c
 		 WHERE p.category_id = c.category_id
+	</select>
+	
+	<select id="selectSellerInfo" parameterType="string" resultType="map">
+		SELECT m.user_name, m.user_rank
+		  FROM (
+		  	SELECT product_id, seller_uid
+		  	  FROM tbl_product
+       		 WHERE product_id = #{productId}) p, tbl_member m
+		 WHERE p.seller_uid = m.uid
+	</select>
+	
+	<select id="countSell" parameterType="string" resultType="int">
+		SELECT COUNT(p.product_id) AS countSell
+		  FROM (SELECT seller_uid
+		  	  FROM tbl_product
+       		 WHERE product_id = #{productId}) s, tbl_product p
+       	 WHERE p.seller_uid = s.seller_uid
+       	   AND p.selling_status = "selling";
 	</select>
 	
 </mapper>
