@@ -57,7 +57,7 @@ public class MarketController {
 		productInfo.put("directPlace",directPlace);
 		productInfo.put("safeDeal",safeDeal);
 		productInfo.put("loginId",loginId);
-		productInfo.put("status","processing");
+		productInfo.put("status","selling");
 		productInfo.put("deliveryCheck", deliveryCheck);
 		
 		Map productImgInfo = new HashMap<String, Object>();
