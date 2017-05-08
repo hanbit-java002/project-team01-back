@@ -50,7 +50,7 @@ public class ProductController {
 	}
 	
 	//product image 정보 가져오기
-	@RequestMapping(value="/img/{productId}", method=RequestMethod.GET)
+	@RequestMapping(value="/image/{productId}", method=RequestMethod.GET)
 	public List getProductImage(@PathVariable("productId") String productId) {
 		return productService.getProductImage(productId);
 	}	

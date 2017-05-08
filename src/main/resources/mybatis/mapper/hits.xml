@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hits"> 
+
+	<insert id="addHits" parameterType="string">
+		INSERT INTO tbl_hits
+  			(product_id, hits)
+  		VALUES
+  			(#{productId}, 0)
+	</insert>
+
+	<update id="plusHits" parameterType="string">
+		UPDATE tbl_hits
+		   SET hits = hits + 1
+		 WHERE product_id = #{productId}
+	</update>
+	
+	<select id="countHits" parameterType="string" resultType="int">
+		SELECT hits
+		  FROM tbl_hits
+		 WHERE product_id = #{productId}
+	</select>
+	
+</mapper>
