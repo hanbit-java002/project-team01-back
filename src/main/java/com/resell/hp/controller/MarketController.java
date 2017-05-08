@@ -1,13 +1,12 @@
 package com.resell.hp.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,6 +69,30 @@ public class MarketController {
 		result.put("result", "ok");
 		
 		return result;
+	}
+	
+	@RequestMapping(value="/list", method = RequestMethod.POST)
+	public List<Map<String,Object>> productList(HttpServletRequest request, HttpSession session) {
+
+		
+		
+		String brandId = request.getParameter("brandId");
+		String searchValue = request.getParameter("searchValue");
+		String seriesId = request.getParameter("seriesId");
+		String categoryId = request.getParameter("categoryId");
+		String sizeId = request.getParameter("sizeId");
+		String qualityId = request.getParameter("qualityId");
+		String priceFilter = request.getParameter("priceFilter");
+		
+		Map filterInfo = new HashMap<String, Object>();
+		filterInfo.put("brandId",brandId);
+		filterInfo.put("searchValue",searchValue);
+		filterInfo.put("seriesId",seriesId);
+		filterInfo.put("sizeId",sizeId);
+		filterInfo.put("qualityId",qualityId);  
+		filterInfo.put("priceFilter",priceFilter);
+		
+		return marketService.selectProductList(filterInfo);
 	}
 
 }

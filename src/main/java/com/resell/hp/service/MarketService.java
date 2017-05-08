@@ -1,5 +1,6 @@
 package com.resell.hp.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -30,6 +31,12 @@ public class MarketService {
 		
 		fileService.addAndSaveProductImg(productImgInfo);
 		
+	}
+	
+	@Transactional
+	public List<Map<String,Object>> selectProductList(Map filterInfo){
+		
+		return marketDAO.selectProductList(filterInfo);
 	}
 	
 }

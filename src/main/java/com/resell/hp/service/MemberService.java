@@ -52,9 +52,8 @@ public class MemberService {
 	
 	
 	public boolean isValidMember(String userId, String userPw) {
-		/*String encryptedUserPw = memberDAO.selectUserPw(userId);*/
-		/*return passwordEncoder.matches(pw, encryptedUserPw);*/
-		return true;
+		String encryptedUserPw = memberDAO.selectUserPw(userId);
+		return passwordEncoder.matches(userPw, encryptedUserPw);
 	}
 	
 	public String getUid(String userId) {
