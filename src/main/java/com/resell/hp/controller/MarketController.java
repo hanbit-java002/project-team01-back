@@ -33,7 +33,7 @@ public class MarketController {
 		String categoryId = request.getParameter("categoryId");
 		String sizeId = request.getParameter("sizeId");
 		String seriesId = request.getParameter("seriesId");
-		String price = request.getParameter("price");
+		int price = Integer.parseInt(request.getParameter("price"));
 		String quality = request.getParameter("qualityId");
 		String detail = request.getParameter("detail");
 		String[] arrImgSrc = request.getParameterValues("arrImgSrc");
