@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.resell.hp.admin.dao.AdminBrandDAO;
 import com.resell.hp.service.ProductService;
 
 @RestController
@@ -19,6 +20,12 @@ public class ProductController {
 
 	@Autowired
 	private ProductService productService;
+	
+	//brand Id 가져오기
+	@RequestMapping("/brand") 
+	public List getBrandId() {
+		return productService.getBrandId();
+	}
 	
 	//product 리스트 불러오기
 	@RequestMapping("/list") 
@@ -42,6 +49,12 @@ public class ProductController {
 		return productService.getProductDetail(productId);
 	}
 	
+	//product image 정보 가져오기
+	@RequestMapping(value="/img/{productId}", method=RequestMethod.GET)
+	public List getProductImage(@PathVariable("productId") String productId) {
+		return productService.getProductImage(productId);
+	}	
+
 	//판매자 정보 가져오기
 	@RequestMapping(value="/seller/{productId}", method=RequestMethod.GET)
 	public Map getSellerInfo(@PathVariable("productId") String productId) {

@@ -3,6 +3,11 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="product"> 
+	<select id="selectBrandId" resultType="map">
+		SELECT brand_id, brand_name
+		  FROM tbl_brand
+	</select>
+	
   	<select id="selectList" parameterType="map" resultType="map">
 		SELECT p.product_id, p.product_name, p.category_id, c.category_name, i.img_url,
 			   p.price, p.brand_id, p.seller_uid, p.size, p.quality, p.deal_means, p.safe_deal, p.update_date
@@ -39,6 +44,13 @@
 		  	  FROM tbl_product
        		 WHERE product_id = #{productId}) p, tbl_category c
 		 WHERE p.category_id = c.category_id
+	</select>
+	
+	<select id="selectProductImage" parameterType="string" resultType="map">
+		SELECT *
+		  FROM tbl_product_img
+		 WHERE product_id = #{productId}
+		 ORDER BY img_main DESC
 	</select>
 	
 	<select id="selectSellerInfo" parameterType="string" resultType="map">
