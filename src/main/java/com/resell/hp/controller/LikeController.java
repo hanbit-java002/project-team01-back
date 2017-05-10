@@ -27,12 +27,20 @@ public class LikeController {
 	// Like 추가
 	@RequestMapping(value="/add/{productId}", method=RequestMethod.GET)
 	public Map addLike(HttpSession session, @PathVariable("productId") String productId) {
-		String uid = (String) session.getAttribute("uid");
-		likeService.addLike(productId, uid);
+		try {
+			String uid = (String) session.getAttribute("uid");
+			likeService.addLike(productId, uid);
+			
+			Map result = new HashMap();
+			result.put("result", "ok");
+			return result;
+			
+		} catch (Exception e) {
+			Map result = new HashMap();
+			result.put("result", "no");
+			return result;
+		}
 		
-		Map result = new HashMap();
-		result.put("result", "ok");
-		return result;
 	}
 	
 	//Like 삭제
