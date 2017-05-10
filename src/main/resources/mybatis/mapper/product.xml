@@ -70,12 +70,7 @@
        	 WHERE p.seller_uid = s.seller_uid
        	   AND p.selling_status = "selling"
 	</select>
-	
-	<select id="countLike" parameterType="string" resultType="int">
-		SELECT COUNT(product_id) AS countLike
-		  FROM tbl_like
-       	 WHERE product_id = #{productId}
-	</select>
+
 
 	<select id="countComment" parameterType="string" resultType="int">
 		SELECT COUNT(comment_id) AS countComment

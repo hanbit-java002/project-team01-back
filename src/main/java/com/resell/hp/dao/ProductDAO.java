@@ -57,11 +57,6 @@ public class ProductDAO {
 		return sqlSession.selectOne("product.countSell", productId);
 	}
 	
-	//like count
-	public int countLike(String productId) {
-		return sqlSession.selectOne("product.countLike", productId);
-	}
-	
 	//comment count
 	public int countComment(String productId) {
 		return sqlSession.selectOne("product.countComment", productId);

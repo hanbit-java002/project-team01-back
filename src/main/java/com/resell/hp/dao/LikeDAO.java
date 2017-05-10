@@ -31,4 +31,17 @@ public class LikeDAO {
 		
 		return sqlSession.delete("like.delete", param);
 	}
+	
+	//like count
+	public int countLike(String productId) {
+		return sqlSession.selectOne("like.countLike", productId);
+	}
+
+	public int hasLike(String productId, String uid) {
+		Map param = new HashMap();
+		param.put("productId", productId);
+		param.put("uid", uid);
+		
+		return sqlSession.selectOne("like.hasLike", param);
+	}
 }

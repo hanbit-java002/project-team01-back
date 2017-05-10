@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.resell.hp.service.LikeService;
-import com.resell.hp.service.ProductService;
 
 @RestController
 @RequestMapping("/api/like")
@@ -26,19 +25,18 @@ public class LikeController {
 	private LikeService likeService;
 	
 	// Like 추가
-	@RequestMapping(value="add/{productId}", method=RequestMethod.GET)
+	@RequestMapping(value="/add/{productId}", method=RequestMethod.GET)
 	public Map addLike(HttpSession session, @PathVariable("productId") String productId) {
 		String uid = (String) session.getAttribute("uid");
 		likeService.addLike(productId, uid);
 		
 		Map result = new HashMap();
-		result.put(result, "ok");
-	
+		result.put("result", "ok");
 		return result;
 	}
 	
 	//Like 삭제
-	@RequestMapping(value="cancel/{productId}", method=RequestMethod.GET)
+	@RequestMapping(value="/cancel/{productId}", method=RequestMethod.GET)
 	public Map cancelLike(HttpSession session, @PathVariable("productId") String productId) {
 		String uid = (String) session.getAttribute("uid");
 		LOGGER.info(uid);
@@ -46,8 +44,27 @@ public class LikeController {
 		
 		
 		Map result = new HashMap();
-		result.put(result, "ok");
+		result.put("result", "ok");
 	
 		return result;
 	}
+	
+	//like count
+	@RequestMapping(value="/count/{productId}", method=RequestMethod.GET)
+	public int countLike(@PathVariable("productId") String productId) {
+		return likeService.countLike(productId);
+	}
+	
+	//has like
+	@RequestMapping(value="/hasLike/{productId}", method=RequestMethod.GET)
+	public Map hasLike(HttpSession session, @PathVariable("productId") String productId) {
+		String uid = (String) session.getAttribute("uid");
+		boolean hasLike = likeService.hasLike(productId, uid);
+		
+		Map result = new HashMap();
+		result.put("result", hasLike);
+		
+		return result;
+	}
+	
 }
