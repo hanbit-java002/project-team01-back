@@ -13,36 +13,34 @@
         	   ON      i.product_id = p.product_id, tbl_category c, tbl_member m
             WHERE      p.category_id = c.category_id
 		      AND      p.seller_uid = m.uid
-		      		   <if test="filter != null and filter.brandId != null and !filter.brandId.equals('brand-all')">
+		      		   <if test="brandId != null and brandId !='brand-all'">
 				       		AND	p.brand_id =#{brandId}
 				       </if>
-				       <if test="filter != null and filter.searchValue != null and !filter.searchValue.equals('')">
-				       		AND p.product_name LIKE '%#{searchValue}%'
+				       <if test="searchValue != null and searchValue != ''">
+				       		AND p.product_name LIKE CONCAT('%', #{searchValue}, '%')
 				       </if>
-				       <if test="filter != null and filter.seriesId != null and !filter.seriesId.equals('series-all')">
-				       		AND p.series_id =#{seriesId} 
+				       <if test="seriesId != null and seriesId != 'series-all'">
+				       		AND p.series_id = #{seriesId} 
 				       </if>
-				       <if test="filter != null and filter.categoryId != null and !filter.categoryId.equals('category-all')">
-				       		AND p.category_id =#{categoryId} 
+				       <if test="categoryId != null and categoryId != 'category-all'">
+				       		AND p.category_id = #{categoryId} 
 				       </if>
-					   <if test="filter != null and filter.sizeId != null and !filter.sizeId.equals('size-all')">
+					   <if test="sizeId != null and sizeId != 'size-all'">
 				       		AND p.size = #{sizeId} 
 				       </if>
-				       <if test="filter != null and filter.qualityId != null and !filter.qualityId.equals('quality-all')">
+				       <if test="qualityId != null and qualityId != 'quality-all'">
 				       		AND p.quality = #{qualityId} 
 				       </if>     
          ORDER BY 
 					   <choose>
-					   		<when test="priceFilter != null and priceFilter.equals('default')">
-								update_date DESC
+							<when test="priceFilter == 'ASC'">
+								p.price ASC,
 							</when>
-							<when test="priceFilter != null and priceFilter.equals('ASC')">
-								p.price ASC
-							</when>
-							<when test="priceFilter != null and priceFilter.equals('DESC')">
-								p.price DESC
+							<when test="priceFilter == 'DESC'">
+								p.price DESC,
 							</when>
 					   </choose>
+				update_date DESC
 </select>
 
 

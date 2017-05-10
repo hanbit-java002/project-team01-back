@@ -17,7 +17,8 @@ public class MarketDAO {
 	}
 	
 	public List<Map<String, Object>> selectProductList(Map filterInfo) {
-		System.out.println("이거다"+filterInfo.get("searchValue"));
+		System.out.println(filterInfo);
+		
 		return sqlSession.selectList("market.selectList",filterInfo);
 /*		if ((filterInfo.get("brandId") == null || "brand-all".equals((filterInfo.get("brandId"))))
 				&& (filterInfo.get("searchValue") == null || "".equals((filterInfo.get("searchValue"))))

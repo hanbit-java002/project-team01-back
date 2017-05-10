@@ -84,9 +84,12 @@ public class MarketController {
 		String qualityId = request.getParameter("qualityId");
 		String priceFilter = request.getParameter("priceFilter");
 		
+		System.out.println("첫번째"+categoryId);
+		
 		Map filterInfo = new HashMap<String, Object>();
 		filterInfo.put("brandId",brandId);
 		filterInfo.put("searchValue",searchValue);
+		filterInfo.put("categoryId",categoryId);
 		filterInfo.put("seriesId",seriesId);
 		filterInfo.put("sizeId",sizeId);
 		filterInfo.put("qualityId",qualityId);  
