@@ -21,13 +21,13 @@ public class HitsController {
 	private HitsService hitsService;
 	
 	// count 조회수
-	@RequestMapping(value="count/{productId}", method=RequestMethod.GET)
+	@RequestMapping(value="/count/{productId}", method=RequestMethod.GET)
 	public int countHits(@PathVariable("productId") String productId) {
 		return hitsService.countHits(productId);
 	}
 	
 	//조회수 추가
-	@RequestMapping(value="plus/{productId}", method=RequestMethod.GET)
+	@RequestMapping(value="/plus/{productId}", method=RequestMethod.GET)
 	public Map plusHits(@PathVariable("productId") String productId) {
 		hitsService.plusHits(productId);
 		

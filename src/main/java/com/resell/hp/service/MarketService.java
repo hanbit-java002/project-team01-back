@@ -30,8 +30,7 @@ public class MarketService {
 		
 		marketDAO.insert(productInfo);
 		fileService.addAndSaveProductImg(productImgInfo);
-		hitsDAO.addHits(productId);
-		
+		hitsDAO.initHits(productId);
 	}
 	
 	@Transactional

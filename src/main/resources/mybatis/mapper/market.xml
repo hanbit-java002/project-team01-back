@@ -41,6 +41,31 @@
 							</when>
 					   </choose>
 				update_date DESC
+		LIMIT  #{startIndex}, #{itemPerPage}
+</select>
+
+<select id ="selectListCount" parameterType="map" resultType="map">
+			SELECT     COUNT(product_id) AS list_count
+      		 FROM      tbl_product
+      	    WHERE	   product_id != "0"
+      	    		   <if test="brandId != null and brandId !='brand-all'">
+				       		AND	brand_id =#{brandId}
+				       </if>
+				       <if test="searchValue != null and searchValue != ''">
+				       		AND product_name LIKE CONCAT('%', #{searchValue}, '%')
+				       </if>
+				       <if test="seriesId != null and seriesId != 'series-all'">
+				       		AND series_id = #{seriesId} 
+				       </if>
+				       <if test="categoryId != null and categoryId != 'category-all'">
+				       		AND category_id = #{categoryId} 
+				       </if>
+					   <if test="sizeId != null and sizeId != 'size-all'">
+				       		AND size = #{sizeId} 
+				       </if>
+				       <if test="qualityId != null and qualityId != 'quality-all'">
+				       		AND quality = #{qualityId} 
+				       </if>
 </select>
 
 

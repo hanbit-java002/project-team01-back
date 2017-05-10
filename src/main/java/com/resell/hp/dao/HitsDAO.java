@@ -13,9 +13,10 @@ public class HitsDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	//product & Hits 추가
-	public int addHits(String productId) {		
-		return sqlSession.insert("hits.addHits", productId);
+	
+	//product & Hits 초기화
+	public int initHits(String productId) {		
+		return sqlSession.insert("hits.initHits", productId);
 	}
 	
 	// count 조회수

@@ -17,22 +17,8 @@ public class MarketDAO {
 	}
 	
 	public List<Map<String, Object>> selectProductList(Map filterInfo) {
-		
-		return sqlSession.selectList("market.selectList",filterInfo);
-/*		if ((filterInfo.get("brandId") == null || "brand-all".equals((filterInfo.get("brandId"))))
-				&& (filterInfo.get("searchValue") == null || "".equals((filterInfo.get("searchValue"))))
-				&& (filterInfo.get("seriesId") == null || "series-all".equals((filterInfo.get("seriesId"))))
-				&& (filterInfo.get("categoryId") == null || "cateory-all".equals((filterInfo.get("categoryId"))))
-				&& (filterInfo.get("sizeId") == null || "size-all".equals((filterInfo.get("sizeId"))))
-				&& (filterInfo.get("qualityId") == null || "quality-all".equals((filterInfo.get("qualityId"))))				
-				) {
-			return sqlSession.selectList("market.selectList",filterInfo);
-		}
-		else {
-			return sqlSession.selectList("market.selectFilterList",filterInfo);
-		}*/
-		
-		
+		return sqlSession.selectList("market.selectList",filterInfo);		
 	}
+
 
 }
