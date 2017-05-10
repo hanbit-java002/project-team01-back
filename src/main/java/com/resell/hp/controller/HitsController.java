@@ -20,17 +20,6 @@ public class HitsController {
 	@Autowired
 	private HitsService hitsService;
 	
-	//product & Hits 추가
-	@RequestMapping(value="add/{productId}", method=RequestMethod.GET)
-	public Map addHits(@PathVariable("productId") String productId) {
-		hitsService.addHits(productId);
-		
-		Map result = new HashMap();
-		result.put(result, "ok");
-	
-		return result;
-	}
-	
 	// count 조회수
 	@RequestMapping(value="count/{productId}", method=RequestMethod.GET)
 	public int countHits(@PathVariable("productId") String productId) {

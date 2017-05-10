@@ -10,11 +10,7 @@ public class HitsService {
 	
 	@Autowired 
 	private HitsDAO hitsDAO;
-	
-	//product & Hits 추가
-	public int addHits(String productId) {
-		return hitsDAO.addHits(productId);
-	}
+
 	
 	// count 조회수
 	public int countHits(String productId) {

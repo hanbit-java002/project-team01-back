@@ -49,13 +49,13 @@
 	INSERT INTO tbl_product 
 				(product_id, product_name, category_id,
 				 brand_id, seller_uid, price 
-				 <if test="sizeId != null">
+				 <if test="sizeId != null and sizeId != 'undefined'">
        		 		,size
         	 	 </if>
 				 ,quality,
 				  deal_means, safe_deal, update_date,
 				  description, selling_status 
-				  <if test="seriesId != null">
+				  <if test="seriesId != null and seriesId != 'undefined'">
        		 		,series_id
         	 	 </if>
         	 	 <if test="directPlace != null">
@@ -66,13 +66,13 @@
         	 	 </if>
 				  ) 
 		 VALUES (#{productId}, #{productName}, #{categoryId},
-		 		 #{brandId}, #{loginId}, #{price},
-		 		 <if test="sizeId != null">
-       		 		#{sizeId},
+		 		 #{brandId}, #{loginId}, #{price}
+		 		 <if test="sizeId != null and sizeId != 'undefined'">
+       		 		,#{sizeId}
         	 	 </if>
-		 		 #{quality}, #{dealMeans}, #{safeDeal}, 
+		 		 ,#{quality}, #{dealMeans}, #{safeDeal}, 
 		 		 DATE_FORMAT(NOW(),"%Y%m%d%H%i%s"), #{detail}, #{status} 
-		 		 <if test="seriesId != null">
+		 		 <if test="seriesId != null and seriesId != 'undefined'">
        		 		,#{seriesId}
         	 	 </if>
         	 	 <if test="directPlace != null">

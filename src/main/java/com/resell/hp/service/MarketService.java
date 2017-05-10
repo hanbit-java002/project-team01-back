@@ -3,12 +3,11 @@ package com.resell.hp.service;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.resell.hp.dao.HitsDAO;
 import com.resell.hp.dao.MarketDAO;
 import com.resell.hp.util.KeyUtils;
 
@@ -18,6 +17,8 @@ public class MarketService {
 	private MarketDAO marketDAO;
 	@Autowired
 	private FileService fileService;
+	@Autowired
+	private HitsDAO hitsDAO;
 	
 	@Transactional 
 	public void add(Map productInfo, Map productImgInfo) {
@@ -28,8 +29,8 @@ public class MarketService {
 		productImgInfo.put("productId", productId);
 		
 		marketDAO.insert(productInfo);
-		
 		fileService.addAndSaveProductImg(productImgInfo);
+		hitsDAO.addHits(productId);
 		
 	}
 	

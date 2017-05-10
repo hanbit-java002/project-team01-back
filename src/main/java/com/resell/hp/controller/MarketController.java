@@ -43,6 +43,7 @@ public class MarketController {
 		String loginId =(String) session.getAttribute("uid");
 		String deliveryCheck= request.getParameter("deliveryCheck");
 		
+		System.out.println("시리즈"+seriesId);
 		Map productInfo = new HashMap<String, Object>();
 		productInfo.put("productName",productName);
 		productInfo.put("brandId",brandId);
