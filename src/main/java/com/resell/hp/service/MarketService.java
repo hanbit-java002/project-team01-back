@@ -33,10 +33,13 @@ public class MarketService {
 		hitsDAO.initHits(productId);
 	}
 	
-	@Transactional
 	public List<Map<String,Object>> selectProductList(Map filterInfo){
 		
 		return marketDAO.selectProductList(filterInfo);
+	}
+
+	public int selectCount(Map filterInfo) {
+		return marketDAO.selectCount(filterInfo);
 	}
 	
 }

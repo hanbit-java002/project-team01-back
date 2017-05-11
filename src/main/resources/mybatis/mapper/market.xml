@@ -41,10 +41,10 @@
 							</when>
 					   </choose>
 				update_date DESC
-		LIMIT  #{startIndex}, #{itemPerPage}
+		LIMIT  #{firstIndex}, #{rowsPerPage}
 </select>
 
-<select id ="selectListCount" parameterType="map" resultType="map">
+<select id ="selectCount" parameterType="map" resultType="int">
 			SELECT     COUNT(product_id) AS list_count
       		 FROM      tbl_product
       	    WHERE	   product_id != "0"

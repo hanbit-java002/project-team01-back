@@ -73,7 +73,7 @@ public class MarketController {
 	}
 	
 	@RequestMapping(value="/list", method = RequestMethod.POST)
-	public List<Map<String,Object>> productList(HttpServletRequest request, HttpSession session) {
+	public Map productList(HttpServletRequest request, HttpSession session) {
 
 		
 		
@@ -84,8 +84,9 @@ public class MarketController {
 		String sizeId = request.getParameter("sizeId");
 		String qualityId = request.getParameter("qualityId");
 		String priceFilter = request.getParameter("priceFilter");
+		int rowsPerPage = Integer.parseInt(request.getParameter("rowsPerPage"));
+		int page = Integer.parseInt(request.getParameter("page"));
 		
-		System.out.println("첫번째"+categoryId);
 		
 		Map filterInfo = new HashMap<String, Object>();
 		filterInfo.put("brandId",brandId);
@@ -95,8 +96,16 @@ public class MarketController {
 		filterInfo.put("sizeId",sizeId);
 		filterInfo.put("qualityId",qualityId);  
 		filterInfo.put("priceFilter",priceFilter);
+		filterInfo.put("rowsPerPage", rowsPerPage);
+		filterInfo.put("page", page);
 		
-		return marketService.selectProductList(filterInfo);
+		List list = marketService.selectProductList(filterInfo);
+		int count = marketService.selectCount(filterInfo);
+		
+		Map result = new HashMap();
+		result.put("list", list);
+		result.put("count", count);
+		return result;
 	}
 
 }

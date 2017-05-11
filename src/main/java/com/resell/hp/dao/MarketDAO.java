@@ -1,5 +1,6 @@
 package com.resell.hp.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +18,16 @@ public class MarketDAO {
 	}
 	
 	public List<Map<String, Object>> selectProductList(Map filterInfo) {
+		int page = (int) filterInfo.get("page");
+		int rowsPerPage = (int) filterInfo.get("rowsPerPage");
+		System.out.println("page"+page);
+		filterInfo.put("firstIndex", (page) * rowsPerPage);
+		filterInfo.put("rowsPerPage", rowsPerPage);
 		return sqlSession.selectList("market.selectList",filterInfo);		
+	}
+
+	public int selectCount(Map filterInfo) {
+		return sqlSession.selectOne("market.selectCount",filterInfo);
 	}
 
 

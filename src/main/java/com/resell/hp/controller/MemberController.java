@@ -82,6 +82,7 @@ public class MemberController {
             (Boolean) session.getAttribute("signedIn")) {
          signedIn = "yes";
          
+         result.put("userId", session.getAttribute("uid"));
          result.put("userId", session.getAttribute("userId"));
          result.put("userRank", session.getAttribute("userRank"));
       }
