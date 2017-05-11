@@ -11,4 +11,11 @@
   			(#{productId}, #{uid})
 	</insert>
 	
+	<select id="hasComplain" parameterType="map" resultType="int">
+		SELECT COUNT(product_id) AS countComplain
+		  FROM tbl_complain
+       	 WHERE product_id = #{productId}
+       	   AND uid = #{uid}
+	</select>
+	
 </mapper>

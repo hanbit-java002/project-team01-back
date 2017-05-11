@@ -38,8 +38,8 @@ public class ProductDAO {
 	}
 	
 	//product detail 정보 가져오기
-	public List selectProductDetail(String productId) {
-		return sqlSession.selectList("product.selectProductDetail", productId);
+	public Map selectProductDetail(String productId) {
+		return sqlSession.selectOne("product.selectProductDetail", productId);
 	}
 	
 	//product image 정보 가져오기

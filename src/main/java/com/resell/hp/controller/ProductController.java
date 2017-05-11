@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.resell.hp.admin.dao.AdminBrandDAO;
 import com.resell.hp.service.ProductService;
 
 @RestController
@@ -45,8 +46,23 @@ public class ProductController {
 	
 	//product detail 정보 가져오기
 	@RequestMapping(value="/detail/{productId}", method=RequestMethod.GET)
-	public List getProductDetail(@PathVariable("productId") String productId) {
-		return productService.getProductDetail(productId);
+	public Map getProductDetail(HttpSession session, @PathVariable("productId") String productId) {
+		String uid = (String) session.getAttribute("uid");
+		Map productInfo = productService.getProductDetail(productId);
+		try {
+			Map result = new HashMap();
+			result.put("productInfo", productInfo);
+			result.put("sessionUid", uid);
+			System.out.println("result : " + result);
+			return result;
+			
+			
+		} catch (Exception e) {
+			Map result = new HashMap();
+			result.put("productInfo", productInfo);
+			result.put("sessionUid", "null");
+			return result;
+		}
 	}
 	
 	//product image 정보 가져오기

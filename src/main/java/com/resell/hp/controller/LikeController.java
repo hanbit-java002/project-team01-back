@@ -47,9 +47,7 @@ public class LikeController {
 	@RequestMapping(value="/cancel/{productId}", method=RequestMethod.GET)
 	public Map cancelLike(HttpSession session, @PathVariable("productId") String productId) {
 		String uid = (String) session.getAttribute("uid");
-		LOGGER.info(uid);
 		likeService.cancelLike(productId, uid);
-		
 		
 		Map result = new HashMap();
 		result.put("result", "ok");

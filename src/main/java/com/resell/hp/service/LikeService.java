@@ -2,14 +2,19 @@ package com.resell.hp.service;
 
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.resell.hp.controller.LikeController;
 import com.resell.hp.dao.LikeDAO;
 
 @Service
 public class LikeService {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(LikeService.class);
 	
 	@Autowired 
 	private LikeDAO likeDAO;
@@ -32,6 +37,8 @@ public class LikeService {
 	}
 
 	public boolean hasLike(String productId, String uid) {
+		System.out.println(productId + ", " + uid);
+		
 		if (likeDAO.hasLike(productId, uid) > 0) {
 			return true;
 		}

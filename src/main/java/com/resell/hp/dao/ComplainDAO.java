@@ -21,4 +21,13 @@ public class ComplainDAO {
 		
 		return sqlSession.insert("complain.addComplain", param);
 	}
+	
+	//has complain
+	public int hasComplain(String productId, String uid) {
+		Map param = new HashMap();
+		param.put("productId", productId);
+		param.put("uid", uid);
+		
+		return sqlSession.selectOne("complain.hasComplain", param);
+	}
 }

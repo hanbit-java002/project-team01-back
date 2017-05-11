@@ -18,4 +18,14 @@ public class ComplainService {
 		return complainDAO.addComplain(productId, uid);
 	}
 	
+	//has complain
+	public boolean hasComplain(String productId, String uid) {
+		
+		if (complainDAO.hasComplain(productId, uid) > 0) {
+			return true;
+		}
+		
+		return false;
+	}
+	
 }

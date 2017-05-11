@@ -40,7 +40,7 @@ public class ProductService {
 	}
 	
 	//product detail 정보 가져오기
-	public List getProductDetail(String productId) {
+	public Map getProductDetail(String productId) {
 		return productDAO.selectProductDetail(productId);
 	}
 	

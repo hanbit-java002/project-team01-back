@@ -38,4 +38,16 @@ public class ComplainController {
 			return result;
 		}
 	}
+	
+	//has complain
+	@RequestMapping(value="/hasComplain/{productId}", method=RequestMethod.GET)
+	public Map hasComplain(HttpSession session, @PathVariable("productId") String productId) {
+		String uid = (String) session.getAttribute("uid");
+		boolean hasComplain = complainService.hasComplain(productId, uid);
+		
+		Map result = new HashMap();
+		result.put("result", hasComplain);
+		
+		return result;
+	}
 }
