@@ -42,5 +42,25 @@ public class CommentDAO {
 		
 		return sqlSession.selectList("comment.selectComment", productId);
 	}
-
+	
+	//remove comment
+	public int delete(String productId, String commentId, String uid) {
+		Map param = new HashMap();
+		param.put("productId", productId);
+		param.put("uid", uid);
+		param.put("commentId", commentId);
+		
+		return sqlSession.delete("comment.delete", param);
+	}
+	
+	//update comment
+	public int update(String productId, String commentId, String newCommentText, String uid) {
+		Map param = new HashMap();
+		param.put("productId", productId);
+		param.put("commentId", commentId);
+		param.put("uid", uid);
+		param.put("newCommentText", newCommentText);
+		
+		return sqlSession.update("comment.update", param);
+	}
 }

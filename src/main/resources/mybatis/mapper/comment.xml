@@ -26,6 +26,22 @@
 		  	  FROM tbl_comment
        		 WHERE product_id = #{productId}) c, tbl_member m
 		 WHERE c.uid = m.uid
+		 ORDER BY c.comment_time ASC
 	</select>
+	
+	<delete id="delete" parameterType="map">
+		DELETE FROM tbl_comment
+		 WHERE product_id = #{productId}
+		   AND uid = #{uid}
+		   AND comment_id = #{commentId}
+	</delete>
+	
+	<update id="update" parameterType="map">
+		UPDATE tbl_comment
+		   SET comment_contents = #{newCommentText}
+		 WHERE comment_id = #{commentId}
+		   AND product_id = #{productId}
+		   AND uid = #{uid}
+	</update>
 	
 </mapper>

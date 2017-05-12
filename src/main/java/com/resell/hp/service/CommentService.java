@@ -34,4 +34,14 @@ public class CommentService {
 	public List getComment(String productId) {
 		return commentDAO.getComment(productId);
 	}
+	
+	//remove comment
+	public int removeComment(String categoryId, String commentId, String uid) {
+		return commentDAO.delete(categoryId, commentId, uid);
+	}
+	
+	//update comment
+	public int modify(String productId, String commentId, String newCommentText, String uid) {
+		return commentDAO.update(productId, commentId, newCommentText, uid);
+	}
 }
