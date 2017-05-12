@@ -27,6 +27,11 @@
 		      WHERE img_id = #{imgId}
 	</delete>
 	
+	<delete id="deleteProduct" parameterType="string">
+		DELETE FROM tbl_product_img
+			  WHERE product_id =#{productId}
+	</delete>
+	
 	<update id="updateSetMainImg" parameterType="string">
 		UPDATE tbl_product_img 
 		   SET img_main = 1 

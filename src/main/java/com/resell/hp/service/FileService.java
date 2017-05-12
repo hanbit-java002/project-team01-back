@@ -132,6 +132,26 @@ public class FileService {
 			
 		}
 	}
+	@Transactional
+	public void deleteProduct(String productId) {
+		List<Map<String,Object>> imgList= fileDAO.selectImgs(productId);
+		
+		for (Map imgInfo :imgList) {
+			String imgId = (String) imgInfo.get("img_id");
+			String filePath =PATH_PREFIX+imgId;
+			File file = new File(filePath);
+			try {
+				FileUtils.forceDelete(file);
+			}
+			catch(Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
+		
+		fileDAO.deleteProduct(productId);
+		
+		
+	}
 	
 
 }

@@ -36,6 +36,11 @@
 		   AND comment_id = #{commentId}
 	</delete>
 	
+	<delete id="deleteProduct" parameterType="string">
+		DELETE FROM tbl_comment
+			  WHERE product_id =#{productId}
+	</delete>
+	
 	<update id="update" parameterType="map">
 		UPDATE tbl_comment
 		   SET comment_contents = #{newCommentText}

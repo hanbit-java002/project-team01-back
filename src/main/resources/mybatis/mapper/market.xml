@@ -150,5 +150,9 @@
         	 	 </if>
 	WHERE        product_id =#{productId}
 </update>
+	<delete id="deleteProduct" parameterType="string">
+			DELETE FROM tbl_product
+			  	  WHERE product_id =#{productId}
+	</delete>
 
 </mapper>

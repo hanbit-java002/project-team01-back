@@ -79,9 +79,6 @@ public class MarketController {
 	
 	@RequestMapping(value="/list", method = RequestMethod.POST)
 	public Map productList(HttpServletRequest request) {
-
-		
-		
 		String brandId = request.getParameter("brandId");
 		String searchValue = request.getParameter("searchValue");
 		String seriesId = request.getParameter("seriesId");
@@ -195,11 +192,17 @@ public class MarketController {
 	}
 	@SignInRequired
 	@RequestMapping(value="/delete", method = RequestMethod.POST)
-	public Map productDelete(@RequestParam("productId") String productId) {
-		
-		marketService.productDelete(productId);
-		
+	public Map deleteProduct(@RequestParam("productId") String productId,
+			@RequestParam("sellerUid") String sellerUid, HttpSession session) {
 		Map result = new HashMap();
+		String sessionUid= (String) session.getAttribute("uid");
+		
+		if (!sellerUid.equals(sessionUid)) {
+			result.put("result", "no");
+			return result;
+		}
+		
+		marketService.deleteProduct(productId);
 		result.put("result", "ok");
 		
 		return result;

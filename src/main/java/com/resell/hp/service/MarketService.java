@@ -69,13 +69,13 @@ public class MarketService {
 	}
 	
 	@Transactional
-	public void productDelete(String productId) {
+	public void deleteProduct(String productId) {
 		hitsDAO.deleteProduct(productId);
 		commentDAO.deleteProduct(productId);
 		dealDAO.deleteProduct(productId);
 		complainDAO.deleteProduct(productId);
 		likeDAO.deleteProduct(productId);
-		fileDAO.deleteProduct(productId);
+		fileService.deleteProduct(productId);
 		marketDAO.deleteProduct(productId);
 	}
 }

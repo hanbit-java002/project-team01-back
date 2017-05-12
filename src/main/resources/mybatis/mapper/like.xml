@@ -30,4 +30,9 @@
 		   AND uid = #{uid}
 	</delete>
 	
+	<delete id="deleteProduct" parameterType="string">
+		DELETE FROM tbl_like
+			  WHERE product_id =#{productId}
+	</delete>
+	
 </mapper>
