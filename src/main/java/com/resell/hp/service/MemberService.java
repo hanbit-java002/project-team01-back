@@ -72,11 +72,12 @@ public class MemberService {
 	} 
 
 
-	public String getTempPw(String userId) {
+	//임시 비밀번호
+	public int updateTempPw(String userId, String tempPw) {
 		String uid = memberDAO.selectUid(userId);
-		memberDAO.updateTempPw(uid);
+		String encryptedUserPw = passwordEncoder.encode(tempPw);
 		
-		return memberDAO.selectUserPw(userId);
+		return memberDAO.updateTempPw(uid, encryptedUserPw);
 	}
 	
 	public Map getUserInfo(String uid) {		

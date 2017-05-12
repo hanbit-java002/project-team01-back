@@ -1,4 +1,4 @@
-/*package com.resell.hp.config;
+package com.resell.hp.config;
 
 import java.util.Properties;
 
@@ -33,4 +33,4 @@ public class MailConfig {
 	
 		return mailSender;
 	}
-}*/
+}

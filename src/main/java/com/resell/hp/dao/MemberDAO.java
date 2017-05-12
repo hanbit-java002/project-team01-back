@@ -45,9 +45,14 @@ public class MemberDAO {
 		return sqlSession.selectOne("member.selectUserId", param);
 	}
 
-	public int updateTempPw(String uid) {
+	//임시 비밀번호 변경
+	public int updateTempPw(String uid, String tempPw) {
+		Map param = new HashMap();
+		
+		param.put("uid", uid);
+		param.put("tempPw", tempPw);
 
-		return sqlSession.update("member.updateTempPw", uid);
+		return sqlSession.insert("member.updateTempPw", param);
 	}
 
 	

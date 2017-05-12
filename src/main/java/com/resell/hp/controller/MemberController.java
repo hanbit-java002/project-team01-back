@@ -2,8 +2,9 @@ package com.resell.hp.controller;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
-/*import javax.mail.internet.MimeMessage;*/
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -28,8 +29,8 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
-	/* @Autowired
-	private JavaMailSender mailSender;*/
+	@Autowired
+	private JavaMailSender mailSender;
 	
 	@RequestMapping(value="/api/member/signUp", method=RequestMethod.POST)
 	public Map signUp(@RequestParam("userId") String userId, @RequestParam("userPw") String userPw,
@@ -132,15 +133,23 @@ public class MemberController {
 			
 			return result;
 	    }
-	}   
-   /*private String from = "hanbitresell@gmail.com";	//보내는사람 이메일
+	} 
+   
+   private String from = "hanbitresell@gmail.com";	//보내는사람 이메일
    private String subject = "[Resll] 임시 비밀번호 입니다.";	//제목
    
    @RequestMapping(value = "/api/member/findPw", method=RequestMethod.POST)
    public Map sendMail(@RequestParam("userEmail") String userId) {
 	   
 	   String uid = memberService.getUid(userId);
-	   String tempPw = memberService.getTempPw(userId);	//임시 비밀번호
+	   //String tempPw = memberService.getTempPw(userId);	//임시 비밀번호
+	   int num;
+	   Random random = new Random();
+	   num = random.nextInt(999999) + 100000;
+	   
+	   String tempPw = "temp" + num;
+	   
+	   memberService.updateTempPw(userId, tempPw);
 	   
 	   if(uid == null) {
 		   throw new RuntimeException("가입되지 않은 사용자입니다.");
@@ -167,12 +176,20 @@ public class MemberController {
 		   	
 		   	return result; 
 	   }
-
-<<<<<<< HEAD
    }
    
    
-   /* 회원정보 변경 */  
+   private String ROUND(int i, int j) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+private int rand() {
+	// TODO Auto-generated method stub
+	return 0;
+}
+
+/* 회원정보 변경 */  
    //회원정보 받아오기
    @RequestMapping(value="/api/member/{userUid}", method=RequestMethod.GET)
 	public Map get(@PathVariable("userUid") String userUid) {

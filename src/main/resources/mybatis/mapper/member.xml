@@ -48,7 +48,7 @@
 	  
 	  <update id="updateTempPw" parameterType="map">
 		UPDATE	tbl_member
-		SET	user_pw = ROUND(123456 + rand()*1000000, 0)
+		SET	user_pw = #{tempPw}
 		WHERE	uid = #{uid}
 	  </update>
 	  
