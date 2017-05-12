@@ -7,7 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.resell.hp.dao.CommentDAO;
+import com.resell.hp.dao.ComplainDAO;
+import com.resell.hp.dao.DealDAO;
+import com.resell.hp.dao.FileDAO;
 import com.resell.hp.dao.HitsDAO;
+import com.resell.hp.dao.LikeDAO;
 import com.resell.hp.dao.MarketDAO;
 import com.resell.hp.util.KeyUtils;
 
@@ -18,7 +23,18 @@ public class MarketService {
 	@Autowired
 	private FileService fileService;
 	@Autowired
+	private FileDAO fileDAO;
+	@Autowired
 	private HitsDAO hitsDAO;
+	@Autowired
+	private CommentDAO commentDAO;
+	@Autowired
+	private DealDAO dealDAO;
+	@Autowired
+	private ComplainDAO complainDAO;
+	@Autowired
+	private LikeDAO likeDAO;
+	
 	
 	@Transactional 
 	public void add(Map productInfo, Map productImgInfo) {
@@ -50,5 +66,16 @@ public class MarketService {
 	public void update(Map productInfo, Map productImgInfo) {
 		marketDAO.update(productInfo);
 		fileService.update(productImgInfo);		
+	}
+	
+	@Transactional
+	public void productDelete(String productId) {
+		hitsDAO.deleteProduct(productId);
+		commentDAO.deleteProduct(productId);
+		dealDAO.deleteProduct(productId);
+		complainDAO.deleteProduct(productId);
+		likeDAO.deleteProduct(productId);
+		fileDAO.deleteProduct(productId);
+		marketDAO.deleteProduct(productId);
 	}
 }

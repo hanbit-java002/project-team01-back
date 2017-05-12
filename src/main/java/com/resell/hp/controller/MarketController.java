@@ -27,6 +27,7 @@ public class MarketController {
 	private MarketService marketService;
 	@Autowired
 	private FileService fileService;
+
 	
 	@SignInRequired
 	@RequestMapping(value="/selling", method = RequestMethod.POST)
@@ -42,7 +43,7 @@ public class MarketController {
 		String[] arrImgSrc = request.getParameterValues("arrImgSrc");
 		int mainImgIndex = Integer.parseInt(request.getParameter("mainImgIndex"));
 		String dealMeans = request.getParameter("dealMeans");
-		String directPlace = request.getParameter("dealPlace");
+		String directPlace = request.getParameter("directPlace");
 		boolean safeDeal = Boolean.parseBoolean(request.getParameter("safeDeal"));
 		String loginId =(String) session.getAttribute("uid");
 		String deliveryCheck= request.getParameter("deliveryCheck");
@@ -192,6 +193,18 @@ public class MarketController {
 		return result;
 		
 	}
+	@SignInRequired
+	@RequestMapping(value="/delete", method = RequestMethod.POST)
+	public Map productDelete(@RequestParam("productId") String productId) {
+		
+		marketService.productDelete(productId);
+		
+		Map result = new HashMap();
+		result.put("result", "ok");
+		
+		return result;
+	}
+	
 	
 
 }

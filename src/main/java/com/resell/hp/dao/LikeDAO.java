@@ -44,4 +44,8 @@ public class LikeDAO {
 		
 		return sqlSession.selectOne("like.hasLike", param);
 	}
+
+	public void deleteProduct(String productId) {
+		sqlSession.delete("like.deleteProduct", productId);
+	}
 }

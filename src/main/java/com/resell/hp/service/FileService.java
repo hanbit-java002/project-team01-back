@@ -113,14 +113,13 @@ public class FileService {
 			fileDAO.updateRomoveMainImg(beforeMainImg);
 		}
 		
-		int mainImgIndex = 999999;
+		int mainImgIndex = Integer.MAX_VALUE;
+		String tag ="new-image-";
 		if (arrImgSrc != null) {
-			for (int i = 0; i<arrImgSrc.length; i++) {
-				System.out.println("배열"+arrImgSrc[i]);
-				System.out.println("담아온것"+mainImg);
-				if (arrImgSrc[i].matches(mainImg)){
-					mainImgIndex =i;
-				}
+			if (mainImg.contains(tag)){
+				System.out.println(mainImg);
+				String mainIndex =StringUtils.substringAfterLast(mainImg, tag);
+				mainImgIndex = Integer.parseInt(mainIndex);
 			}
 			
 			Map insertImg = new HashMap();

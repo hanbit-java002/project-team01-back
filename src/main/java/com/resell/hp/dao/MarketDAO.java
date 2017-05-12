@@ -40,5 +40,9 @@ public class MarketDAO {
 		sqlSession.update("market.update",productInfo);
 	}
 
+	public void deleteProduct(String productId) {
+		sqlSession.delete("market.deleteProduct", productId);
+	}
+
 
 }

@@ -28,4 +28,8 @@ public class HitsDAO {
 	public int plusHits(String productId) {
 		return sqlSession.insert("hits.plusHits", productId);
 	}
+
+	public void deleteProduct(String productId) {
+		sqlSession.delete("hits.deleteProduct", productId);
+	}
 }

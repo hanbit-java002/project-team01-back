@@ -30,4 +30,8 @@ public class ComplainDAO {
 		
 		return sqlSession.selectOne("complain.hasComplain", param);
 	}
+
+	public void deleteProduct(String productId) {
+		sqlSession.delete("complain.deleteProduct", productId);			
+	}
 }

@@ -63,4 +63,8 @@ public class CommentDAO {
 		
 		return sqlSession.update("comment.update", param);
 	}
+
+	public void deleteProduct(String productId) {
+		sqlSession.delete("comment.deleteProduct", productId);
+	}
 }

@@ -45,5 +45,9 @@ public class FileDAO {
 	public void updateRomoveMainImg(String imgId) {
 		sqlSession.update("file.updateRomoveMainImg", imgId); 
 	}
+	public void deleteProduct(String productId) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
