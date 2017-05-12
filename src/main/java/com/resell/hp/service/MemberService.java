@@ -70,6 +70,9 @@ public class MemberService {
 	public String getUserId(String userName, String phoneNum) {
 		return memberDAO.selectUserId(userName, phoneNum);
 	} 
+	public String getUserId(String userUid) {
+		return memberDAO.selectUserId(userUid);
+	} 
 
 
 	//임시 비밀번호
@@ -104,5 +107,13 @@ public class MemberService {
 		
 		//return memberDAO.updatePw(userUid, modifyPw, userName, userPhoneNum, userAddr, userAddrDetail, userZipCode);
 	}	
+	
+	
+	/* 회원 삭제(탈퇴) */
+	public int remove(String uid) {	
+		memberDAO.deleteDetail(uid);	//디테일 부터 지운 후
+		
+		return memberDAO.delete(uid);	//원래 꺼 지운다.
+	}
 
 }

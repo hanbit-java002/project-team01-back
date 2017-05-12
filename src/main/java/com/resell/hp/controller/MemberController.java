@@ -135,6 +135,7 @@ public class MemberController {
 	    }
 	} 
    
+   
    private String from = "hanbitresell@gmail.com";	//보내는사람 이메일
    private String subject = "[Resll] 임시 비밀번호 입니다.";	//제목
    
@@ -178,18 +179,8 @@ public class MemberController {
 	   }
    }
    
-   
-   private String ROUND(int i, int j) {
-	// TODO Auto-generated method stub
-	return null;
-}
 
-private int rand() {
-	// TODO Auto-generated method stub
-	return 0;
-}
-
-/* 회원정보 변경 */  
+   /* 회원정보 변경 */  
    //회원정보 받아오기
    @RequestMapping(value="/api/member/{userUid}", method=RequestMethod.GET)
 	public Map get(@PathVariable("userUid") String userUid) {
@@ -230,6 +221,39 @@ private int rand() {
 	   result.put(result, "ok");
 	
 	   return result;
+	}
+   
+   
+   
+    /* 회원 삭제(탈퇴) */
+	@RequestMapping(value="/api/member/delete", method=RequestMethod.POST)
+	public Map remove(@RequestParam("userUid") String userUid,
+					  @RequestParam("userPw") String userPw, 
+					  HttpSession session) {
+		
+		String userId = memberService.getUserId(userUid);
+
+		
+		try {
+			
+	        if(!memberService.isValidMember(userId, userPw)) {
+	            LOGGER.warn("패스워드 틀림:" + userId + "/" + userPw);
+	             
+	            throw new RuntimeException("패스워드가 다릅니다.");
+	        }
+	    }
+	    catch (NullPointerException e) {
+	          throw new RuntimeException(e);
+	    }
+	
+		memberService.remove(userUid);
+		
+		session.invalidate();	//세션 끊기(로그아웃)
+		
+		Map result = new HashMap();
+		result.put("result", "ok");
+		
+		return result;
 	}
    
 }

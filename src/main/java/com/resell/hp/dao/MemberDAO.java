@@ -37,6 +37,7 @@ public class MemberDAO {
 		return sqlSession.selectOne("member.selectRank", uid);
 	} 
 	
+	
 	public String selectUserId(String userName, String phoneNum) {
 		Map param = new HashMap();
 		param.put("userName", userName);
@@ -44,6 +45,11 @@ public class MemberDAO {
 		
 		return sqlSession.selectOne("member.selectUserId", param);
 	}
+	public String selectUserId(String userUid) {
+		return sqlSession.selectOne("member.selectUserId2", userUid);
+	}
+	
+	
 
 	//임시 비밀번호 변경
 	public int updateTempPw(String uid, String tempPw) {
@@ -96,6 +102,16 @@ public class MemberDAO {
 	public Map selectUserInfo(String uid) {
 
 		return sqlSession.selectOne("member.selectUserInfo", uid);
+	}
+	
+	
+	/* 회원 삭제(탈퇴) */
+	public int delete(String uid) {
+		return sqlSession.delete("member.delete", uid);
+	}
+	
+	public int deleteDetail(String uid) {
+		return sqlSession.delete("member.deleteDetail", uid);
 	}
 
 }

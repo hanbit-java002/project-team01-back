@@ -26,6 +26,11 @@
 		FROM tbl_member m, tbl_member_detail d
 		WHERE m.user_name = #{userName}
 		AND d.phone_num = #{phoneNum}
+	  </select>
+	  <select id="selectUserId2"  parameterType="string" resultType="string">
+	    SELECT user_id
+		FROM tbl_member m
+		WHERE uid = #{userUid}
 	  </select> 
 	  
 	  <select id="selectUserInfo"  parameterType="string" resultType="map">
@@ -86,4 +91,18 @@
 	    INSERT INTO tbl_member_detail (uid, phone_num, addr, addr_detail, zip_code) 
 	    	 VALUES (#{uid}, #{userPhone}, #{userAddr}, #{userAddrDetail}, #{userZipcode})
 	  </insert>
+	  
+	  
+	  
+	  
+	  <delete id="delete" parameterType="string">
+ 		DELETE FROM tbl_member
+ 		 WHERE uid = #{uid}
+ 	  </delete>
+ 	
+ 	  <delete id="deleteDetail" parameterType="string">
+ 		DELETE FROM tbl_member_detail
+ 		 WHERE uid = #{uid}
+ 	  </delete>
+ 	
 </mapper>
