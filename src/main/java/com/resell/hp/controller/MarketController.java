@@ -12,9 +12,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.resell.hp.annotation.SignInRequired;
+import com.resell.hp.service.FileService;
 import com.resell.hp.service.MarketService;
 
 @RestController
@@ -23,6 +25,8 @@ public class MarketController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(MarketController.class);
 	@Autowired
 	private MarketService marketService;
+	@Autowired
+	private FileService fileService;
 	
 	@SignInRequired
 	@RequestMapping(value="/selling", method = RequestMethod.POST)
@@ -73,7 +77,7 @@ public class MarketController {
 	}
 	
 	@RequestMapping(value="/list", method = RequestMethod.POST)
-	public Map productList(HttpServletRequest request, HttpSession session) {
+	public Map productList(HttpServletRequest request) {
 
 		
 		
@@ -107,5 +111,77 @@ public class MarketController {
 		result.put("count", count);
 		return result;
 	}
+	@SignInRequired
+	@RequestMapping(value="/getProduct", method = RequestMethod.GET)
+	public Map getProduct(HttpSession session, @RequestParam("productId") String productId) {
+		String sessionUid = (String) session.getAttribute("uid");
+		Map productData = marketService.getProduct(productId);
+		String sellerUid = (String) productData.get("seller_uid");
+		
+		Map result = new HashMap();
+		if (sessionUid.equals(sellerUid)) {
+			result.put("valid", "ok");
+			result.put("product", productData);
+			result.put("productImg", fileService.getProductImgs(productId));
+			
+		}
+		else {
+			result.put("valid", "no");
+		}
+		return result;
+		
+	}
+	
+	@SignInRequired
+	@RequestMapping(value="/selling-update", method = RequestMethod.POST)
+	public Map productUpdate(HttpServletRequest request) {
+		String productId = request.getParameter("productId");
+		String productName = request.getParameter("name");
+		String brandId = request.getParameter("brandId");
+		String categoryId = request.getParameter("categoryId");
+		String sizeId = request.getParameter("sizeId");
+		String seriesId = request.getParameter("seriesId");
+		int price = Integer.parseInt(request.getParameter("price"));
+		String quality = request.getParameter("qualityId");
+		String detail = request.getParameter("detail");
+		String[] arrImgSrc = request.getParameterValues("arrImgSrc");
+		int mainImgIndex = Integer.parseInt(request.getParameter("mainImgIndex"));
+		String dealMeans = request.getParameter("dealMeans");
+		String directPlace = request.getParameter("dealPlace");
+		boolean safeDeal = Boolean.parseBoolean(request.getParameter("safeDeal"));
+		String deliveryCheck= request.getParameter("deliveryCheck");
+		String status= request.getParameter("status");
+		
+		System.out.println("시리즈"+seriesId);
+		Map productInfo = new HashMap<String, Object>();
+		productInfo.put("productId",productId);
+		productInfo.put("productName",productName);
+		productInfo.put("brandId",brandId);
+		productInfo.put("categoryId",categoryId);
+		productInfo.put("sizeId",sizeId);
+		productInfo.put("seriesId",seriesId);  
+		productInfo.put("price",price);
+		productInfo.put("quality",quality);
+		productInfo.put("detail",detail);
+		productInfo.put("dealMeans",dealMeans);
+		productInfo.put("directPlace",directPlace);
+		productInfo.put("safeDeal",safeDeal);
+		productInfo.put("status","selling");
+		productInfo.put("deliveryCheck", deliveryCheck);
+		productInfo.put("status", status);
+		
+		Map productImgInfo = new HashMap<String, Object>();
+		productImgInfo.put("arrImgSrc",arrImgSrc);
+		productImgInfo.put("mainImgIndex",mainImgIndex);
+		
+		marketService.update(productInfo, productImgInfo);
+		
+		Map result = new HashMap();
+		result.put("result", "ok");
+		
+		return result;
+		
+	}
+	
 
 }

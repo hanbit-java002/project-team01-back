@@ -1,6 +1,7 @@
 package com.resell.hp.service;
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
@@ -72,6 +73,9 @@ public class FileService {
 	
 	public Map get(String fileId) {
 		return fileDAO.selectOne(fileId);
+	}
+	public List getProductImgs(String productId) {
+		return fileDAO.selectImgs(productId);
 	}
 	
 

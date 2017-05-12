@@ -1,6 +1,7 @@
 package com.resell.hp.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -24,11 +25,13 @@ public class FileDAO {
 		imgInfo.put("isMainImg", isMainImg);
 		
 		return sqlSession.insert("file.insert",imgInfo);
-		
 	}
 	public Map selectOne(String fileId) {
 		
 		return sqlSession.selectOne("file.selectOne", fileId); 
+	}
+	public List selectImgs(String productId) {
+		return sqlSession.selectList("file.selectImgs", productId); 
 	}
 
 }

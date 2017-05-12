@@ -41,5 +41,15 @@ public class MarketService {
 	public int selectCount(Map filterInfo) {
 		return marketDAO.selectCount(filterInfo);
 	}
+
+	public Map getProduct(String productId) {
+		return marketDAO.selectProduct(productId);
+	}
+	
+	@Transactional
+	public void update(Map productInfo, Map productImgInfo) {
+		marketDAO.update(productInfo);
+		
+	}
 	
 }

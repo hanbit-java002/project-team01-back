@@ -30,5 +30,14 @@ public class MarketDAO {
 		return sqlSession.selectOne("market.selectCount",filterInfo);
 	}
 
+	public Map selectProduct(String productId) {
+		return sqlSession.selectOne("market.selectProduct",productId);
+	}
+
+	public void update(Map productInfo) {
+		System.out.println(productInfo);
+		sqlSession.update("market.update",productInfo);
+	}
+
 
 }
