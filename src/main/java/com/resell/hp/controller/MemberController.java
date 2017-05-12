@@ -10,8 +10,11 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-/*import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;*/
+
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,8 +47,9 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="/api/member/signIn", method=RequestMethod.POST)
-	public Map signIn(@RequestParam("userId") String userId, @RequestParam("userPw") String userPw,
-			HttpServletRequest request) {
+	public Map signIn(@RequestParam("userId") String userId, 
+					  @RequestParam("userPw") String userPw,
+					  HttpServletRequest request) {
 		
 	      try {
 	          if(!memberService.isValidMember(userId, userPw)) {
@@ -88,7 +92,10 @@ public class MemberController {
       }
       
       result.put("result", signedIn);
-      
+
+      result.put("userRank", session.getAttribute("userRank"));
+      result.put("uid", session.getAttribute("uid"));
+ 
       return result;
    }
    
@@ -161,5 +168,51 @@ public class MemberController {
 		   	return result; 
 	   }
 
-   }*/
+<<<<<<< HEAD
+   }
+   
+   
+   /* 회원정보 변경 */  
+   //회원정보 받아오기
+   @RequestMapping(value="/api/member/{userUid}", method=RequestMethod.GET)
+	public Map get(@PathVariable("userUid") String userUid) {
+	   
+	   return memberService.getUserData(userUid);
+	}
+   
+   //회원정보 수정(비밀번호 변경x)
+   @RequestMapping(value="/api/member/{userUid}", method=RequestMethod.PUT)
+	public Map modify(@PathVariable("userUid") String userUid,
+			@RequestParam("userName") String userName,
+			@RequestParam("userPhoneNum") String userPhoneNum,
+			@RequestParam("userAddr") String userAddr,
+			@RequestParam("userAddrDetail") String userAddrDetail,
+			@RequestParam("userZipCode") String userZipCode) {
+		
+	   memberService.modify(userUid, userName, userPhoneNum, userAddr, userAddrDetail, userZipCode);
+
+	   Map result = new HashMap();
+	   result.put(result, "ok");
+	
+	   return result;
+   }
+   
+   //회원정보 수정(비밀번호 변경o)
+   @RequestMapping(value="/api/member/{userUid}", method=RequestMethod.POST)
+	public Map modifyPw(@PathVariable("userUid") String userUid,
+			@RequestParam("modifyPw") String modifyPw,
+			@RequestParam("userName") String userName,
+			@RequestParam("userPhoneNum") String userPhoneNum,
+			@RequestParam("userAddr") String userAddr,
+			@RequestParam("userAddrDetail") String userAddrDetail,
+			@RequestParam("userZipCode") String userZipCode) {
+
+	   memberService.modifyPw(userUid, modifyPw, userName, userPhoneNum, userAddr, userAddrDetail, userZipCode);
+
+	   Map result = new HashMap();
+	   result.put(result, "ok");
+	
+	   return result;
+	}
+   
 }

@@ -36,10 +36,43 @@
          WHERE m.uid = #{uid};
 	  </select>	  
 	  
+	  
+	  <select id="selectUserData" parameterType="string" resultType="map">
+		SELECT m.uid, m.user_id, m.user_pw, m.user_name, 
+			   d.phone_num, d.addr, d.addr_detail, d.zip_code
+		  FROM tbl_member m, tbl_member_detail d
+		 WHERE m.uid = #{userUid}
+		   AND m.uid = d.uid
+	  </select>
+	  
+	  
 	  <update id="updateTempPw" parameterType="map">
 		UPDATE	tbl_member
 		SET	user_pw = ROUND(123456 + rand()*1000000, 0)
 		WHERE	uid = #{uid}
+	  </update>
+	  
+	  <update id="update" parameterType="map">
+ 		UPDATE tbl_member m, tbl_member_detail d
+ 		   SET m.user_name = #{userName},
+ 		       d.phone_num = #{userPhoneNum},
+ 		       d.addr = #{userAddr},
+ 		       d.addr_detail = #{userAddrDetail},
+ 		       d.zip_code = #{userZipCode}
+ 		 WHERE m.uid = #{userUid}
+ 		   AND m.uid = d.uid
+ 	   </update>
+ 	   
+ 	   <update id="updatePw" parameterType="map">
+		UPDATE tbl_member m, tbl_member_detail d
+ 		   SET m.user_pw = #{modifyPw},
+ 		   	   m.user_name = #{userName},
+ 		       d.phone_num = #{userPhoneNum},
+ 		       d.addr = #{userAddr},
+ 		       d.addr_detail = #{userAddrDetail},
+ 		       d.zip_code = #{userZipCode}
+ 		 WHERE m.uid = #{userUid}
+ 		   AND m.uid = d.uid
 	  </update>
 	
 	
@@ -51,7 +84,6 @@
 	  
 	  <insert id="insertUserDetail" parameterType="map">
 	    INSERT INTO tbl_member_detail (uid, phone_num, addr, addr_detail, zip_code) 
-	    	 VALUES (#{uid}, #{userPhone}, #{userAddr}, #{userAddrDetail},
-	    	 		 #{userZipcode})
+	    	 VALUES (#{uid}, #{userPhone}, #{userAddr}, #{userAddrDetail}, #{userZipcode})
 	  </insert>
 </mapper>

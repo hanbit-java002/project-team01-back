@@ -54,6 +54,9 @@ public class MemberService {
 	public boolean isValidMember(String userId, String userPw) {
 		String encryptedUserPw = memberDAO.selectUserPw(userId);
 		return passwordEncoder.matches(userPw, encryptedUserPw);
+		
+		//String pw = memberDAO.selectUserPw(userId);
+		//return pw.matches(userPw);
 	}
 	
 	public String getUid(String userId) {
@@ -80,6 +83,25 @@ public class MemberService {
 		return memberDAO.selectUserInfo(uid);
 	}
 
+
+	/* 회원정보변경 */ 
+	public Map getUserData(String userUid) {
+		return memberDAO.selectUserData(userUid);
+	}
 	
+	public int modify(String userUid, String userName, String userPhoneNum, 
+			String userAddr, String userAddrDetail, String userZipCode) {
+		
+		return memberDAO.update(userUid, userName, userPhoneNum, userAddr, userAddrDetail, userZipCode);
+	}
+	
+	public int modifyPw(String userUid, String modifyPw, String userName, String userPhoneNum, 
+			String userAddr, String userAddrDetail, String userZipCode) {
+		
+		String encryptedUserPw = passwordEncoder.encode(modifyPw);
+		return memberDAO.updatePw(userUid, encryptedUserPw, userName, userPhoneNum, userAddr, userAddrDetail, userZipCode);
+		
+		//return memberDAO.updatePw(userUid, modifyPw, userName, userPhoneNum, userAddr, userAddrDetail, userZipCode);
+	}	
 
 }
