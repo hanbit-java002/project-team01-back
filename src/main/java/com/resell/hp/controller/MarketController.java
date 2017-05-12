@@ -113,8 +113,10 @@ public class MarketController {
 	}
 	@SignInRequired
 	@RequestMapping(value="/getProduct", method = RequestMethod.GET)
-	public Map getProduct(HttpSession session, @RequestParam("productId") String productId) {
+	public Map getProduct(@RequestParam("productId") String productId, HttpSession session) {
+		System.out.println(productId);
 		String sessionUid = (String) session.getAttribute("uid");
+		System.out.println(sessionUid);
 		Map productData = marketService.getProduct(productId);
 		String sellerUid = (String) productData.get("seller_uid");
 		
@@ -129,7 +131,6 @@ public class MarketController {
 			result.put("valid", "no");
 		}
 		return result;
-		
 	}
 	
 	@SignInRequired
@@ -143,16 +144,19 @@ public class MarketController {
 		String seriesId = request.getParameter("seriesId");
 		int price = Integer.parseInt(request.getParameter("price"));
 		String quality = request.getParameter("qualityId");
-		String detail = request.getParameter("detail");
-		String[] arrImgSrc = request.getParameterValues("arrImgSrc");
-		int mainImgIndex = Integer.parseInt(request.getParameter("mainImgIndex"));
+		String detail = request.getParameter("detail");		
 		String dealMeans = request.getParameter("dealMeans");
-		String directPlace = request.getParameter("dealPlace");
+		String directPlace = request.getParameter("directPlace");
 		boolean safeDeal = Boolean.parseBoolean(request.getParameter("safeDeal"));
 		String deliveryCheck= request.getParameter("deliveryCheck");
 		String status= request.getParameter("status");
 		
-		System.out.println("시리즈"+seriesId);
+		String[] arrImgSrc = request.getParameterValues("arrImgSrc");
+		String[] arrDelImgId = request.getParameterValues("arrDelImgId");
+		String mainImg = request.getParameter("mainImg");
+		String beforeMainImg = request.getParameter("beforeMainImg");
+		System.out.println(status);
+		
 		Map productInfo = new HashMap<String, Object>();
 		productInfo.put("productId",productId);
 		productInfo.put("productName",productName);
@@ -166,13 +170,19 @@ public class MarketController {
 		productInfo.put("dealMeans",dealMeans);
 		productInfo.put("directPlace",directPlace);
 		productInfo.put("safeDeal",safeDeal);
-		productInfo.put("status","selling");
 		productInfo.put("deliveryCheck", deliveryCheck);
 		productInfo.put("status", status);
 		
+		System.out.println(productInfo);
+		
 		Map productImgInfo = new HashMap<String, Object>();
-		productImgInfo.put("arrImgSrc",arrImgSrc);
-		productImgInfo.put("mainImgIndex",mainImgIndex);
+		productImgInfo.put("productId",productId);
+		productImgInfo.put("arrImgSrc", arrImgSrc);
+		productImgInfo.put("arrDelImgId", arrDelImgId);
+		productImgInfo.put("mainImg", mainImg);
+		productImgInfo.put("beforeMainImg", beforeMainImg);
+		
+		System.out.println(productImgInfo);
 		
 		marketService.update(productInfo, productImgInfo);
 		

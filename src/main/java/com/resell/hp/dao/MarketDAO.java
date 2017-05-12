@@ -31,6 +31,7 @@ public class MarketDAO {
 	}
 
 	public Map selectProduct(String productId) {
+		System.out.println(productId);
 		return sqlSession.selectOne("market.selectProduct",productId);
 	}
 

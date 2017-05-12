@@ -8,6 +8,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.resell.hp.service.FileService;
+
 @Repository
 public class FileDAO {
 	@Autowired
@@ -32,6 +34,16 @@ public class FileDAO {
 	}
 	public List selectImgs(String productId) {
 		return sqlSession.selectList("file.selectImgs", productId); 
+	}
+	public void deleteImg(String imgId) {
+		System.out.println(imgId);
+		sqlSession.delete("file.deleteImg", imgId); 
+	}
+	public void updateSetMainImg(String imgId) {
+		sqlSession.update("file.updateSetMainImg", imgId); 
+	}
+	public void updateRomoveMainImg(String imgId) {
+		sqlSession.update("file.updateRomoveMainImg", imgId); 
 	}
 
 }

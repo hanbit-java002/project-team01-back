@@ -1,6 +1,7 @@
 package com.resell.hp.service;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -76,6 +77,61 @@ public class FileService {
 	}
 	public List getProductImgs(String productId) {
 		return fileDAO.selectImgs(productId);
+	}
+	
+	@Transactional
+	public void update(Map productImgInfo) {
+		String productId= (String) productImgInfo.get("productId");
+		String[] arrImgSrc = (String[])productImgInfo.get("arrImgSrc");
+		String[] arrDelImgId = (String[])productImgInfo.get("arrDelImgId");
+		String mainImg = (String)productImgInfo.get("mainImg");
+		String beforeMainImg = (String)productImgInfo.get("beforeMainImg");
+		
+		
+		if (arrDelImgId != null) {
+			for (int i = 0; i<arrDelImgId.length; i++) {
+				System.out.println(arrDelImgId[i]);
+				fileDAO.deleteImg(arrDelImgId[i]);
+				String filePath = PATH_PREFIX+arrDelImgId[i];
+				File file = new File(filePath);
+				
+				try {
+					FileUtils.forceDelete(file);
+				}
+				catch(Exception e) {
+					throw new RuntimeException(e);
+				}
+			}
+			
+		}
+		
+		
+		if (!("default".equals(mainImg))) {
+			if (mainImg.contains("IMG")) {
+				fileDAO.updateSetMainImg(mainImg);
+			}
+			fileDAO.updateRomoveMainImg(beforeMainImg);
+		}
+		
+		int mainImgIndex = 999999;
+		if (arrImgSrc != null) {
+			for (int i = 0; i<arrImgSrc.length; i++) {
+				System.out.println("배열"+arrImgSrc[i]);
+				System.out.println("담아온것"+mainImg);
+				if (arrImgSrc[i].matches(mainImg)){
+					mainImgIndex =i;
+				}
+			}
+			
+			Map insertImg = new HashMap();
+			
+			insertImg.put("arrImgSrc", arrImgSrc);
+			insertImg.put("productId", productId);
+			insertImg.put("mainImgIndex", mainImgIndex);
+			
+			addAndSaveProductImg(insertImg);
+			
+		}
 	}
 	
 

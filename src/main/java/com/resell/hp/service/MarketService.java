@@ -49,7 +49,6 @@ public class MarketService {
 	@Transactional
 	public void update(Map productInfo, Map productImgInfo) {
 		marketDAO.update(productInfo);
-		
+		fileService.update(productImgInfo);		
 	}
-	
 }

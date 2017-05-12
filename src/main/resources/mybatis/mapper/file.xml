@@ -22,4 +22,21 @@
 		 WHERE product_id = #{productId}
 	</select>
 
+	<delete id="deleteImg" parameterType="string">
+		DELETE FROM tbl_product_img 
+		      WHERE img_id = #{imgId}
+	</delete>
+	
+	<update id="updateSetMainImg" parameterType="string">
+		UPDATE tbl_product_img 
+		   SET img_main = 1 
+		 WHERE img_id = #{imgId}
+	</update>
+		
+	<update id="updateRomoveMainImg" parameterType="string">
+		UPDATE tbl_product_img 
+		   SET img_main = 0 
+		 WHERE img_id = #{imgId}
+	</update>
+
 </mapper>
