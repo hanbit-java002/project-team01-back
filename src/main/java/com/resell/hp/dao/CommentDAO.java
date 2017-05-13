@@ -65,6 +65,7 @@ public class CommentDAO {
 	}
 
 	public void deleteProduct(String productId) {
+		System.out.println("코멘트: "+ productId);
 		sqlSession.delete("comment.deleteProduct", productId);
 	}
 }

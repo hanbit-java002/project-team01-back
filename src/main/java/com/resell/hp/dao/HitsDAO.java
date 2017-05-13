@@ -30,6 +30,7 @@ public class HitsDAO {
 	}
 
 	public void deleteProduct(String productId) {
+		System.out.println("히트: "+ productId);
 		sqlSession.delete("hits.deleteProduct", productId);
 	}
 }

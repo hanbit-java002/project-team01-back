@@ -46,6 +46,7 @@ public class LikeDAO {
 	}
 
 	public void deleteProduct(String productId) {
+		System.out.println("라이크: "+ productId);
 		sqlSession.delete("like.deleteProduct", productId);
 	}
 }

@@ -41,6 +41,7 @@ public class MarketDAO {
 	}
 
 	public void deleteProduct(String productId) {
+		System.out.println("프로덕트: "+ productId);
 		sqlSession.delete("market.deleteProduct", productId);
 	}
 

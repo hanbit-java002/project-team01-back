@@ -25,7 +25,7 @@
 	
 	<delete id="deleteProduct" parameterType="string">
 		DELETE FROM tbl_hits
-			  WHERE product_id =#{productId};
+			  WHERE product_id = #{productId}
 	</delete>
 	
 </mapper>

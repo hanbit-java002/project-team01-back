@@ -10,6 +10,7 @@ public class DealDAO {
 	private SqlSession sqlSession;
 
 	public void deleteProduct(String productId) {
+		System.out.println("딜: "+ productId);
 		sqlSession.delete("deal.deleteProduct", productId);		
 	}
 
