@@ -78,4 +78,12 @@ public class MarketService {
 		fileService.deleteProduct(productId);
 		marketDAO.deleteProduct(productId);
 	}
+
+	public List selectSellingList(String uid, int page, int rowsPerPage) {
+		return marketDAO.selectSellingList(uid, page, rowsPerPage);
+	}
+
+	public int selectSellingCount(String uid) {
+		return marketDAO.selectSellingCount(uid);
+	}
 }

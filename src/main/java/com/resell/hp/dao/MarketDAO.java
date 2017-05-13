@@ -45,5 +45,17 @@ public class MarketDAO {
 		sqlSession.delete("market.deleteProduct", productId);
 	}
 
+	public List selectSellingList(String uid, int page, int rowsPerPage) {
+		Map sellinginfo = new HashMap();
+		sellinginfo.put("uid", uid);
+		sellinginfo.put("firstIndex", (page)*rowsPerPage);
+		sellinginfo.put("rowsPerPage", rowsPerPage);
+		return sqlSession.selectList("market.selectSellingList", sellinginfo);
+	}
+
+	public int selectSellingCount(String uid) {
+		return sqlSession.selectOne("market.selectSellingCount", uid);
+	}
+
 
 }

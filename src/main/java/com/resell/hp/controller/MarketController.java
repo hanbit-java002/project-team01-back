@@ -208,6 +208,25 @@ public class MarketController {
 		return result;
 	}
 	
+	@SignInRequired
+	@RequestMapping(value="/sellingList", method = RequestMethod.GET)
+	public Map getsellingList(@RequestParam("page") int page, 
+			@RequestParam("rowsPerPage") int rowsPerPage, HttpSession session) {
+		String uid = (String) session.getAttribute("uid");
+		
+		Map result = new HashMap();
+		
+		
+		int listCount = marketService.selectSellingCount(uid);
+		List list= marketService.selectSellingList(uid, page, rowsPerPage);
+		
+		result.put("listCount", listCount);
+		result.put("list", list);
+	
+		return result;
+	}
+	
+	
 	
 
 }
