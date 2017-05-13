@@ -7,4 +7,11 @@
 		DELETE FROM tbl_deal
 			  WHERE product_id =#{productId}
 	</delete>
+	
+	<insert id="addDeal" parameterType="map">
+		INSERT INTO tbl_deal
+  			(deal_id, product_id, purchaser_uid, user_name, phone_num, deal_means, safe_deal, direct_place, zipcode, address)
+  		VALUES
+  			(#{dealId}, #{productId}, #{purchaserUid}, #{userName}, #{phoneNum}, #{dealMeans}, #{safeDeal}, #{directPlace}, #{zipcode}, #{address})
+	</insert>
 </mapper>
