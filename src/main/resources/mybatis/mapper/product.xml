@@ -54,12 +54,13 @@
 	</select>
 	
 	<select id="selectSellerInfo" parameterType="string" resultType="map">
-		SELECT m.user_name, m.user_rank
+		SELECT m.user_name, m.user_rank, d.phone_num
 		  FROM (
 		  	SELECT product_id, seller_uid
 		  	  FROM tbl_product
-       		 WHERE product_id = #{productId}) p, tbl_member m
+       		 WHERE product_id = #{productId}) p, tbl_member m, tbl_member_detail d
 		 WHERE p.seller_uid = m.uid
+		   AND p.seller_uid = d.uid
 	</select>
 	
 	<select id="countSell" parameterType="string" resultType="int">
