@@ -79,11 +79,11 @@ public class MarketService {
 		marketDAO.deleteProduct(productId);
 	}
 
-	public List selectSellingList(String uid, int page, int rowsPerPage) {
-		return marketDAO.selectSellingList(uid, page, rowsPerPage);
+	public List selectSellingList(String uid, int page, int rowsPerPage, String searchValue) {
+		return marketDAO.selectSellingList(uid, page, rowsPerPage, searchValue);
 	}
 
-	public int selectSellingCount(String uid) {
-		return marketDAO.selectSellingCount(uid);
+	public int selectSellingCount(String uid, String searchValue) {
+		return marketDAO.selectSellingCount(uid, searchValue);
 	}
 }

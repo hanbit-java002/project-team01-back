@@ -211,14 +211,14 @@ public class MarketController {
 	@SignInRequired
 	@RequestMapping(value="/sellingList", method = RequestMethod.GET)
 	public Map getsellingList(@RequestParam("page") int page, 
-			@RequestParam("rowsPerPage") int rowsPerPage, HttpSession session) {
-		String uid = (String) session.getAttribute("uid");
-		
+			@RequestParam("rowsPerPage") int rowsPerPage, 
+			@RequestParam("searchValue") String searchValue, HttpSession session) {
+		String uid = (String) session.getAttribute("uid");		
 		Map result = new HashMap();
+		System.out.println(searchValue);
 		
-		
-		int listCount = marketService.selectSellingCount(uid);
-		List list= marketService.selectSellingList(uid, page, rowsPerPage);
+		int listCount = marketService.selectSellingCount(uid, searchValue);
+		List list= marketService.selectSellingList(uid, page, rowsPerPage, searchValue);
 		
 		result.put("listCount", listCount);
 		result.put("list", list);
