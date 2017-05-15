@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,8 +49,8 @@ public class AdminMemberController {
 			@RequestParam("userRank") String userRank,
 			@RequestParam("userPhoneNum") String userPhoneNum,
 			@RequestParam("userAddr") String userAddr,
-			@RequestParam("userAddr") String userAddrDetail,
-			@RequestParam("userName") String userZipCode) {
+			@RequestParam("userAddrDetail") String userAddrDetail,
+			@RequestParam("userZipCode") String userZipCode) {
 		
 		adminMemberService.modify(userUid, userName, userRank, 
 				userPhoneNum, userAddr, userAddrDetail, userZipCode);
@@ -56,6 +58,19 @@ public class AdminMemberController {
 		Map result = new HashMap();
 		result.put(result, "ok");
 	
+		return result;
+	}
+	
+	
+    /* 회원 삭제(강제탈퇴) */
+	@RequestMapping(value="/{userUid}", method=RequestMethod.DELETE)
+	public Map remove(@PathVariable("userUid") String userUid) {
+
+		adminMemberService.remove(userUid);
+		
+		Map result = new HashMap();
+		result.put("result", "ok");
+		
 		return result;
 	}
 }

@@ -40,4 +40,15 @@
  		 WHERE m.uid = #{userUid}
  		   AND m.uid = d.uid
  	</update>
+ 	
+ 	
+ 	<delete id="delete" parameterType="string">
+ 		DELETE FROM tbl_member
+ 		 WHERE uid = #{uid}
+ 	</delete>
+ 	
+ 	<delete id="deleteDetail" parameterType="string">
+ 		DELETE FROM tbl_member_detail
+ 		 WHERE uid = #{uid}
+ 	</delete>
 </mapper>

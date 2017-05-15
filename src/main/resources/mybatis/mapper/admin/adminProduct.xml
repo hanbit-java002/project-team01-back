@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="admin.adminProduct">
+	
+	
+	<select id ="selectList" parameterType="map" resultType="map">
+				SELECT     p.product_id, product_name, price, size, quality,
+	          			   deal_means, safe_deal, seller_uid, update_date,
+	           		       selling_status, i.img_url, c.category_name, m.user_name, m.user_rank
+	      		 FROM      tbl_product p 
+	  LEFT OUTER JOIN      (SELECT product_id, img_url FROM tbl_product_img WHERE img_main = 1) i
+	        	   ON      i.product_id = p.product_id, tbl_category c, tbl_member m
+	            WHERE	   p.selling_status = #{menuCategory}
+	            AND        p.category_id = c.category_id
+		        AND        p.seller_uid = m.uid
+	         ORDER BY 
+					update_date DESC
+			LIMIT  #{firstIndex}, #{rowsPerPage}
+	</select>
+	
+	<select id ="selectCount" parameterType="map" resultType="int">
+				SELECT     COUNT(product_id) AS list_count
+	      		 FROM      tbl_product
+	      	    WHERE	   product_id != "0"
+	</select>
+		
+	
+</mapper>
