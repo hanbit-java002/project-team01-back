@@ -61,5 +61,12 @@ public class MarketDAO {
 		return sqlSession.selectOne("market.selectSellingCount", sellinginfo);
 	}
 
+	public void updateStatus(String productId, String statusSelect) {
+		Map updateInfo = new HashMap();
+		updateInfo.put("productId", productId);
+		updateInfo.put("statusSelect", statusSelect);
+		sqlSession.update("market.updateStatus", updateInfo);
+	}
+
 
 }

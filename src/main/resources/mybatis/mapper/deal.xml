@@ -19,7 +19,8 @@
 		UPDATE tbl_product
 		   SET selling_status = "processing"
 		 WHERE product_id = #{productId}
-	</update>	
+	</update>
+	
 	
 	<select id="selectPurchaserInfo" parameterType="map" resultType="map">
 		SELECT *

@@ -226,7 +226,18 @@ public class MarketController {
 		return result;
 	}
 	
-	
+	@SignInRequired
+	@RequestMapping(value="/updateStatus", method = RequestMethod.GET)
+	public Map updateStatus(@RequestParam("productId") String productId,
+			@RequestParam("statusSelect") String statusSelect, 
+			@RequestParam("statusSelectBefore") String statusSelectBefore) {
+		Map result = new HashMap();
+		System.out.println(productId+","+statusSelect+","+statusSelectBefore);
+		marketService.updateStatus(productId, statusSelect, statusSelectBefore);
+		result.put("result", "ok");
+		
+		return result;
+	}
 	
 
 }

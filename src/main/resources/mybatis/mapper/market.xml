@@ -193,6 +193,11 @@
         	 	 )
 </insert>
 
+<update id="updateStatus" parameterType="map">
+	UPDATE tbl_product
+	   SET selling_status = #{statusSelect}
+	 WHERE product_id = #{productId}
+</update>
 
 <update id="update" parameterType="map"> 
 	UPDATE 		tbl_product 

@@ -86,4 +86,12 @@ public class MarketService {
 	public int selectSellingCount(String uid, String searchValue) {
 		return marketDAO.selectSellingCount(uid, searchValue);
 	}
+
+	public void updateStatus(String productId, String statusSelect, String statusSelectBefore) {
+		if (!(("complete".equals(statusSelect) || "processing".equals(statusSelect))
+				&& "processing".equals(statusSelectBefore))) {
+			dealDAO.deleteProduct(productId);
+		}
+		marketDAO.updateStatus(productId, statusSelect);
+	}
 }
