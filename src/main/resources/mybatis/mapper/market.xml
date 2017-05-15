@@ -86,7 +86,73 @@
 			  AND	   p.product_id = #{productId}
 </select>
 
+<select id ="selectSellingCount" parameterType="map" resultType="int">
+			SELECT     COUNT(product_id)
+      		 FROM      tbl_product 
+            WHERE      seller_uid = #{uid}
+            <if test="searchValue != null or searchValue != ''">
+              AND	   product_name LIKE CONCAT('%', #{searchValue}, '%')
+            </if>
+</select>
 
+<select id ="selectSellingList" parameterType="map" resultType="map">
+		    SELECT   merg.product_id, merg.product_name, merg.price, merg.size, merg.quality,
+				     merg.deal_means, merg.safe_deal, merg.seller_uid, merg.update_date,
+					 merg.selling_status, merg.img_url, merg.category_name, merg.user_name, 
+					 merg.user_rank, merg.purchaser_uid, merg.purchaser_name, merg.purchaser_rank, merg.like_count, 
+					 merg.complain_count, merg.comment_count, hit.hits_count
+			FROM	 (		  SELECT     merg.product_id, merg.product_name, merg.price, merg.size, merg.quality,
+										 merg.deal_means, merg.safe_deal, merg.seller_uid, merg.update_date,
+										 merg.selling_status, merg.img_url, merg.category_name, merg.user_name, 
+										 merg.user_rank, merg.purchaser_uid, merg.purchaser_name, merg.purchaser_rank, merg.like_count, 
+										 merg.complain_count, comm.comment_count
+								FROM	 (SELECT   merg.product_id, merg.product_name, merg.price, merg.size, merg.quality,
+												   merg.deal_means, merg.safe_deal, merg.seller_uid, merg.update_date,
+												   merg.selling_status, merg.img_url, merg.category_name, merg.user_name, 
+												   merg.user_rank,merg.purchaser_uid, merg.purchaser_name, merg.purchaser_rank, merg.like_count, comp.complain_count
+										  FROM     (			SELECT     merg.product_id, merg.product_name, merg.price, merg.size, merg.quality,
+																		   merg.deal_means, merg.safe_deal, merg.seller_uid, merg.update_date,
+																		   merg.selling_status, merg.img_url, merg.category_name, merg.user_name, 
+																		   merg.user_rank, merg.purchaser_uid, merg.purchaser_name, merg.purchaser_rank, lik.like_count
+																 FROM    
+																		  (SELECT 				   merg.product_id, merg.product_name, merg.price, merg.size, merg.quality,
+																								   merg.deal_means, merg.safe_deal, merg.seller_uid, merg.update_date,
+																								   merg.selling_status, merg.img_url, merg.category_name, merg.user_name, 
+																								   merg.user_rank, merg0.purchaser_uid, merg0.purchaser_name, merg0.purchaser_rank
+																			FROM
+																			
+																			
+																			(			SELECT     p.product_id, product_name, price, size, quality,
+																								   deal_means, safe_deal, seller_uid, update_date,
+																								   selling_status, i.img_url, c.category_name, m.user_name, 
+																								   m.user_rank
+																						 FROM      tbl_product p 
+																			  LEFT OUTER JOIN      (SELECT product_id, img_url FROM tbl_product_img WHERE img_main = 1) i
+																						   ON      i.product_id = p.product_id, tbl_category c, tbl_member m
+																						WHERE      p.seller_uid = #{uid}
+																						  AND      p.seller_uid = m.uid
+																						  AND      p.category_id = c.category_id
+																			              <if test="searchValue != null or searchValue != ''">
+																						  AND	   product_name LIKE CONCAT('%', #{searchValue}, '%')
+																						  </if>
+																			              ) merg
+																			  LEFT OUTER JOIN	   (SELECT deal.product_id, deal.purchaser_uid, 
+																			  							   m.user_name purchaser_name, m.user_rank purchaser_rank 
+																									  FROM tbl_deal deal, tbl_member m 
+																									 WHERE deal.purchaser_uid = m.uid
+																			                        ) merg0
+																						   ON      merg0.product_id = merg.product_id) merg
+													  LEFT OUTER JOIN      (select product_id, COUNT(product_id) like_count from tbl_like GROUP BY product_id) lik
+																   ON      merg.product_id = lik.product_id) merg 
+													LEFT OUTER JOIN       (select product_id, COUNT(product_id) complain_count from tbl_complain GROUP BY product_id) comp 
+																 ON		  merg.product_id = comp.product_id) merg
+					 LEFT OUTER JOIN     (select product_id, COUNT(product_id) comment_count from tbl_comment GROUP BY product_id) comm
+								  ON     merg.product_id = comm.product_id) merg
+ LEFT OUTER JOIN     (select product_id, hits hits_count from tbl_hits) hit
+			  ON     merg.product_id = hit.product_id
+		ORDER BY     merg.selling_status DESC, merg.update_date DESC
+		LIMIT  #{firstIndex}, #{rowsPerPage}
+</select>
 
 <insert id="insert" parameterType="map"> 
 	INSERT INTO tbl_product 
@@ -127,6 +193,11 @@
         	 	 )
 </insert>
 
+<update id="updateStatus" parameterType="map">
+	UPDATE tbl_product
+	   SET selling_status = #{statusSelect}
+	 WHERE product_id = #{productId}
+</update>
 
 <update id="update" parameterType="map"> 
 	UPDATE 		tbl_product 
@@ -150,5 +221,9 @@
         	 	 </if>
 	WHERE        product_id =#{productId}
 </update>
+	<delete id="deleteProduct" parameterType="string">
+			DELETE FROM tbl_product
+			  	  WHERE product_id =#{productId}
+	</delete>
 
 </mapper>

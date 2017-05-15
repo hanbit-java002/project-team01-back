@@ -1,5 +1,6 @@
 package com.resell.hp.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -8,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.resell.hp.controller.LikeController;
 import com.resell.hp.dao.LikeDAO;
+import com.resell.hp.dao.MarketDAO;
 
 @Service
 public class LikeService {
@@ -18,6 +19,18 @@ public class LikeService {
 	
 	@Autowired 
 	private LikeDAO likeDAO;
+	
+	@Autowired 
+	private MarketDAO marketDAO;
+	
+	public List<Map<String,Object>> selectProductList(Map filterInfo){
+		
+		return marketDAO.selectProductList(filterInfo);
+	}
+
+	public int selectCount(Map filterInfo) {
+		return marketDAO.selectCount(filterInfo);
+	}
 	
 	//Like 추가
 	@Transactional

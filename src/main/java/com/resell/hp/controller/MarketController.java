@@ -27,6 +27,7 @@ public class MarketController {
 	private MarketService marketService;
 	@Autowired
 	private FileService fileService;
+
 	
 	@SignInRequired
 	@RequestMapping(value="/selling", method = RequestMethod.POST)
@@ -42,7 +43,7 @@ public class MarketController {
 		String[] arrImgSrc = request.getParameterValues("arrImgSrc");
 		int mainImgIndex = Integer.parseInt(request.getParameter("mainImgIndex"));
 		String dealMeans = request.getParameter("dealMeans");
-		String directPlace = request.getParameter("dealPlace");
+		String directPlace = request.getParameter("directPlace");
 		boolean safeDeal = Boolean.parseBoolean(request.getParameter("safeDeal"));
 		String loginId =(String) session.getAttribute("uid");
 		String deliveryCheck= request.getParameter("deliveryCheck");
@@ -78,9 +79,6 @@ public class MarketController {
 	
 	@RequestMapping(value="/list", method = RequestMethod.POST)
 	public Map productList(HttpServletRequest request) {
-
-		
-		
 		String brandId = request.getParameter("brandId");
 		String searchValue = request.getParameter("searchValue");
 		String seriesId = request.getParameter("seriesId");
@@ -113,8 +111,10 @@ public class MarketController {
 	}
 	@SignInRequired
 	@RequestMapping(value="/getProduct", method = RequestMethod.GET)
-	public Map getProduct(HttpSession session, @RequestParam("productId") String productId) {
+	public Map getProduct(@RequestParam("productId") String productId, HttpSession session) {
+		System.out.println(productId);
 		String sessionUid = (String) session.getAttribute("uid");
+		System.out.println(sessionUid);
 		Map productData = marketService.getProduct(productId);
 		String sellerUid = (String) productData.get("seller_uid");
 		
@@ -129,7 +129,6 @@ public class MarketController {
 			result.put("valid", "no");
 		}
 		return result;
-		
 	}
 	
 	@SignInRequired
@@ -143,16 +142,19 @@ public class MarketController {
 		String seriesId = request.getParameter("seriesId");
 		int price = Integer.parseInt(request.getParameter("price"));
 		String quality = request.getParameter("qualityId");
-		String detail = request.getParameter("detail");
-		String[] arrImgSrc = request.getParameterValues("arrImgSrc");
-		int mainImgIndex = Integer.parseInt(request.getParameter("mainImgIndex"));
+		String detail = request.getParameter("detail");		
 		String dealMeans = request.getParameter("dealMeans");
-		String directPlace = request.getParameter("dealPlace");
+		String directPlace = request.getParameter("directPlace");
 		boolean safeDeal = Boolean.parseBoolean(request.getParameter("safeDeal"));
 		String deliveryCheck= request.getParameter("deliveryCheck");
 		String status= request.getParameter("status");
 		
-		System.out.println("시리즈"+seriesId);
+		String[] arrImgSrc = request.getParameterValues("arrImgSrc");
+		String[] arrDelImgId = request.getParameterValues("arrDelImgId");
+		String mainImg = request.getParameter("mainImg");
+		String beforeMainImg = request.getParameter("beforeMainImg");
+		System.out.println(status);
+		
 		Map productInfo = new HashMap<String, Object>();
 		productInfo.put("productId",productId);
 		productInfo.put("productName",productName);
@@ -166,13 +168,19 @@ public class MarketController {
 		productInfo.put("dealMeans",dealMeans);
 		productInfo.put("directPlace",directPlace);
 		productInfo.put("safeDeal",safeDeal);
-		productInfo.put("status","selling");
 		productInfo.put("deliveryCheck", deliveryCheck);
 		productInfo.put("status", status);
 		
+		System.out.println(productInfo);
+		
 		Map productImgInfo = new HashMap<String, Object>();
-		productImgInfo.put("arrImgSrc",arrImgSrc);
-		productImgInfo.put("mainImgIndex",mainImgIndex);
+		productImgInfo.put("productId",productId);
+		productImgInfo.put("arrImgSrc", arrImgSrc);
+		productImgInfo.put("arrDelImgId", arrDelImgId);
+		productImgInfo.put("mainImg", mainImg);
+		productImgInfo.put("beforeMainImg", beforeMainImg);
+		
+		System.out.println(productImgInfo);
 		
 		marketService.update(productInfo, productImgInfo);
 		
@@ -181,6 +189,54 @@ public class MarketController {
 		
 		return result;
 		
+	}
+	@SignInRequired
+	@RequestMapping(value="/delete", method = RequestMethod.POST)
+	public Map deleteProduct(@RequestParam("productId") String productId,
+			@RequestParam("sellerUid") String sellerUid, HttpSession session) {
+		Map result = new HashMap();
+		String sessionUid= (String) session.getAttribute("uid");
+		
+		if (!sellerUid.equals(sessionUid)) {
+			result.put("result", "no");
+			return result;
+		}
+		
+		marketService.deleteProduct(productId);
+		result.put("result", "ok");
+		
+		return result;
+	}
+	
+	@SignInRequired
+	@RequestMapping(value="/sellingList", method = RequestMethod.GET)
+	public Map getsellingList(@RequestParam("page") int page, 
+			@RequestParam("rowsPerPage") int rowsPerPage, 
+			@RequestParam("searchValue") String searchValue, HttpSession session) {
+		String uid = (String) session.getAttribute("uid");		
+		Map result = new HashMap();
+		System.out.println(searchValue);
+		
+		int listCount = marketService.selectSellingCount(uid, searchValue);
+		List list= marketService.selectSellingList(uid, page, rowsPerPage, searchValue);
+		
+		result.put("listCount", listCount);
+		result.put("list", list);
+	
+		return result;
+	}
+	
+	@SignInRequired
+	@RequestMapping(value="/updateStatus", method = RequestMethod.GET)
+	public Map updateStatus(@RequestParam("productId") String productId,
+			@RequestParam("statusSelect") String statusSelect, 
+			@RequestParam("statusSelectBefore") String statusSelectBefore) {
+		Map result = new HashMap();
+		System.out.println(productId+","+statusSelect+","+statusSelectBefore);
+		marketService.updateStatus(productId, statusSelect, statusSelectBefore);
+		result.put("result", "ok");
+		
+		return result;
 	}
 	
 

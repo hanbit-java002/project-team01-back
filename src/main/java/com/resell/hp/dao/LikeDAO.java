@@ -14,6 +14,19 @@ public class LikeDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	
+	public List<Map<String, Object>> selectProductList(Map filterInfo) {
+		int page = (int) filterInfo.get("page");
+		int rowsPerPage = (int) filterInfo.get("rowsPerPage");
+		System.out.println("page"+page);
+		filterInfo.put("firstIndex", (page) * rowsPerPage);
+		filterInfo.put("rowsPerPage", rowsPerPage);
+		return sqlSession.selectList("market.selectList",filterInfo);		
+	}
+
+	public int selectCount(Map filterInfo) {
+		return sqlSession.selectOne("market.selectCount",filterInfo);
+	}
+	
 	//Like 추가
 	public int addLike(String productId, String uid) {		
 		Map param = new HashMap();
@@ -43,5 +56,10 @@ public class LikeDAO {
 		param.put("uid", uid);
 		
 		return sqlSession.selectOne("like.hasLike", param);
+	}
+
+	public void deleteProduct(String productId) {
+		System.out.println("라이크: "+ productId);
+		sqlSession.delete("like.deleteProduct", productId);
 	}
 }

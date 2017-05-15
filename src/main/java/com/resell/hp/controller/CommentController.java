@@ -69,5 +69,34 @@ public class CommentController {
 		}
 	}
 	
+	//remove comment
+	@RequestMapping(value="/remove/{productId}", method=RequestMethod.GET)
+	public Map removeComment(HttpSession session, 
+			@PathVariable("productId") String productId,
+			@RequestParam("commentId") String commentId) {
+		
+		String uid = (String) session.getAttribute("uid");
+		commentService.removeComment(productId, commentId, uid);
+		
+		Map result = new HashMap();
+		result.put(result, "ok");
+		return result;
+	}
+	
+	//update comment
+	@RequestMapping(value="/update/{productId}", method=RequestMethod.GET)
+	public Map modify(HttpSession session,
+			@PathVariable("productId") String productId,
+			@RequestParam("commentId") String commentId,
+		@RequestParam("newCommentText") String newCommentText) {
+		
+		String uid = (String) session.getAttribute("uid");
+		commentService.modify(productId, commentId, newCommentText, uid);
+		
+		Map result = new HashMap();
+		result.put(result, "ok");
+	
+		return result;
+	}
 
 }
