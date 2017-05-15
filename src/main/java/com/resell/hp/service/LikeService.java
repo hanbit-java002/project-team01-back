@@ -1,5 +1,6 @@
 package com.resell.hp.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -18,6 +19,15 @@ public class LikeService {
 	
 	@Autowired 
 	private LikeDAO likeDAO;
+	
+	public List<Map<String,Object>> selectProductList(Map filterInfo){
+		
+		return marketDAO.selectProductList(filterInfo);
+	}
+
+	public int selectCount(Map filterInfo) {
+		return marketDAO.selectCount(filterInfo);
+	}
 	
 	//Like 추가
 	@Transactional
