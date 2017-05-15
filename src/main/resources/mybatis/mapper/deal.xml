@@ -10,8 +10,15 @@
 	
 	<insert id="addDeal" parameterType="map">
 		INSERT INTO tbl_deal
-  			(deal_id, product_id, purchaser_uid, user_name, phone_num, deal_means, safe_deal, direct_place, zipcode, address)
+  			(deal_id, product_id, purchaser_uid, user_name, phone_num, deal_means, safe_deal, direct_place, zipcode, address, deal_time)
   		VALUES
-  			(#{dealId}, #{productId}, #{purchaserUid}, #{userName}, #{phoneNum}, #{dealMeans}, #{safeDeal}, #{directPlace}, #{zipcode}, #{address})
+  			(#{dealId}, #{productId}, #{purchaserUid}, #{userName}, #{phoneNum}, #{dealMeans}, #{safeDeal}, #{directPlace}, #{zipcode}, #{address}, DATE_FORMAT(NOW(),"%Y%m%d%H%i%s"))
 	</insert>
+	
+	<select id="selectPurchaserInfo" parameterType="map" resultType="map">
+		SELECT *
+		  FROM tbl_deal
+		 WHERE product_id = #{productId}
+		   AND purchaser_uid = #{purchaserUid}
+	</select>
 </mapper>

@@ -36,4 +36,13 @@ public class DealDAO {
 		return sqlSession.insert("deal.addDeal", param);
 	}
 
+	// 구매자 정보 가져오기
+	public Map selectPurchaserInfo(String productId, String purchaserUid) {
+		
+		Map param = new HashMap();
+		param.put("productId", productId);
+		param.put("purchaserUid", purchaserUid);
+		
+		return sqlSession.selectOne("deal.selectPurchaserInfo", param);
+	}
 }

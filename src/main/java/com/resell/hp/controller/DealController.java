@@ -43,4 +43,14 @@ public class DealController {
 		
 		return result;
 	}
+	
+	
+	// 구매자 정보 가져오기
+	@SignInRequired
+	@RequestMapping(value="/purchaser/{productId}", method=RequestMethod.GET)
+	public Map getPurchaserInfo(HttpSession session, @PathVariable("productId") String productId) {
+		
+		String purchaserUid = (String) session.getAttribute("uid");
+		return dealService.getPurchaserInfo(productId, purchaserUid);
+	}
 }
