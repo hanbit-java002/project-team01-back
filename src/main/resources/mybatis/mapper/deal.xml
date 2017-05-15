@@ -28,6 +28,12 @@
 		   AND purchaser_uid = #{purchaserUid}
 	</select>
 	
+	<select id="getsellingPurchaser" parameterType="string" resultType="map">
+		SELECT *
+		  FROM tbl_deal d
+		 WHERE product_id = #{productId}
+	</select>
+	
 	<select id="selectUserInfo" parameterType="string" resultType="map">
 		SELECT m.user_name, d.phone_num, d.zip_code, d.addr, d.addr_detail
 		  FROM tbl_member m, tbl_member_detail d

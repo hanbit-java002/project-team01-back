@@ -44,4 +44,8 @@ public class DealService {
 		
 		return dealDAO.selectUserInfo(purchaserUid);
 	}
+
+	public Map getsellingPurchaser(String productId) {
+		return dealDAO.getsellingPurchaser(productId);
+	}
 }
