@@ -35,6 +35,10 @@ public class DealDAO {
 		
 		return sqlSession.insert("deal.addDeal", param);
 	}
+	
+	public int updateStatus(String productId) {
+		return sqlSession.update("deal.updateStatus", productId);
+	}
 
 	// 구매자 정보 가져오기
 	public Map selectPurchaserInfo(String productId, String purchaserUid) {

@@ -15,6 +15,12 @@
   			(#{dealId}, #{productId}, #{purchaserUid}, #{userName}, #{phoneNum}, #{dealMeans}, #{safeDeal}, #{directPlace}, #{zipcode}, #{address}, DATE_FORMAT(NOW(),"%Y%m%d%H%i%s"))
 	</insert>
 	
+	<update id="updateStatus" parameterType="string">
+		UPDATE tbl_product
+		   SET selling_status = "processing"
+		 WHERE product_id = #{productId}
+	</update>	
+	
 	<select id="selectPurchaserInfo" parameterType="map" resultType="map">
 		SELECT *
 		  FROM tbl_deal

@@ -25,6 +25,12 @@ public class DealService {
 				safeDeal, directPlace, zipcode, address, purchaserUid);
 	}
 	
+	@Transactional
+	public int updateStatus(String productId) {
+		
+		return dealDAO.updateStatus(productId);
+	}
+	
 	// 구매자 정보 가져오기
 	@Transactional
 	public Map getPurchaserInfo(String productId, String purchaserUid) {

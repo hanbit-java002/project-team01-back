@@ -37,6 +37,7 @@ public class DealController {
 		String purchaserUid = (String) session.getAttribute("uid");
 		
 		dealService.purchase(productId, userName, phoneNum, dealMeans, safeDeal, directPlace, zipcode, address, purchaserUid);
+		dealService.updateStatus(productId);
 		
 		Map result = new HashMap();
 		result.put("result", "ok");
