@@ -38,4 +38,10 @@ public class DealService {
 		return dealDAO.selectPurchaserInfo(productId, purchaserUid);
 	}
 
+	// 구매자 정보 가져오기
+	@Transactional
+	public Map getUserInfo(String purchaserUid) {
+		
+		return dealDAO.selectUserInfo(purchaserUid);
+	}
 }

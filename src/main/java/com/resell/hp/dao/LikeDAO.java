@@ -14,17 +14,20 @@ public class LikeDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public List<Map<String, Object>> selectProductList(Map filterInfo) {
-		int page = (int) filterInfo.get("page");
-		int rowsPerPage = (int) filterInfo.get("rowsPerPage");
-		System.out.println("page"+page);
-		filterInfo.put("firstIndex", (page) * rowsPerPage);
-		filterInfo.put("rowsPerPage", rowsPerPage);
-		return sqlSession.selectList("market.selectList",filterInfo);		
+	//get like list
+	public List selectLikeList(String uid, int rowsPerPage, int page) {
+		
+		Map param = new HashMap();
+		param.put("uid", uid);
+		param.put("firstIndex", (page) * rowsPerPage);
+		param.put("rowsPerPage", rowsPerPage);
+		System.out.println((page) * rowsPerPage);
+		
+		return sqlSession.selectList("like.selectLikeList", param);		
 	}
 
-	public int selectCount(Map filterInfo) {
-		return sqlSession.selectOne("market.selectCount",filterInfo);
+	public int selectCount(String uid) {
+		return sqlSession.selectOne("like.selectCount", uid);
 	}
 	
 	//Like 추가

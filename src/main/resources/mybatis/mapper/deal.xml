@@ -20,12 +20,18 @@
 		   SET selling_status = "processing"
 		 WHERE product_id = #{productId}
 	</update>
-	
-	
+		
 	<select id="selectPurchaserInfo" parameterType="map" resultType="map">
 		SELECT *
 		  FROM tbl_deal
 		 WHERE product_id = #{productId}
 		   AND purchaser_uid = #{purchaserUid}
+	</select>
+	
+	<select id="selectUserInfo" parameterType="string" resultType="map">
+		SELECT m.user_name, d.phone_num, d.zip_code, d.addr, d.addr_detail
+		  FROM tbl_member m, tbl_member_detail d
+		 WHERE m.uid = #{purchaserUid}
+		   AND d.uid = #{purchaserUid}
 	</select>
 </mapper>
