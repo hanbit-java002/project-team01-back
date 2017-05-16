@@ -49,4 +49,13 @@ public class DealDAO {
 		
 		return sqlSession.selectOne("deal.selectPurchaserInfo", param);
 	}
+	
+	// 구매자 정보 가져오기
+	public Map selectUserInfo(String purchaserUid) {
+		return sqlSession.selectOne("deal.selectUserInfo", purchaserUid);
+	}
+
+	public Map getsellingPurchaser(String productId) {
+		return sqlSession.selectOne("deal.getsellingPurchaser", productId );
+	}
 }

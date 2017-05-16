@@ -13,8 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.resell.hp.annotation.SignInRequired;
 import com.resell.hp.service.LikeService;
 import com.resell.hp.service.MarketService;
 
@@ -27,36 +29,18 @@ public class LikeController {
 	@Autowired
 	private LikeService likeService;
 	
-	@Autowired
-	private MarketService marketService;
-	
-	//get list
-	@RequestMapping(value="/list", method = RequestMethod.POST)
-	public Map productList(HttpServletRequest request) {
-		String brandId = request.getParameter("brandId");
-		String searchValue = request.getParameter("searchValue");
-		String seriesId = request.getParameter("seriesId");
-		String categoryId = request.getParameter("categoryId");
-		String sizeId = request.getParameter("sizeId");
-		String qualityId = request.getParameter("qualityId");
-		String priceFilter = request.getParameter("priceFilter");
-		int rowsPerPage = Integer.parseInt(request.getParameter("rowsPerPage"));
-		int page = Integer.parseInt(request.getParameter("page"));
+	//get like list
+	@SignInRequired
+	@RequestMapping(value="/list", method = RequestMethod.GET)
+	public Map productList(HttpSession session,
+			@RequestParam("rowsPerPage") int rowsPerPage,
+			@RequestParam("page") int page,
+			@RequestParam("searchValue") String searchValue) {
 		
+		String uid = (String) session.getAttribute("uid");
 		
-		Map filterInfo = new HashMap<String, Object>();
-		filterInfo.put("brandId",brandId);
-		filterInfo.put("searchValue",searchValue);
-		filterInfo.put("categoryId",categoryId);
-		filterInfo.put("seriesId",seriesId);
-		filterInfo.put("sizeId",sizeId);
-		filterInfo.put("qualityId",qualityId);  
-		filterInfo.put("priceFilter",priceFilter);
-		filterInfo.put("rowsPerPage", rowsPerPage);
-		filterInfo.put("page", page);
-		
-		List list = marketService.selectProductList(filterInfo);
-		int count = marketService.selectCount(filterInfo);
+		List list = likeService.selectLikeList(uid, rowsPerPage, page, searchValue);
+		int count = likeService.selectCount(uid, searchValue);
 		
 		Map result = new HashMap();
 		result.put("list", list);

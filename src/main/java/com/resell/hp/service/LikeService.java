@@ -19,17 +19,15 @@ public class LikeService {
 	
 	@Autowired 
 	private LikeDAO likeDAO;
-	
-	@Autowired 
-	private MarketDAO marketDAO;
-	
-	public List<Map<String,Object>> selectProductList(Map filterInfo){
 		
-		return marketDAO.selectProductList(filterInfo);
+	//get like list
+	public List selectLikeList(String uid, int rowsPerPage, int page, String searchValue){
+		return likeDAO.selectLikeList(uid, rowsPerPage, page, searchValue);
 	}
 
-	public int selectCount(Map filterInfo) {
-		return marketDAO.selectCount(filterInfo);
+	//count like list
+	public int selectCount(String uid, String searchValue) {
+		return likeDAO.selectCount(uid, searchValue);
 	}
 	
 	//Like 추가
