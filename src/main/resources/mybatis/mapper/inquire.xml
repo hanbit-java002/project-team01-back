@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="inquire">
+
+	<select id ="selectInquireList" parameterType="map" resultType="map">
+		SELECT p.product_id, p.product_name, p.category_id, p.price, p.brand_id,
+			   p.seller_uid, p.size, p.quality, p.deal_means, p.safe_deal,
+			   p.update_date, p.selling_status,
+			   ct.category_name, i.img_url,
+			   cm.comment_id, cm.upper_id, cm.comment_time, cm.comment_contents
+		  FROM (
+		  	SELECT *
+		  	  FROM tbl_comment
+		  	 WHERE uid = #{uid}) cm, tbl_category ct, tbl_product_img i, tbl_product p
+		 WHERE cm.product_id = p.product_id
+		   AND p.category_id = ct.category_id
+		   AND p.product_id = i.product_id
+		   AND i.img_main = "1"
+		 <if test="searchValue != ''">
+		   AND p.product_name LIKE CONCAT('%', #{searchValue}, '%')
+		 </if>
+		 ORDER BY p.update_date DESC
+		 LIMIT #{firstIndex}, #{rowsPerPage}
+	</select>
+	
+	<select id ="selectAnswer" parameterType="map" resultType="map">
+		SELECT *
+		  FROM tbl_comment
+		 WHERE upper_id = #{inquireId}
+		   AND uid = #{sellerUid}
+	</select>
+
+	<select id ="selectCount" parameterType="map" resultType="int">
+		SELECT COUNT(cm.product_id) AS count
+      	  FROM tbl_comment cm, tbl_product p 
+      	 WHERE cm.uid = #{uid}
+      	 <if test="searchValue != undefined">
+      	   AND cm.product_id = p.product_id
+		   AND p.product_name LIKE CONCAT('%', #{searchValue}, '%')
+		 </if>
+	</select>
+	
+</mapper>
