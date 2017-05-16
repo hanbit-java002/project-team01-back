@@ -25,6 +25,18 @@
 	      		 FROM      tbl_product
 	      	    WHERE	   product_id != "0"
 	</select>
-		
+	
+	<select id ="selectStatusCount" parameterType="map" resultType="int">
+				SELECT     COUNT(selling_status) AS status_count
+	      		 FROM      tbl_product
+	      	    WHERE	   selling_status = #{menuCategory}
+	</select>
+	
+	
+	<update id="updateStatus" parameterType="map">
+ 		UPDATE tbl_product
+ 		   SET selling_status = #{menuCategory}
+ 		 WHERE product_id = #{productId}
+ 	</update>
 	
 </mapper>

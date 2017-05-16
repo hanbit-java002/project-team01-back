@@ -30,4 +30,14 @@ public class AdminProductService {
 	public int selectCount(Map filterInfo) {
 		return adminProductDAO.selectCount(filterInfo);
 	}
+	
+	public int selectStatusCount(Map filterInfo) {
+		return adminProductDAO.selectStatusCount(filterInfo);
+	}
+
+
+
+	public int convert(String menuCategory, String productId) {
+		return adminProductDAO.updateStatus(menuCategory, productId);
+	}
 }
