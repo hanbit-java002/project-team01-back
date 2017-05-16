@@ -15,19 +15,24 @@ public class LikeDAO {
 	private SqlSession sqlSession;
 	
 	//get like list
-	public List selectLikeList(String uid, int rowsPerPage, int page) {
+	public List selectLikeList(String uid, int rowsPerPage, int page, String searchValue) {
 		
 		Map param = new HashMap();
 		param.put("uid", uid);
 		param.put("firstIndex", (page) * rowsPerPage);
 		param.put("rowsPerPage", rowsPerPage);
+		param.put("searchValue", searchValue);
 		System.out.println((page) * rowsPerPage);
 		
 		return sqlSession.selectList("like.selectLikeList", param);		
 	}
 
-	public int selectCount(String uid) {
-		return sqlSession.selectOne("like.selectCount", uid);
+	public int selectCount(String uid, String searchValue) {
+		Map param = new HashMap();
+		param.put("uid", uid);
+		param.put("searchValue", searchValue);
+		System.out.println(searchValue);
+		return sqlSession.selectOne("like.selectCount", param);
 	}
 	
 	//Like 추가

@@ -16,14 +16,21 @@
 		   AND p.product_id = i.product_id
 		   AND i.img_main = "1"
 		   AND p.seller_uid = m.uid
+		 <if test="searchValue != ''">
+		   AND p.product_name LIKE CONCAT('%', #{searchValue}, '%')
+		 </if>
 		 ORDER BY p.update_date DESC
 		 LIMIT #{firstIndex}, #{rowsPerPage}
 	</select>
 
-	<select id ="selectCount" parameterType="string" resultType="int">
-		SELECT COUNT(product_id) AS count
-      	  FROM tbl_like
-      	 WHERE uid = #{uid}
+	<select id ="selectCount" parameterType="map" resultType="int">
+		SELECT COUNT(l.product_id) AS count
+      	  FROM tbl_like l, tbl_product p 
+      	 WHERE l.uid = #{uid}
+      	 <if test="searchValue != undefined">
+      	   AND l.product_id = p.product_id
+		   AND p.product_name LIKE CONCAT('%', #{searchValue}, '%')
+		 </if>
 	</select>
 
 	<select id="countLike" parameterType="string" resultType="int">

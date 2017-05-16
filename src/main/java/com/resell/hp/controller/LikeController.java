@@ -34,12 +34,13 @@ public class LikeController {
 	@RequestMapping(value="/list", method = RequestMethod.GET)
 	public Map productList(HttpSession session,
 			@RequestParam("rowsPerPage") int rowsPerPage,
-			@RequestParam("page") int page) {
+			@RequestParam("page") int page,
+			@RequestParam("searchValue") String searchValue) {
 		
 		String uid = (String) session.getAttribute("uid");
 		
-		List list = likeService.selectLikeList(uid, rowsPerPage, page);
-		int count = likeService.selectCount(uid);
+		List list = likeService.selectLikeList(uid, rowsPerPage, page, searchValue);
+		int count = likeService.selectCount(uid, searchValue);
 		
 		Map result = new HashMap();
 		result.put("list", list);

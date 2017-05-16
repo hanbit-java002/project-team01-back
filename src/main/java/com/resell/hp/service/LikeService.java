@@ -21,13 +21,13 @@ public class LikeService {
 	private LikeDAO likeDAO;
 		
 	//get like list
-	public List selectLikeList(String uid, int rowsPerPage, int page){
-		return likeDAO.selectLikeList(uid, rowsPerPage, page);
+	public List selectLikeList(String uid, int rowsPerPage, int page, String searchValue){
+		return likeDAO.selectLikeList(uid, rowsPerPage, page, searchValue);
 	}
 
 	//count like list
-	public int selectCount(String uid) {
-		return likeDAO.selectCount(uid);
+	public int selectCount(String uid, String searchValue) {
+		return likeDAO.selectCount(uid, searchValue);
 	}
 	
 	//Like 추가
