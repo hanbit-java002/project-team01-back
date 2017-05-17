@@ -36,8 +36,17 @@ public class AdminProductService {
 	}
 
 
-
+	
+	//selling_status 변경
 	public int convert(String menuCategory, String productId) {
 		return adminProductDAO.updateStatus(menuCategory, productId);
+	}
+	
+	//검색리스트
+	public List<Map<String,Object>> selectSearchList(Map filterInfo){
+		return adminProductDAO.selectSearchList(filterInfo);
+	}
+	public int selectSearchCount(String menuCategory, String searchValue) {
+		return adminProductDAO.selectSearchCount(menuCategory, searchValue);
 	}
 }

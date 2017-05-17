@@ -66,5 +66,34 @@ public class AdminProductController {
 		
 		return result;
 	}	
+	
+	
+	//검색 리스트
+	@RequestMapping(value="/searchList", method = RequestMethod.GET)
+	public Map getSearchList(@RequestParam("menuCategory") String menuCategory,
+							  @RequestParam("searchValue") String searchValue,
+							  @RequestParam("rowsPerPage") int rowsPerPage,
+							  @RequestParam("page") int page) {
+
+		Map filterInfo = new HashMap<String, Object>();
+		filterInfo.put("menuCategory",menuCategory);
+		filterInfo.put("searchValue", searchValue);
+		filterInfo.put("rowsPerPage", rowsPerPage);
+		filterInfo.put("page", page);
+		
+		List list = adminProductService.selectSearchList(filterInfo);
+		int count = adminProductService.selectSearchCount(menuCategory, searchValue);
+		int statusCount = adminProductService.selectStatusCount(filterInfo);
+
+		System.out.println("count " + count);
+		System.out.println("statusCount " + statusCount);
+		System.out.println(searchValue);
+		
+		Map result = new HashMap();
+		result.put("list", list);
+		result.put("count", count);
+		result.put("statusCount", statusCount);
+		return result;
+	}
 
 }
