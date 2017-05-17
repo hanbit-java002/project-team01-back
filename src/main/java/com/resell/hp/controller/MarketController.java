@@ -210,7 +210,7 @@ public class MarketController {
 	
 	@SignInRequired
 	@RequestMapping(value="/sellingList", method = RequestMethod.GET)
-	public Map getsellingList(@RequestParam("page") int page, 
+	public Map getSellingList(@RequestParam("page") int page, 
 			@RequestParam("rowsPerPage") int rowsPerPage, 
 			@RequestParam("searchValue") String searchValue, HttpSession session) {
 		String uid = (String) session.getAttribute("uid");		
@@ -219,6 +219,24 @@ public class MarketController {
 		
 		int listCount = marketService.selectSellingCount(uid, searchValue);
 		List list= marketService.selectSellingList(uid, page, rowsPerPage, searchValue);
+		
+		result.put("listCount", listCount);
+		result.put("list", list);
+	
+		return result;
+	}
+	
+	@SignInRequired
+	@RequestMapping(value="/purchaseList", method = RequestMethod.GET)
+	public Map getPurchaseList(@RequestParam("page") int page, 
+			@RequestParam("rowsPerPage") int rowsPerPage, 
+			@RequestParam("searchValue") String searchValue, HttpSession session) {
+		String uid = (String) session.getAttribute("uid");		
+		Map result = new HashMap();
+		System.out.println(searchValue);
+		
+		int listCount = marketService.selectPurchaseCount(uid, searchValue);
+		List list= marketService.selectPurchaseList(uid, page, rowsPerPage, searchValue);
 		
 		result.put("listCount", listCount);
 		result.put("list", list);

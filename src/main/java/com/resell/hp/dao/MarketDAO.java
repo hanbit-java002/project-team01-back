@@ -60,6 +60,22 @@ public class MarketDAO {
 		sellinginfo.put("searchValue", searchValue);
 		return sqlSession.selectOne("market.selectSellingCount", sellinginfo);
 	}
+	
+	public List selectPurchaseList(String uid, int page, int rowsPerPage, String searchValue) {
+		Map sellinginfo = new HashMap();
+		sellinginfo.put("uid", uid);
+		sellinginfo.put("firstIndex", (page)*rowsPerPage);
+		sellinginfo.put("rowsPerPage", rowsPerPage);
+		sellinginfo.put("searchValue", searchValue);
+		return sqlSession.selectList("market.selectPurchaseList", sellinginfo);
+	}
+	
+	public int selectPurchaseCount(String uid, String searchValue) {
+		Map sellinginfo = new HashMap();
+		sellinginfo.put("uid", uid);
+		sellinginfo.put("searchValue", searchValue);
+		return sqlSession.selectOne("market.selectPurchaseCount", sellinginfo);
+	}
 
 	public void updateStatus(String productId, String statusSelect) {
 		Map updateInfo = new HashMap();
