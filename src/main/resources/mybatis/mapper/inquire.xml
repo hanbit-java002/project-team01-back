@@ -18,6 +18,7 @@
 		   AND p.category_id = ct.category_id
 		   AND p.product_id = i.product_id
 		   AND i.img_main = "1"
+		   AND p.seller_uid != #{uid}
 		 <if test="searchValue != ''">
 		   AND p.product_name LIKE CONCAT('%', #{searchValue}, '%')
 		 </if>
@@ -36,6 +37,7 @@
 		SELECT COUNT(cm.product_id) AS count
       	  FROM tbl_comment cm, tbl_product p 
       	 WHERE cm.uid = #{uid}
+      	   AND p.seller_uid != #{uid}
       	 <if test="searchValue != undefined">
       	   AND cm.product_id = p.product_id
 		   AND p.product_name LIKE CONCAT('%', #{searchValue}, '%')
