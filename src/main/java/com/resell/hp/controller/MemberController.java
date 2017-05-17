@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -255,5 +256,55 @@ public class MemberController {
 		
 		return result;
 	}
-   
+	   
+	   @RequestMapping(value = "/api/member/emailConfirmMail", method=RequestMethod.POST)
+	   public Map sendMailConfirmMail(@RequestParam("userEmail") String userId, HttpSession session) {
+		   String subject = "[Resll] 인증확인 이메일 입니다.";			   
+		   Random random = new Random();
+		   String num = String.format("%06d",(random.nextInt(1000000)));
+		   
+		   String cfmNum= "CFM" + num;
+		   String isExist= memberService.getUid(userId);
+		   if( !(isExist == null || "".equals(isExist))) {
+			   throw new RuntimeException("가입된 아이디입니다.");
+		   }
+		   else {
+			   Map result = new HashMap<>();
+			   
+			   try {
+					   MimeMessage message = mailSender.createMimeMessage();
+					   MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8"); 
+					   messageHelper.setTo(userId);	//받는사람 이메일 
+					   messageHelper.setText(userId + " 님의 \n 인증번호는 [ " + cfmNum + " ] 입니다."
+					   		+ "\n\n* 인증번호를 입력해주세요."); 	//본문
+					   messageHelper.setFrom(from); 
+					   messageHelper.setSubject(subject);	// 메일제목은 생략 가능하다
+						   
+					   mailSender.send(message); 
+				} 
+				catch(Exception e) { 
+					   System.out.println(e); 
+				}
+			   session.setAttribute("emailCfm", cfmNum);
+			   
+			   	result.put("result", "ok");			   	
+			   	return result; 
+		   }
+	   }
+	   
+	   @RequestMapping(value = "/api/member/emailConfirm", method=RequestMethod.POST)
+	   public Map sendMailConfirm(@RequestParam("cfm") String cfm ,HttpSession session) {
+		   Map result = new HashMap();
+		   String emailCfm =(String) session.getAttribute("emailCfm");
+		   if (emailCfm.equals(cfm)) {
+			   
+			   result.put("result", "ok");
+		   }
+		   else {
+			   result.put("result", "no");
+			   throw new RuntimeException("틀린 인증번호 입니다.");
+		   }
+		   return result; 
+	   }
+
 }
