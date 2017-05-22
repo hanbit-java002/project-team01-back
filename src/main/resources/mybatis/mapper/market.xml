@@ -69,21 +69,29 @@
 </select>
 
 <select id ="selectProduct" parameterType="string" resultType="map">
-			SELECT     p.product_id, product_name, price, 
+	SELECT product_id, product_name, price, 
+		   size, quality, deal_means, safe_deal, 
+		   seller_uid, update_date, selling_status, 
+		   description, direct_place, delivery_check,
+		   p.brand_id, brand_name, category_id, 
+		   category_name, p.series_id, s.series_name,
+		   user_name, phone_num
+	  FROM (SELECT     p.product_id, product_name, price, 
 					   size, quality, deal_means, safe_deal, 
 					   seller_uid, update_date, selling_status, 
 					   description, direct_place, delivery_check,
-           		       p.brand_id, b.brand_name, p.category_id, 
-           		       c.category_name, p.series_id, s.series_name, 
-           		       m.user_name, md.phone_num
-      		 FROM      tbl_product p , tbl_category c, tbl_member m, 
-      		 		   tbl_member_detail md, tbl_brand b, tbl_series s
-            WHERE      p.category_id = c.category_id
-		      AND      p.seller_uid = m.uid
-		      AND	   P.seller_uid = md.uid
-		      AND	   p.brand_id = b.brand_id
-		      AND	   p.series_id = s.series_id
-			  AND	   p.product_id = #{productId}
+					   p.brand_id, b.brand_name, p.category_id, 
+					   c.category_name, p.series_id,
+					   m.user_name, md.phone_num
+			 FROM      tbl_product p , tbl_category c, tbl_member m, 
+					   tbl_member_detail md, tbl_brand b
+			WHERE      p.category_id = c.category_id
+			  AND      p.seller_uid = m.uid
+			  AND	   P.seller_uid = md.uid
+			  AND	   p.brand_id = b.brand_id
+			  AND	   p.product_id = #{productId}) p
+			LEFT OUTER JOIN tbl_series s
+	 ON p.series_id = s.series_id;
 </select>
 
 <select id ="selectSellingCount" parameterType="map" resultType="int">
