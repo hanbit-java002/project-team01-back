@@ -49,6 +49,7 @@ public class LikeController {
 	}
 	
 	// Like 추가
+	@SignInRequired
 	@RequestMapping(value="/add/{productId}", method=RequestMethod.GET)
 	public Map addLike(HttpSession session, @PathVariable("productId") String productId) {
 		try {
@@ -68,6 +69,7 @@ public class LikeController {
 	}
 	
 	//Like 삭제
+	@SignInRequired
 	@RequestMapping(value="/cancel/{productId}", method=RequestMethod.GET)
 	public Map cancelLike(HttpSession session, @PathVariable("productId") String productId) {
 		String uid = (String) session.getAttribute("uid");

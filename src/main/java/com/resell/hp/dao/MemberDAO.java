@@ -107,7 +107,7 @@ public class MemberDAO {
 	
 	/* 회원 삭제(탈퇴) */
 	public int drop(String uid) {
-		return sqlSession.insert("member.RankToDrop", uid);
+		return sqlSession.update("member.RankToDrop", uid);
 	}
 	
 }

@@ -52,12 +52,20 @@ public class MemberController {
 	public Map signIn(@RequestParam("userId") String userId, 
 					  @RequestParam("userPw") String userPw,
 					  HttpServletRequest request) {
-		
+		  String uid = memberService.getUid(userId);
+	      String userRank = memberService.getRank(uid);
+	      
 	      try {
 	          if(!memberService.isValidMember(userId, userPw)) {
 	            LOGGER.warn("패스워드 틀림:" + userId + "/" + userPw);
 	             
 	             throw new RuntimeException("패스워드가 다릅니다.");
+	          }
+	          else if ("blind".equals(userRank)) {
+	        	  throw new RuntimeException("블라인드된 회원입니다.");
+	          }
+	          else if ("drop".equals(userRank)) {
+	        	  throw new RuntimeException("탈퇴한 회원입니다.");
 	          }
 	       }
 	       catch (NullPointerException e) {
@@ -66,8 +74,6 @@ public class MemberController {
 	      
 	      //로그인 세션 저장//
 	      HttpSession session = request.getSession();
-	      String uid = memberService.getUid(userId);
-	      String userRank = memberService.getRank(uid);
 	     
 	      session.setAttribute("signedIn", true);
 	      session.setAttribute("uid", uid);
