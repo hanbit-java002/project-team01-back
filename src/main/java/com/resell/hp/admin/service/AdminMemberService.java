@@ -36,9 +36,7 @@ public class AdminMemberService {
 	
 	
 	/* 회원 삭제(탈퇴) */
-	public int remove(String uid) {	
-		adminMemberDAO.deleteDetail(uid);	//디테일 부터 지운 후
-		
-		return adminMemberDAO.delete(uid);	//원래 꺼 지운다.
+	public int drop(String uid) {	
+		return adminMemberDAO.drop(uid);	
 	}
 }

@@ -247,7 +247,7 @@ public class MemberController {
 	          throw new RuntimeException(e);
 	    }
 	
-		memberService.remove(userUid);
+		memberService.drop(userUid);
 		
 		session.invalidate();	//세션 끊기(로그아웃)
 		

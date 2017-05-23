@@ -51,11 +51,7 @@ public class AdminMemberDAO {
 	
 	
 	/* 회원 삭제(탈퇴) */
-	public int delete(String uid) {
-		return sqlSession.delete("admin.adminMember.delete", uid);
-	}
-	
-	public int deleteDetail(String uid) {
-		return sqlSession.delete("admin.adminMember.deleteDetail", uid);
+	public int drop(String uid) {
+		return sqlSession.insert("admin.adminMember.RankToDrop", uid);
 	}
 }

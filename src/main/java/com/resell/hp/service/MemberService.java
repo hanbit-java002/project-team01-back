@@ -110,10 +110,8 @@ public class MemberService {
 	
 	
 	/* 회원 삭제(탈퇴) */
-	public int remove(String uid) {	
-		memberDAO.deleteDetail(uid);	//디테일 부터 지운 후
-		
-		return memberDAO.delete(uid);	//원래 꺼 지운다.
+	public void drop(String uid) {	
+		memberDAO.drop(uid);	
 	}
 
 }

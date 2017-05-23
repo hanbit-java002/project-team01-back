@@ -53,6 +53,7 @@ public class AdminProductController {
 		return result;
 	}
 	
+	
 	//selling_status 변경
 	@RequestMapping(value="/{menuCategory}", method=RequestMethod.PUT)
 	public Map convertStatus(@PathVariable("menuCategory") String menuCategory,

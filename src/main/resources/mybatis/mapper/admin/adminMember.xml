@@ -41,14 +41,9 @@
  		   AND m.uid = d.uid
  	</update>
  	
- 	
- 	<delete id="delete" parameterType="string">
- 		DELETE FROM tbl_member
+	<update id="RankToDrop" parameterType="string">
+ 		 UPDATE tbl_member 
+ 		   SET user_rank = 'drop' 		   	  
  		 WHERE uid = #{uid}
- 	</delete>
- 	
- 	<delete id="deleteDetail" parameterType="string">
- 		DELETE FROM tbl_member_detail
- 		 WHERE uid = #{uid}
- 	</delete>
+	</update>
 </mapper>

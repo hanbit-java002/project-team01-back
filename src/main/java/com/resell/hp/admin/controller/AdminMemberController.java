@@ -66,7 +66,7 @@ public class AdminMemberController {
 	@RequestMapping(value="/{userUid}", method=RequestMethod.DELETE)
 	public Map remove(@PathVariable("userUid") String userUid) {
 
-		adminMemberService.remove(userUid);
+		adminMemberService.drop(userUid);
 		
 		Map result = new HashMap();
 		result.put("result", "ok");
