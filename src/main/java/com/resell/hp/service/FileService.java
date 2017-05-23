@@ -11,6 +11,7 @@ import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.resell.hp.dao.FileDAO;
 import com.resell.hp.util.KeyUtils;
@@ -24,27 +25,21 @@ public class FileService {
 	@Autowired
 	private FileDAO fileDAO;
 	
+	
 	@Transactional
 	public String addAndSaveProductImg(Map productImgInfo) {
-		String[]  arrImgSrc = (String[]) productImgInfo.get("arrImgSrc");
+		List<MultipartFile>  arrImgSrc = (List<MultipartFile>) productImgInfo.get("arrImgSrc");
 		int mainImgIndex = (Integer) productImgInfo.get("mainImgIndex");
 		String productId = (String) productImgInfo.get("productId");
-		
+		System.out.println("메인 이미지 인덱스:"+mainImgIndex);
 		if (arrImgSrc != null) {
-			for (int i=0; i<arrImgSrc.length; i++) {
+			for (int i=0; i<arrImgSrc.size(); i++) {	
 				boolean isMainImg = true;
-				String dataUrl = arrImgSrc[i];
-				String contentType = StringUtils.substringBetween(dataUrl, "data:", ";base64,");
-				String base64 = StringUtils.substringAfter(dataUrl, ";base64,");
-				System.out.println(contentType);
-				byte[] bytes = Base64.decodeBase64(base64);
-				
-				int imgSize = bytes.length;
-				
-				String imgId=KeyUtils.generateKey("IMG");
-				
+				MultipartFile multipartFile = arrImgSrc.get(i);
+				String imgId = KeyUtils.generateKey("FILE");
 				String imgPath = PATH_PREFIX+imgId;
 				String imgUrl = URL_PREFIX+imgId;
+				
 				if (i == mainImgIndex) {
 					isMainImg = true;
 				}
@@ -52,12 +47,13 @@ public class FileService {
 					isMainImg = false;
 				}
 				
-				addProductImg(imgId, contentType, imgSize, imgUrl, productId, isMainImg);
+				fileDAO.insert(imgId, multipartFile.getContentType(),
+						multipartFile.getSize(), imgUrl, productId, isMainImg);
 				
 				File file = new File(imgPath);
 				
 				try {
-					FileUtils.writeByteArrayToFile(file, bytes);
+					FileUtils.writeByteArrayToFile(file, multipartFile.getBytes());
 				}
 				catch(Exception e) {
 					throw new RuntimeException(e);
@@ -66,11 +62,7 @@ public class FileService {
 		}
 		return productId;
 	}
-	@Transactional 
-	public void addProductImg(String imgId, String contentType, int imgSize, 
-			String imgUrl, String productId , boolean isMainImg) {
-		fileDAO.insert(imgId, contentType, imgSize, imgUrl, productId, isMainImg);
-	}
+	
 	
 	public Map get(String fileId) {
 		return fileDAO.selectOne(fileId);
@@ -82,7 +74,7 @@ public class FileService {
 	@Transactional
 	public void update(Map productImgInfo) {
 		String productId= (String) productImgInfo.get("productId");
-		String[] arrImgSrc = (String[])productImgInfo.get("arrImgSrc");
+		List<MultipartFile> arrImgSrc = (List<MultipartFile>)productImgInfo.get("arrImgSrc");
 		String[] arrDelImgId = (String[])productImgInfo.get("arrDelImgId");
 		String mainImg = (String)productImgInfo.get("mainImg");
 		String beforeMainImg = (String)productImgInfo.get("beforeMainImg");
@@ -105,7 +97,7 @@ public class FileService {
 			
 		}
 		
-		
+		/* 메인이미지*/
 		if (!("default".equals(mainImg))) {
 			if (mainImg.contains("IMG")) {
 				fileDAO.updateSetMainImg(mainImg);

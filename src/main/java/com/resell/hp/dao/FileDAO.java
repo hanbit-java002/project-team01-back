@@ -15,7 +15,7 @@ public class FileDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public int insert(String imgId, String contentType, int imgSize, 
+	public int insert(String imgId, String contentType, long imgSize, 
 			String imgUrl, String productId, boolean isMainImg){
 		Map imgInfo = new HashMap();
 		

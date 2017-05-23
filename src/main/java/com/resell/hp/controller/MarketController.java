@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.resell.hp.annotation.SignInRequired;
 import com.resell.hp.service.FileService;
@@ -31,7 +33,7 @@ public class MarketController {
 	
 	@SignInRequired
 	@RequestMapping(value="/selling", method = RequestMethod.POST)
-	public Map productAdd(HttpServletRequest request, HttpSession session) {
+	public Map productAdd(MultipartHttpServletRequest request, HttpSession session) {
 		String productName = request.getParameter("name");
 		String brandId = request.getParameter("brandId");
 		String categoryId = request.getParameter("categoryId");
@@ -40,7 +42,7 @@ public class MarketController {
 		int price = Integer.parseInt(request.getParameter("price"));
 		String quality = request.getParameter("qualityId");
 		String detail = request.getParameter("detail");
-		String[] arrImgSrc = request.getParameterValues("arrImgSrc");
+		List<MultipartFile> arrImgSrc = request.getFiles("arrImgSrc");
 		int mainImgIndex = Integer.parseInt(request.getParameter("mainImgIndex"));
 		String dealMeans = request.getParameter("dealMeans");
 		String directPlace = request.getParameter("directPlace");
@@ -48,7 +50,7 @@ public class MarketController {
 		String loginId =(String) session.getAttribute("uid");
 		String deliveryCheck= request.getParameter("deliveryCheck");
 		
-		System.out.println("시리즈"+seriesId);
+		System.out.println("멀티파트"+arrImgSrc);
 		Map productInfo = new HashMap<String, Object>();
 		productInfo.put("productName",productName);
 		productInfo.put("brandId",brandId);
@@ -75,6 +77,66 @@ public class MarketController {
 		result.put("result", "ok");
 		
 		return result;
+	}
+	
+	@SignInRequired
+	@RequestMapping(value="/selling-update", method = RequestMethod.POST)
+	public Map productUpdate(MultipartHttpServletRequest request) {
+		String productId = request.getParameter("productId");
+		String productName = request.getParameter("name");
+		String brandId = request.getParameter("brandId");
+		String categoryId = request.getParameter("categoryId");
+		String sizeId = request.getParameter("sizeId");
+		String seriesId = request.getParameter("seriesId");
+		int price = Integer.parseInt(request.getParameter("price"));
+		String quality = request.getParameter("qualityId");
+		String detail = request.getParameter("detail");		
+		String dealMeans = request.getParameter("dealMeans");
+		String directPlace = request.getParameter("directPlace");
+		boolean safeDeal = Boolean.parseBoolean(request.getParameter("safeDeal"));
+		String deliveryCheck= request.getParameter("deliveryCheck");
+		String status= request.getParameter("status");
+		
+		List<MultipartFile> arrImgSrc = request.getFiles("arrImgSrc");
+		String[] arrDelImgId = request.getParameterValues("arrDelImgId");
+		String mainImg = request.getParameter("mainImg");
+		String beforeMainImg = request.getParameter("beforeMainImg");
+		System.out.println(status);
+		
+		Map productInfo = new HashMap<String, Object>();
+		productInfo.put("productId",productId);
+		productInfo.put("productName",productName);
+		productInfo.put("brandId",brandId);
+		productInfo.put("categoryId",categoryId);
+		productInfo.put("sizeId",sizeId);
+		productInfo.put("seriesId",seriesId);  
+		productInfo.put("price",price);
+		productInfo.put("quality",quality);
+		productInfo.put("detail",detail);
+		productInfo.put("dealMeans",dealMeans);
+		productInfo.put("directPlace",directPlace);
+		productInfo.put("safeDeal",safeDeal);
+		productInfo.put("deliveryCheck", deliveryCheck);
+		productInfo.put("status", status);
+		
+		System.out.println(productInfo);
+		
+		Map productImgInfo = new HashMap<String, Object>();
+		productImgInfo.put("productId",productId);
+		productImgInfo.put("arrImgSrc", arrImgSrc);
+		productImgInfo.put("arrDelImgId", arrDelImgId);
+		productImgInfo.put("mainImg", mainImg);
+		productImgInfo.put("beforeMainImg", beforeMainImg);
+		
+		System.out.println(productImgInfo);
+		
+		marketService.update(productInfo, productImgInfo);
+		
+		Map result = new HashMap();
+		result.put("result", "ok");
+		
+		return result;
+		
 	}
 	
 	@RequestMapping(value="/list", method = RequestMethod.POST)
@@ -131,65 +193,6 @@ public class MarketController {
 		return result;
 	}
 	
-	@SignInRequired
-	@RequestMapping(value="/selling-update", method = RequestMethod.POST)
-	public Map productUpdate(HttpServletRequest request) {
-		String productId = request.getParameter("productId");
-		String productName = request.getParameter("name");
-		String brandId = request.getParameter("brandId");
-		String categoryId = request.getParameter("categoryId");
-		String sizeId = request.getParameter("sizeId");
-		String seriesId = request.getParameter("seriesId");
-		int price = Integer.parseInt(request.getParameter("price"));
-		String quality = request.getParameter("qualityId");
-		String detail = request.getParameter("detail");		
-		String dealMeans = request.getParameter("dealMeans");
-		String directPlace = request.getParameter("directPlace");
-		boolean safeDeal = Boolean.parseBoolean(request.getParameter("safeDeal"));
-		String deliveryCheck= request.getParameter("deliveryCheck");
-		String status= request.getParameter("status");
-		
-		String[] arrImgSrc = request.getParameterValues("arrImgSrc");
-		String[] arrDelImgId = request.getParameterValues("arrDelImgId");
-		String mainImg = request.getParameter("mainImg");
-		String beforeMainImg = request.getParameter("beforeMainImg");
-		System.out.println(status);
-		
-		Map productInfo = new HashMap<String, Object>();
-		productInfo.put("productId",productId);
-		productInfo.put("productName",productName);
-		productInfo.put("brandId",brandId);
-		productInfo.put("categoryId",categoryId);
-		productInfo.put("sizeId",sizeId);
-		productInfo.put("seriesId",seriesId);  
-		productInfo.put("price",price);
-		productInfo.put("quality",quality);
-		productInfo.put("detail",detail);
-		productInfo.put("dealMeans",dealMeans);
-		productInfo.put("directPlace",directPlace);
-		productInfo.put("safeDeal",safeDeal);
-		productInfo.put("deliveryCheck", deliveryCheck);
-		productInfo.put("status", status);
-		
-		System.out.println(productInfo);
-		
-		Map productImgInfo = new HashMap<String, Object>();
-		productImgInfo.put("productId",productId);
-		productImgInfo.put("arrImgSrc", arrImgSrc);
-		productImgInfo.put("arrDelImgId", arrDelImgId);
-		productImgInfo.put("mainImg", mainImg);
-		productImgInfo.put("beforeMainImg", beforeMainImg);
-		
-		System.out.println(productImgInfo);
-		
-		marketService.update(productInfo, productImgInfo);
-		
-		Map result = new HashMap();
-		result.put("result", "ok");
-		
-		return result;
-		
-	}
 	@SignInRequired
 	@RequestMapping(value="/delete", method = RequestMethod.POST)
 	public Map deleteProduct(@RequestParam("productId") String productId,
