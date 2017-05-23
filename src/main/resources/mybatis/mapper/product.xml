@@ -36,11 +36,11 @@
 	<select id="selectProductDetail" parameterType="string" resultType="map">
 		SELECT p.product_id, p.product_name, p.category_id, c.category_name,
 			   p.price, p.brand_id, p.seller_uid, p.size, p.quality, p.deal_means,
-			   p.safe_deal, p.update_date, p.description, p.direct_place, p.delivery_check
+			   p.safe_deal, p.update_date, p.description, p.direct_place, p.delivery_check, p.selling_status
 		  FROM (
 		  	SELECT product_id, product_name, category_id, price,
 		  		   brand_id, seller_uid, size, quality, deal_means,
-				   safe_deal, update_date, description, direct_place, delivery_check
+				   safe_deal, update_date, description, direct_place, delivery_check, selling_status
 		  	  FROM tbl_product
        		 WHERE product_id = #{productId}) p, tbl_category c
 		 WHERE p.category_id = c.category_id
