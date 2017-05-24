@@ -61,7 +61,7 @@ public class MemberController {
 	             
 	             throw new RuntimeException("패스워드가 다릅니다.");
 	          }
-	          else if ("blind".equals(userRank)) {
+	          else if ("blackList".equals(userRank)) {
 	        	  throw new RuntimeException("블라인드된 회원입니다.");
 	          }
 	          else if ("drop".equals(userRank)) {
