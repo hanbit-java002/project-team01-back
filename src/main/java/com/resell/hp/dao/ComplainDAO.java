@@ -22,6 +22,11 @@ public class ComplainDAO {
 		return sqlSession.insert("complain.addComplain", param);
 	}
 	
+	//tbl_product의 selling_status를 complain으로 업데이트
+	public int updateStatus(String productId) {
+		return sqlSession.update("complain.updateStatus", productId);
+	}
+	
 	//has complain
 	public int hasComplain(String productId, String uid) {
 		Map param = new HashMap();

@@ -11,6 +11,13 @@
   			(#{productId}, #{uid})
 	</insert>
 	
+	<update id="updateStatus" parameterType="string">
+		UPDATE tbl_product
+		   SET selling_status = "complain"
+		 WHERE product_id = #{productId}
+	</update>
+	
+	
 	<select id="hasComplain" parameterType="map" resultType="int">
 		SELECT COUNT(product_id) AS countComplain
 		  FROM tbl_complain

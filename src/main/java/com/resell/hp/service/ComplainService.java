@@ -18,6 +18,12 @@ public class ComplainService {
 		return complainDAO.addComplain(productId, uid);
 	}
 	
+	@Transactional
+	public int updateStatus(String productId) {
+		return complainDAO.updateStatus(productId);
+	}
+	
+	
 	//has complain
 	public boolean hasComplain(String productId, String uid) {
 		

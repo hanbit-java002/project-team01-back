@@ -27,6 +27,7 @@ public class ComplainController {
 		try {
 			String uid = (String) session.getAttribute("uid");
 			complainService.addComplain(productId, uid);
+			complainService.updateStatus(productId);
 			
 			Map result = new HashMap();
 			result.put("result", "ok");
